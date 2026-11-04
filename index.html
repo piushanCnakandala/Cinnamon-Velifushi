@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#252776">
+<link rel="icon" type="image/png" href="img/logo-flower.png">
+<link rel="apple-touch-icon" href="img/logo-flower.png">
 <title>Cinnamon Velifushi – Guest Directory</title>
 <meta name="description" content="Digital guest directory for Cinnamon Velifushi Maldives: menus, island experiences, spa, activities, resort map and more.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,8 +45,9 @@ main{min-height:100vh;padding-bottom:calc(70px + var(--safeB))}
 .topnav{position:fixed;top:0;left:0;right:0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:calc(12px + env(safe-area-inset-top,0px)) 18px 12px;transition:background .3s,box-shadow .3s,color .3s;color:#fff}
 .topnav.solid{background:rgba(255,255,255,.96);backdrop-filter:blur(10px);box-shadow:0 1px 0 var(--line);color:var(--ink)}
 .logo{display:flex;flex-direction:column;line-height:1}
-.logo b{font-family:var(--serif);font-weight:600;font-size:21px;letter-spacing:.02em}
-.logo small{font-size:9.5px;letter-spacing:.34em;text-transform:uppercase;margin-top:4px;opacity:.85}
+.logo img{height:40px;width:auto;transition:filter .3s}
+/* the logo file is white: tint it the logo's purple once the bar turns white on scroll */
+.topnav.solid .logo img{filter:brightness(0) saturate(100%) invert(20%) sepia(38%) saturate(2960%) hue-rotate(247deg) brightness(92%) contrast(94%)}
 .clock{font-size:12px;letter-spacing:.06em;opacity:.9;text-align:right}
 
 /* ---------- hero ---------- */
@@ -319,7 +322,7 @@ html,body{overflow-x:clip}
 </style>
 </head>
 <body>
-<header class="topnav" id="topnav"><a class="logo" href="#/"><b id="logoName"></b><small>Maldives</small></a><span class="clock" id="clock"></span></header>
+<header class="topnav" id="topnav"><a class="logo" href="#/"><img id="logoImg" src="img/logo-white.png" width="600" height="199" alt=""></a><span class="clock" id="clock"></span></header>
 <main id="app"></main>
 <nav class="tabs" id="tabs"></nav>
 
@@ -348,7 +351,7 @@ const RESORT = {
    Leave "" to use the cover of that section's first document instead. */
 const CINNAMON_IMG = "https://cinnamonweb.blob.core.windows.net/cinnamonweb-prd/misc/";
 const PHOTOS = {
-  home:     CINNAMON_IMG + "velifush-intro-01-200122.jpeg",
+  home:     "img/hero-aerial.jpg",
   island:   CINNAMON_IMG + "velifushi-arrivals-00-530x498.jpg",
   menus: "",
   sustain:    "img/docs/sustainability.jpg",
@@ -520,7 +523,7 @@ const DOCS = {};
 for (const [k,s] of Object.entries(SECTIONS))
   (s.groups||[]).forEach(g => itemsOf(g).forEach(([t,id]) => { DOCS[id] = DOCS[id] || {t, from:k}; }));
 
-document.getElementById('logoName').textContent = RESORT.name;
+document.getElementById('logoImg').alt = RESORT.name + ' Maldives';
 function tickClock(){
   const el = document.getElementById('clock');
   el.textContent = new Date().toLocaleString([], {weekday:'short', day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'});
@@ -551,7 +554,7 @@ function dialSvg(){
     <circle class="pulse" cx="200" cy="200" r="112"/>
     <a class="ctr" href="#/packages" aria-label="${esc(SECTIONS.packages.title)}">
       <circle class="c1" cx="200" cy="200" r="112"/><circle class="c2" cx="200" cy="200" r="100"/>
-      <g transform="translate(184,146) scale(1.35)"><g class="ic">${ICONS.flower}</g></g>
+      <image href="img/logo-flower.png" x="178" y="136" width="44" height="44"/>
       <text class="t1" x="200" y="202">All-Inclusive</text>
       <text class="t2" x="200" y="224">PACKAGES &amp; MENUS</text></a></svg>`;
 }

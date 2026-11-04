@@ -61,7 +61,8 @@ A document with no entry in `content.js` (for example one you just added) opens 
 ## Photos
 The site is photo-led, in the style of the Cinnamon Hotels website:
 
-- **Home hero and Island Experiences banner** use two Velifushi photos from Cinnamon's own image library (`CINNAMON_IMG` in the `PHOTOS` block). If Cinnamon ever renames or removes them, the site falls back to your Drive document covers automatically.
+- **Home hero** uses `img/hero-aerial.jpg`. The logos are `img/logo-white.png` (top bar) and `img/logo-flower.png` (centre of the dial and browser icon).
+- **Island Experiences banner** uses a Velifushi photo from Cinnamon's own image library (`CINNAMON_IMG` in the `PHOTOS` block). If Cinnamon ever renames or removes it, the site falls back to your Drive document covers automatically.
 - **Every other banner and tile** uses its own photo if you set one, otherwise the cover of that section's first PDF.
 - **Document cards** show each PDF's cover page from Drive automatically.
 
