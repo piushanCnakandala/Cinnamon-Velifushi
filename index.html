@@ -1,0 +1,616 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#252776">
+<title>Cinnamon Velifushi – Guest Directory</title>
+<meta name="description" content="Digital guest directory for Cinnamon Velifushi Maldives: menus, island experiences, spa, activities, resort map and more.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* BRAND COLOURS — Cinnamon purple & white. Change these to retheme the whole site. */
+  --cream:#ffffff;          /* page background */
+  --paper:#f6f6fb;          /* alternate section background (soft lilac-white) */
+  --ink:#1c1c3c;            /* main text */
+  --muted:#6b6b86;          /* secondary text */
+  --line:#e3e3ef;           /* hairlines & borders */
+  --cinnamon:#252776;       /* primary purple: accents, links, buttons */
+  --cinnamon-d:#1a1b57;     /* darker purple */
+  --gold:#b8b6e3;           /* soft lilac for fine details */
+  --sea:#252776;            /* photo placeholder / dial centre */
+  --night:#17183f;          /* dark contact strip */
+  --tint:#dcdbf5;           /* light lilac text on photos */
+  --shade:23,24,63;         /* RGB of photo overlays */
+  --serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;
+  --sans:Jost,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --safeB:env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);font-weight:400;background:var(--cream);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.5}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+main{min-height:100vh;padding-bottom:calc(70px + var(--safeB))}
+.eyebrow{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--cinnamon);font-weight:500}
+.title{font-family:var(--serif);font-weight:500;line-height:1.08;color:var(--ink)}
+.title .tilde{color:var(--gold);font-style:italic;margin-right:.08em}
+.container{max-width:1080px;margin:0 auto;padding:0 20px}
+
+/* ---------- top bar ---------- */
+.topnav{position:fixed;top:0;left:0;right:0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:calc(12px + env(safe-area-inset-top,0px)) 18px 12px;transition:background .3s,box-shadow .3s,color .3s;color:#fff}
+.topnav.solid{background:rgba(255,255,255,.96);backdrop-filter:blur(10px);box-shadow:0 1px 0 var(--line);color:var(--ink)}
+.logo{display:flex;flex-direction:column;line-height:1}
+.logo b{font-family:var(--serif);font-weight:600;font-size:21px;letter-spacing:.02em}
+.logo small{font-size:9.5px;letter-spacing:.34em;text-transform:uppercase;margin-top:4px;opacity:.85}
+.clock{font-size:12px;letter-spacing:.06em;opacity:.9;text-align:right}
+
+/* ---------- hero ---------- */
+.hero{position:relative;min-height:88vh;min-height:88svh;display:flex;align-items:flex-end;color:#fff;background-color:var(--sea);background-image:var(--img);background-position:center;background-size:cover;background-repeat:no-repeat;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(var(--shade),.45) 0%,rgba(var(--shade),.05) 35%,rgba(var(--shade),.7) 100%)}
+.hero .in{position:relative;width:100%;max-width:1080px;margin:0 auto;padding:0 22px 56px}
+.hero .eyebrow{color:var(--tint)}
+.hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(40px,9vw,76px);line-height:1.02;margin-top:10px}
+.hero p{max-width:520px;margin-top:12px;font-size:15px;font-weight:300;color:#ecebf7}
+.hero .cta{display:inline-flex;align-items:center;gap:10px;margin-top:22px;padding:13px 22px;border:1px solid rgba(255,255,255,.7);font-size:12px;letter-spacing:.2em;text-transform:uppercase}
+.hero .cta:active{background:rgba(255,255,255,.15)}
+.scrollhint{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);width:1px;height:28px;background:rgba(255,255,255,.6)}
+
+/* ---------- section blocks ---------- */
+.block{padding:56px 0}
+.block .head{text-align:center;max-width:620px;margin:0 auto 28px;padding:0 20px}
+.block .head .title{font-size:clamp(30px,6vw,44px);margin-top:8px}
+.block .head p{color:var(--muted);margin-top:10px;font-weight:300}
+.block.alt{background:var(--paper)}
+
+/* ---------- dial ---------- */
+.dial{max-width:430px;margin:0 auto;padding:0 12px}
+.dial svg{width:100%;height:auto;display:block;overflow:visible}
+.seg path{fill:var(--paper);stroke:var(--line);stroke-width:1.2;transition:fill .2s}
+.seg:hover path,.seg:focus path{fill:#f1f0fa}
+.seg:active path{fill:#e4e3f5}
+.seg text{fill:var(--ink);font-family:var(--sans);font-size:10.5px;font-weight:500;text-anchor:middle;letter-spacing:.03em}
+.seg .ic{stroke:var(--cinnamon);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.dial .ring{fill:none;stroke:var(--gold);stroke-width:1}
+.ctr .c1{fill:var(--sea);transition:filter .2s}
+.ctr:hover .c1{filter:brightness(1.12)}
+.ctr .c2{fill:none;stroke:rgba(243,217,181,.55);stroke-width:1}
+.ctr text.t1{font-family:var(--serif);font-size:24px;font-weight:600;fill:#fff;text-anchor:middle}
+.ctr text.t2{font-family:var(--sans);font-size:9.5px;fill:var(--tint);text-anchor:middle;letter-spacing:.18em}
+.ctr .ic{stroke:var(--tint);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---------- photo tiles (home) ---------- */
+.tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:0 14px;max-width:1080px;margin:0 auto}
+@media (min-width:760px){.tiles{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}}
+.tile{position:relative;display:block;aspect-ratio:3/4;overflow:hidden;background:var(--sea);color:#fff}
+.tile.wide{grid-column:span 2;aspect-ratio:16/10}
+.tile .pic{position:absolute;inset:0;background-image:var(--img);background-position:center;background-size:cover;background-repeat:no-repeat;transition:transform .6s}
+.tile:hover .pic{transform:scale(1.05)}
+.tile::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(var(--shade),0) 40%,rgba(var(--shade),.78))}
+.tile .cap{position:absolute;left:14px;right:14px;bottom:14px;z-index:1}
+.tile .cap b{display:block;font-family:var(--serif);font-weight:500;font-size:22px;line-height:1.1}
+.tile .cap span{display:block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--tint);margin-top:6px}
+
+/* ---------- feature split ---------- */
+.split{display:grid;gap:0;max-width:1080px;margin:0 auto}
+@media (min-width:760px){.split{grid-template-columns:1fr 1fr;align-items:center}.split.rev .ph{order:2}}
+.split .ph{display:block;aspect-ratio:4/3;background-color:var(--sea);background-image:var(--img);background-position:center;background-size:cover;background-repeat:no-repeat}
+.split .tx{padding:28px 22px 8px}
+@media (min-width:760px){.split .tx{padding:40px 48px}}
+.split .title{font-size:34px;margin-top:8px}
+.split p{color:var(--muted);margin-top:10px;font-weight:300}
+.link{display:inline-flex;align-items:center;gap:8px;margin-top:18px;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--cinnamon);border-bottom:1px solid currentColor;padding-bottom:4px}
+.link svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.6}
+
+/* ---------- contact strip ---------- */
+.contact{background:var(--night);color:#ecebf7;text-align:center;padding:48px 20px 40px}
+.contact .title{color:#fff;font-size:32px;margin-top:8px}
+.contact .eyebrow{color:var(--gold)}
+.cbtns{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:22px}
+.cbtns a{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border:1px solid rgba(236,235,247,.35);font-size:13px;letter-spacing:.06em}
+.cbtns svg{width:16px;height:16px;stroke:var(--gold);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.contact small{display:block;margin-top:26px;font-size:11px;color:#9b9ab8;letter-spacing:.08em}
+
+/* ---------- inner pages ---------- */
+.phero{position:relative;min-height:46vh;display:flex;align-items:flex-end;color:#fff;background-color:var(--sea);background-image:var(--img);background-position:center;background-size:cover;background-repeat:no-repeat}
+.phero::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(var(--shade),.5),rgba(var(--shade),.15) 40%,rgba(var(--shade),.78))}
+.phero .in{position:relative;width:100%;max-width:1080px;margin:0 auto;padding:90px 22px 30px}
+.phero .eyebrow{color:var(--tint)}
+.phero h2{font-family:var(--serif);font-weight:500;font-size:clamp(34px,7vw,56px);line-height:1.05;margin-top:8px}
+.phero p{max-width:560px;margin-top:8px;font-weight:300;color:#ecebf7}
+.crumb{display:inline-flex;align-items:center;gap:6px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#fff;opacity:.9}
+.crumb svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8}
+.group{max-width:1080px;margin:0 auto;padding:30px 16px 0}
+.group h3{font-family:var(--serif);font-weight:500;font-size:26px;margin:0 4px 14px;display:flex;align-items:center;gap:12px}
+.group h3::after{content:"";flex:1;height:1px;background:var(--line)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (min-width:760px){.grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}}
+.card{display:block;background:var(--paper);overflow:hidden;box-shadow:0 1px 0 var(--line);transition:transform .2s,box-shadow .2s}
+.card:hover{box-shadow:0 10px 28px rgba(37,39,118,.14)}
+.card:active{transform:scale(.98)}
+.card .ph{position:relative;display:block;aspect-ratio:3/4;background:linear-gradient(135deg,#e9e8f6,#f6f6fb);overflow:hidden}
+.card .ph img{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;object-position:top;opacity:0;transition:opacity .4s}
+.card .ph img.ok{opacity:1}
+.card .ph .fb{position:absolute;inset:0;display:grid;place-items:center}
+.card .ph .fb svg{width:30px;height:30px;stroke:var(--cinnamon);fill:none;stroke-width:1.3;opacity:.5}
+.card .cap{display:block;padding:12px 12px 14px;border-top:2px solid var(--cinnamon)}
+.card .cap b{display:block;font-weight:500;font-size:14px;line-height:1.3}
+.card .cap span{display:block;font-size:12px;color:var(--muted);margin-top:3px}
+.list{background:var(--paper);box-shadow:0 1px 0 var(--line)}
+.item{display:flex;align-items:center;gap:14px;padding:16px;border-top:1px solid var(--line)}
+.item:first-child{border-top:0}
+.item .badge{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;flex:none}
+.item .badge svg{width:18px;height:18px;stroke:var(--cinnamon);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.item .tx{flex:1;min-width:0}.item .tx b{display:block;font-weight:500}.item .tx span{display:block;font-size:13px;color:var(--muted)}
+.item .chev{width:16px;height:16px;stroke:#b9b8cf;fill:none;stroke-width:1.8;flex:none}
+.feature{display:block;position:relative;aspect-ratio:16/9;background-color:var(--sea);background-image:var(--img);background-position:center;background-size:cover;background-repeat:no-repeat;color:#fff;overflow:hidden}
+@media (min-width:760px){.feature{aspect-ratio:21/8}}
+.feature::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(var(--shade),.75),rgba(var(--shade),.1))}
+.feature div{position:absolute;left:20px;right:20px;bottom:18px}
+.feature small{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--tint)}
+.feature b{display:block;font-family:var(--serif);font-weight:500;font-size:26px;line-height:1.15;margin-top:4px;max-width:420px}
+.empty{background:var(--paper);padding:26px;text-align:center;color:var(--muted)}
+.mapimg{width:100%;background:#e9e8f6;box-shadow:0 1px 0 var(--line)}
+.note{font-size:13px;color:var(--muted);margin:12px 4px 0}
+
+/* ---------- document viewer ---------- */
+.viewer{position:fixed;inset:0;background:#1b1b1b;display:flex;flex-direction:column;z-index:60}
+.vbar{display:flex;align-items:center;gap:10px;padding:10px 14px;padding-top:max(10px,env(safe-area-inset-top));background:var(--cream);border-bottom:1px solid var(--line)}
+.vbar .ttl{flex:1;font-family:var(--serif);font-size:19px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vbar .back{display:grid;place-items:center;width:36px;height:36px}
+.vbar .back svg{width:20px;height:20px;stroke:var(--ink);fill:none;stroke-width:1.8}
+.vbar .open{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--cinnamon);border:1px solid currentColor;padding:8px 12px}
+.viewer iframe{flex:1;border:0;width:100%;background:#2b2b2b}
+
+/* ---------- bottom tabs ---------- */
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:40;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:6px 4px calc(6px + var(--safeB))}
+.tabs a{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:4px 8px;min-width:58px}
+.tabs a.on{color:var(--cinnamon)}
+.tabs svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+
+/* =================== ANIMATIONS =================== */
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes kenburns{from{transform:scale(1.14)}to{transform:scale(1)}}
+@keyframes segIn{from{opacity:0;transform:scale(.82) rotate(-8deg)}to{opacity:1;transform:none}}
+@keyframes ctrIn{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
+@keyframes pulse{0%{transform:scale(1);opacity:.55}70%{transform:scale(1.12);opacity:0}100%{opacity:0}}
+@keyframes hint{0%{transform:translateX(-50%) scaleY(0);transform-origin:top}50%{transform:translateX(-50%) scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:translateX(-50%) scaleY(0);transform-origin:bottom}}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:none}}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* page transition */
+#app.enter{animation:fadeIn .55s ease both}
+
+/* hero: slow zoom + staggered text */
+.hero,.phero{isolation:isolate;overflow:hidden}
+html,body{overflow-x:clip}
+.hero .bgz,.phero .bgz{position:absolute;inset:0;z-index:-1;background-color:var(--sea);background-image:var(--img);background-position:center;background-size:cover;background-repeat:no-repeat;animation:kenburns 16s cubic-bezier(.2,.6,.3,1) both}
+.hero .in > *{opacity:0;animation:fadeUp .9s cubic-bezier(.2,.7,.2,1) both}
+.hero .in > :nth-child(1){animation-delay:.25s}
+.hero .in > :nth-child(2){animation-delay:.45s}
+.hero .in > :nth-child(3){animation-delay:.65s}
+.hero .in > :nth-child(4){animation-delay:.85s}
+.phero .in > *{opacity:0;animation:fadeUp .8s cubic-bezier(.2,.7,.2,1) both}
+.phero .in > :nth-child(2){animation-delay:.12s}
+.phero .in > :nth-child(3){animation-delay:.24s}
+.scrollhint{animation:hint 2.2s ease-in-out infinite}
+.hero .cta{transition:background .3s,letter-spacing .3s}
+.hero .cta:hover{background:rgba(255,255,255,.14);letter-spacing:.26em}
+
+/* scroll reveal */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
+.rv.seen{opacity:1;transform:none}
+
+/* dial assembles when it scrolls into view */
+.dial .seg,.dial .ctr{transform-box:view-box;transform-origin:200px 200px;opacity:0}
+.dial.seen .seg{animation:segIn .7s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i) * 90ms + .1s)}
+.dial.seen .ctr{animation:ctrIn .8s cubic-bezier(.2,.9,.3,1.2) .05s both}
+.dial .seg path{transition:fill .25s,transform .25s;transform-box:view-box;transform-origin:200px 200px}
+.dial .seg:hover path{transform:scale(1.025)}
+.dial .ring{transform-box:view-box;transform-origin:200px 200px;stroke-dasharray:3 7;animation:spin 90s linear infinite}
+.dial .pulse{fill:none;stroke:var(--gold);stroke-width:1.2;transform-box:view-box;transform-origin:200px 200px;animation:pulse 3.2s ease-out 1.4s infinite}
+
+/* tiles, cards, links */
+.tile .pic{transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.tile:hover .pic{transform:scale(1.08)}
+.tile .cap span{transition:letter-spacing .4s,color .3s}
+.tile:hover .cap span{letter-spacing:.3em;color:#fff}
+.split .ph{transition:filter .6s}
+.split .ph:hover{filter:brightness(1.06) saturate(1.08)}
+.link svg{transition:transform .3s}
+.link:hover svg{transform:translateX(5px)}
+.card{transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s}
+.card:hover{transform:translateY(-4px)}
+.card .ph img{transition:opacity .5s,transform .8s cubic-bezier(.2,.7,.2,1)}
+.card:hover .ph img{transform:scale(1.05)}
+.feature{background-size:cover;transition:background-size .8s}
+.cbtns a{transition:background .3s,border-color .3s}
+.cbtns a:hover{background:rgba(236,235,247,.08);border-color:var(--gold)}
+.tabs a{transition:color .25s,transform .25s}
+.tabs a:active{transform:scale(.92)}
+.tabs a.on svg{animation:fadeUp .4s ease both}
+.viewer{animation:slideUp .45s cubic-bezier(.2,.8,.2,1) both}
+
+/* respect "reduce motion" phone settings */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none !important;transition:none !important}
+  .rv,.hero .in > *,.phero .in > *,.dial .seg,.dial .ctr{opacity:1 !important;transform:none !important}
+}
+</style>
+</head>
+<body>
+<header class="topnav" id="topnav"><a class="logo" href="#/"><b id="logoName"></b><small>Maldives</small></a><span class="clock" id="clock"></span></header>
+<main id="app"></main>
+<nav class="tabs" id="tabs"></nav>
+
+<script>
+/* =====================================================================
+   CONFIGURATION — edit this block to update the site.
+   Documents are Google Drive file IDs (the long code in a file's link:
+   drive.google.com/file/d/<ID>/view). Share the Drive folder as
+   "Anyone with the link – Viewer" so guests can open them.
+   ===================================================================== */
+const RESORT = {
+  name: "Cinnamon Velifushi",
+  tagline: "Vaavu Atoll · Maldives",
+  welcome: "Your private island, 25 minutes from Malé. Everything you need for your stay is right here.",
+  phone: "+960 670 6000",
+  email: "velifushi@cinnamonhotels.com",
+  whatsapp: "",            // e.g. "9607000000" (digits only) to show a WhatsApp button
+  website: "https://www.cinnamonhotels.com/cinnamonvelifushimaldives"
+};
+
+/* ---------------- PHOTOS ----------------
+   Each value can be: a Google Drive file ID of a photo, a path to a photo
+   in this repo (e.g. "img/spa.jpg"), or a full web address (https://...).
+   Leave "" to use the cover of that section's first document instead. */
+const CINNAMON_IMG = "https://cinnamonweb.blob.core.windows.net/cinnamonweb-prd/misc/";
+const PHOTOS = {
+  home:     CINNAMON_IMG + "velifush-intro-01-200122.jpeg",
+  island:   CINNAMON_IMG + "velifushi-arrivals-00-530x498.jpg",
+  menus: "", sustain: "", compendium: "", activities: "",
+  map:      "1Pnn-vVSgpbs00vP2vWNHh7yJLj_ozRj0",
+  special: "", packages: "",
+  spa:      "1tpOXMbRNiQ5cusDIwjvYw4RNAyfYTFes",
+  wedding: "", contacts: ""
+};
+/* Set to false to show plain text lists instead of picture cards */
+const SHOW_DOCUMENT_PREVIEWS = true;
+
+const SECTIONS = {
+  island: { title: "Island Experiences", icon: "palm",
+    intro: "Excursions, diving, water sports, spa and celebrations.",
+    groups: [
+      { name: "Excursions", items: [
+        ["Big Game Fishing", "1sbG0lkeEXcxW6bAw6u49LyPRVmvKYOV2"],
+        ["Dolphin Watching", "1N3PWo-Odk5h3W97dGAfPAqXQrujoHMRE"],
+        ["Local Village Tour", "1xu3NNJbJ7kIjQvoAUhGgJDdLQNXH5nag"],
+        ["Sandbank Excursion", "1PPF8pivzg1EDo387bo4x41PgjVKLp2Fv"],
+        ["Sunset Cruise", "1E7AWpZRPvbUjtj-AtK6-j8ivY5AyU5ed"],
+        ["Sunset Fishing", "11lhh-PYgxbpozYztyOrex_cYkiVZzkk4"],
+        ["Thinadhoo Island", "1N_6oWUocF_a9gj_TZaHoaL0V6v0rsZzx"]
+      ]},
+      { name: "Diving & Water Sports", items: [
+        ["Dive & Sail – Rates", "1tY-fHAKOcea67IPaDHvhrwljind1eDtM", "1 Sep 2026 – 30 Apr 2027"]
+      ]},
+      { name: "Mandara Spa", link: "spa" },
+      { name: "Weddings", link: "wedding" }
+    ]},
+  menus: { title: "Menus", icon: "menu",
+    intro: "Restaurant, bar and in-room dining menus.",
+    groups: [
+      { name: "Food", items: [
+        ["All Day Dining", "1LYwhnm_JNL2PzSBHKRXtBQKkZx836Nut", "In-room & all-day"],
+        ["Iru Kitchen & Bar – Lunch", "1CQ4_X9nN6nSGoCeBavgekDhHSxuGosbd"],
+        ["Iru Kitchen & Bar – Dinner", "13nCTQDLMqSdHOzP1lKV2Iir5zsVzNPAc"],
+        ["Marlin Seafood Restaurant", "1kzzvnGOaXkl53C5DSd-CFTkmld5QYqn_"],
+        ["High Tea", "1fD2o05kZBOgHOZ8Jphsw56e-srd7NsRR"],
+        ["Kids' Menu", "1MNHIw9JNCrRAMUT-yRmjqjr6OZWuQwSz"]
+      ]},
+      { name: "Combo Dining", items: [
+        ["Combo Offer – Iru Kitchen", "14UR4_xl5IuBfNII0V2drxzcdQauj99l4"],
+        ["Combo Offer – Marlin", "10nyF1wKCX_jLpCsoUwsaVVWpgrb8aDSJ"]
+      ]},
+      { name: "Drinks & Wine", items: [
+        ["Beverage List", "1SbB-oVUljl_PfOTtcvvvBDltQ7AoRfUC"],
+        ["Wine List", "1xgOflyoNvao-SJYGsuMZqKXLUEp9IFHP"],
+        ["Signature Cocktail Menu", "1q13w2muwe3Zl6OHL94ozyarQAtEcsa6g"],
+        ["Signature Cocktail", "18dGofgX2le4B4ExFIP3jrrnxRqyjMr6Q"],
+        ["Japanese & Korean Beverages", "1lnv6W1jI-XNqr01L0W3U2N6sWgCGyofs"]
+      ]},
+      { name: "Destination Dining", items: "DEST" },
+      { name: "Guest Services", items: [
+        ["Laundry Package", "1Fmr9jTzB2e-UzsUA86C3QJQrMzPP0Bkg"]
+      ]}
+    ]},
+  sustain: { title: "Sustainability Initiatives", icon: "leaf",
+    intro: "How we care for the island, the reef and the community.",
+    groups: [{ name: "Documents", items: [
+      ["Sustainability – English", "1ufUhu-A6tu8hHB9hm80U7SNqppkmnmpI"],
+      ["Durabilité – Français", "1S2Yl7J0ylxFaQOjV8xv6vpaSwYCsAez3"]
+    ]}]},
+  compendium: { title: "Compendium", icon: "book",
+    intro: "Your complete guide to resort services and information.",
+    groups: [{ name: "Guide", items: [
+      ["Resort Compendium", "1eX_1Iuzz5GOQVfBAgaXWOhydB14687Px"]
+    ]}]},
+  activities: { title: "Weekly Activities & Entertainment", icon: "calendar",
+    intro: "What's happening on the island this week.",
+    groups: [{ name: "This Week", items: [
+      ["Weekly Activities", "1Wq_R_jAfc4T5hKfC2_5rj5Ywj1z1jTBu"],
+      ["Weekly Entertainment", "1e-M6ZcV7hsaUQbsou82lkROJvxzCSJJk"]
+    ]}]},
+  map: { title: "Resort Map", icon: "map", intro: "Find your way around the island.",
+    image: "1Pnn-vVSgpbs00vP2vWNHh7yJLj_ozRj0" },
+  special: { title: "Signature Experiences", icon: "star",
+    intro: "Unforgettable private dining moments, curated for you.",
+    groups: [{ name: "Destination Dining", items: "DEST" }]},
+  packages: { title: "All-Inclusive Packages & Menus", icon: "flower",
+    intro: "What's included in your All-Inclusive or Soft All-Inclusive plan.",
+    groups: [
+      { name: "Packages", items: [
+        ["All-Inclusive Package", "1w3_j0SjMCzu0GIKNAHf3NKaoGu3U3iEj"],
+        ["Soft All-Inclusive Package", "13o1zAbpyDAqfJBeu5OainSCB3x_RzHnA"]
+      ]},
+      { name: "Included Drinks", items: [
+        ["All-Inclusive Beverage List", "1PkxasQywQk6AAhdWUaMOlPS5PphrMB_T"],
+        ["Premium All-Inclusive Beverage List", "1l3QB_BkGHQUCRSAcDelbuZN8lOr9o7xp"]
+      ]}
+    ]},
+  spa: { title: "Mandara Spa", icon: "spa", intro: "Treatments and rituals to restore body and mind.",
+    groups: [{ name: "Spa", items: [
+      ["Spa Menu", "1iC_YteBk_fjPN4wInjbWayYQz9F--_Cw"],
+      ["Fresh On Arrival Offer", "1tpOXMbRNiQ5cusDIwjvYw4RNAyfYTFes", "Special offer"]
+    ]}]},
+  wedding: { title: "Weddings", icon: "ring", intro: "Celebrate your love on the island.",
+    groups: [{ name: "Celebrations", items: [
+      ["Wedding Packages", "1N6iaVZSfNeGc6YsOZ16z-B19E5aiOQMX"]
+    ]}]},
+  contacts: { title: "Contacts", icon: "phone", intro: "We're here for you, day and night." }
+};
+
+const DESTINATION_DINING = [
+  ["Champagne Breakfast", "1yGBWEktsxeANIKZ6ifXhjSeqScK7WJP_"],
+  ["Lobster Lovers Night", "1sFDPuT8A_tWKe73oaFN3JDgBpDTJDvh8"],
+  ["Marquee Dinner", "1ZlfiJ5ApHzu2xbdyHH9xGCE5K8twBRVR"],
+  ["Private BBQ Dinner", "1tRaL2IzvQRdKw8CseWTrKT5sWdgZLost"],
+  ["Romance Under the Stars", "1teGbSK25HeuBRblcZESVpNi7K1NNAmJQ"],
+  ["Romance Under the Stars – Vegetarian", "1Hc_aYSXeUtDDaUjVFp-3U3sRdQd5n0A9"],
+  ["Seafood Experience", "1Z3Xr6xTACqE6_j77GUYFmdz8lCXif8M1"],
+  ["Surf & Turf Dinner", "1oHVrxLrH8qt50hSxppZcVzhz72ElkOtl"]
+];
+
+/* Order of the 7 dial segments (clockwise from top); "packages" sits in the centre. */
+const DIAL = ["island","menus","sustain","compendium","activities","map","special"];
+const DIAL_LABELS = {
+  island:["Island","Experiences"], menus:["Menus"], sustain:["Sustainability","Initiatives"],
+  compendium:["Compendium"], activities:["Weekly Activities","& Entertainment"],
+  map:["Resort","Map"], special:["Signature","Experiences"]
+};
+/* Photo tiles on the home page (first one is shown wide) */
+const HOME_TILES = ["island","menus","special","activities","sustain","map","compendium"];
+/* ===================== end of configuration ===================== */
+
+const ICONS = {
+  palm:'<path d="M12 22V11"/><path d="M12 11C10 7 6 6 3 7c3 0 6 1 9 4Z"/><path d="M12 11c2-4 6-5 9-4-3 0-6 1-9 4Z"/><path d="M12 11c-1-4-4-7-7-8 3 2 5 5 7 8Z"/><path d="M12 11c1-4 4-7 7-8-3 2-5 5-7 8Z"/><path d="M7 22h10"/>',
+  menu:'<path d="M7 3v8a2 2 0 0 0 2 2v8"/><path d="M5 3v6M9 3v6"/><path d="M17 21V3c-2 1.5-3 4-3 7v4h3"/>',
+  leaf:'<path d="M5 19C5 10 11 4 20 4c0 9-6 15-15 15Z"/><path d="M5 19 13 11"/>',
+  book:'<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2Z"/><path d="M4 21V5"/><path d="M8 7h7"/>',
+  calendar:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+  map:'<path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2Z"/><path d="M9 4v14M15 6v14"/>',
+  star:'<path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9Z"/>',
+  flower:'<circle cx="12" cy="12" r="2.5"/><path d="M12 9.5C12 6 10 4 12 2c2 2 0 4 0 7.5ZM12 14.5c0 3.5 2 5.5 0 7.5-2-2 0-4 0-7.5ZM9.5 12C6 12 4 14 2 12c2-2 4 0 7.5 0ZM14.5 12c3.5 0 5.5-2 7.5 0-2 2-4 0-7.5 0Z"/>',
+  spa:'<path d="M12 21c-5 0-8-3-8-7 3 0 6 1 8 4 2-3 5-4 8-4 0 4-3 7-8 7Z"/><path d="M12 18c-2-3-2-7 0-11 2 4 2 8 0 11Z"/>',
+  ring:'<circle cx="12" cy="15" r="6"/><path d="m9 3 3 4 3-4Z"/>',
+  phone:'<path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2Z"/>',
+  doc:'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>',
+  home:'<path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/>',
+  mail:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',
+  globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/>',
+  chat:'<path d="M4 20l1.5-4A8 8 0 1 1 9 19Z"/>',
+  chev:'<path d="m9 6 6 6-6 6"/>', left:'<path d="m15 6-6 6 6 6"/>', arrow:'<path d="M4 12h16M14 6l6 6-6 6"/>', down:'<path d="M12 4v16M6 14l6 6 6-6"/>'
+};
+const svg = (n, cls='') => `<svg viewBox="0 0 24 24" class="${cls}" aria-hidden="true">${ICONS[n]||''}</svg>`;
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const app = document.getElementById('app');
+const driveView = id => `https://drive.google.com/file/d/${id}/view`;
+const drivePreview = id => `https://drive.google.com/file/d/${id}/preview`;
+const driveImage = (id, w=2400) => `https://drive.google.com/thumbnail?id=${id}&sz=w${w}`;
+const photoUrl = (v, w=1800) => !v ? '' : (/^(https?:|\/|\.|img\/)/.test(v) || /\.(jpe?g|png|webp|gif)$/i.test(v)) ? v : driveImage(v, w);
+const itemsOf = g => g.items === "DEST" ? DESTINATION_DINING : (g.items || []);
+function firstDocId(key){
+  for (const g of (SECTIONS[key]?.groups || [])) { const it = itemsOf(g); if (it.length) return it[0][1]; }
+  return '';
+}
+const heroFor = key => photoUrl(PHOTOS[key]) || (firstDocId(key) ? driveImage(firstDocId(key), 1600) : '');
+/* Background helper: the photo, with the Drive cover as a fallback layer underneath */
+function bgVar(key){
+  const own = photoUrl(PHOTOS[key]), cover = firstDocId(key) ? driveImage(firstDocId(key), 1600) : '';
+  const layers = [own, cover].filter(Boolean).map(u => `url('${u}')`);
+  return layers.length ? `--img:${layers.join(',')}` : '';
+}
+
+const DOCS = {};
+for (const [k,s] of Object.entries(SECTIONS))
+  (s.groups||[]).forEach(g => itemsOf(g).forEach(([t,id]) => { DOCS[id] = DOCS[id] || {t, from:k}; }));
+
+document.getElementById('logoName').textContent = RESORT.name;
+function tickClock(){
+  const el = document.getElementById('clock');
+  el.textContent = new Date().toLocaleString([], {weekday:'short', day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'});
+}
+tickClock(); setInterval(tickClock, 30000);
+
+/* ---------- Dial ---------- */
+function polar(r, deg){ const a=(deg-90)*Math.PI/180; return [200+r*Math.cos(a), 200+r*Math.sin(a)]; }
+function segPath(a0,a1,R,r){
+  const [x0,y0]=polar(R,a0),[x1,y1]=polar(R,a1),[x2,y2]=polar(r,a1),[x3,y3]=polar(r,a0);
+  const f=n=>n.toFixed(2);
+  return `M${f(x0)} ${f(y0)}A${R} ${R} 0 0 1 ${f(x1)} ${f(y1)}L${f(x2)} ${f(y2)}A${r} ${r} 0 0 0 ${f(x3)} ${f(y3)}Z`;
+}
+function dialSvg(){
+  const n = DIAL.length, step = 360/n, R=194, r=120;
+  let segs = '';
+  DIAL.forEach((key,i) => {
+    const a0 = i*step - step/2, a1 = a0+step, mid = i*step;
+    const [cx,cy] = polar((R+r)/2, mid), lab = DIAL_LABELS[key];
+    const ty = cy + 10 - (lab.length-1)*6;
+    segs += `<a class="seg" style="--i:${i}" href="#/${key}" aria-label="${esc(SECTIONS[key].title)}">
+      <path d="${segPath(a0+.8,a1-.8,R,r)}"/>
+      <g transform="translate(${(cx-11).toFixed(1)},${(cy-31).toFixed(1)}) scale(.92)"><g class="ic">${ICONS[SECTIONS[key].icon]}</g></g>
+      ${lab.map((t,j)=>`<text x="${cx.toFixed(1)}" y="${(ty+j*12).toFixed(1)}">${esc(t)}</text>`).join('')}</a>`;
+  });
+  return `<svg viewBox="-6 -6 412 412" role="navigation" aria-label="Guest directory">
+    <circle class="ring" cx="200" cy="200" r="201"/>${segs}
+    <circle class="pulse" cx="200" cy="200" r="112"/>
+    <a class="ctr" href="#/packages" aria-label="${esc(SECTIONS.packages.title)}">
+      <circle class="c1" cx="200" cy="200" r="112"/><circle class="c2" cx="200" cy="200" r="100"/>
+      <g transform="translate(184,146) scale(1.35)"><g class="ic">${ICONS.flower}</g></g>
+      <text class="t1" x="200" y="202">All-Inclusive</text>
+      <text class="t2" x="200" y="224">PACKAGES &amp; MENUS</text></a></svg>`;
+}
+
+/* ---------- Home ---------- */
+function renderHome(){
+  const tiles = HOME_TILES.map((k,i) => `<a class="tile rv${i===0?' wide':''}" style="--d:${(i%2)*0.12}s" href="#/${k}">
+      <span class="pic" style="${bgVar(k)}"></span>
+      <span class="cap"><b>${esc(SECTIONS[k].title)}</b><span>Explore</span></span></a>`).join('');
+  const split = (k, eyebrow, title, rev) => `<section class="split rv${rev?' rev':''}">
+      <a class="ph" href="#/${k}" style="${bgVar(k)}" aria-label="${esc(SECTIONS[k].title)}"></a>
+      <div class="tx"><div class="eyebrow">${esc(eyebrow)}</div><h3 class="title">${title}</h3>
+        <p>${esc(SECTIONS[k].intro)}</p><a class="link" href="#/${k}">Discover ${svg('arrow')}</a></div></section>`;
+  app.innerHTML = `
+    <section class="hero"><span class="bgz" style="${bgVar('home')}"></span>
+      <div class="in"><div class="eyebrow">${esc(RESORT.tagline)} · Guest Directory</div>
+        <h1>Welcome to<br>${esc(RESORT.name)}</h1><p>${esc(RESORT.welcome)}</p>
+        <a class="cta" href="#explore" onclick="event.preventDefault();document.getElementById('explore').scrollIntoView()">Explore ${svg('down')}</a></div>
+      <span class="scrollhint"></span>
+    </section>
+    <section class="block" id="explore">
+      <div class="head rv"><div class="eyebrow">Your island guide</div>
+        <h2 class="title"><span class="tilde">~</span>Shall we show you around?</h2>
+        <p>Tap a section of the dial to explore menus, experiences, activities and more.</p></div>
+      <div class="dial">${dialSvg()}</div>
+    </section>
+    <section class="block alt">
+      <div class="head rv"><div class="eyebrow">Discover</div><h2 class="title"><span class="tilde">~</span>Things to do</h2></div>
+      <div class="tiles">${tiles}</div>
+    </section>
+    <section class="block">
+      ${split('spa','Wellness','Mandara <em>Spa</em>')}
+      <div style="height:28px"></div>
+      ${split('menus','Dining','Restaurants &amp; <em>Bars</em>', true)}
+      <div style="height:28px"></div>
+      ${split('wedding','Celebrations','Island <em>Weddings</em>')}
+    </section>
+    ${contactBlock()}`;
+}
+function contactRows(){
+  const r = [];
+  if (RESORT.phone) r.push(['phone', `tel:${RESORT.phone.replace(/\s/g,'')}`, 'Call Reception', RESORT.phone]);
+  if (RESORT.whatsapp) r.push(['chat', `https://wa.me/${RESORT.whatsapp}`, 'WhatsApp', 'Message the team']);
+  if (RESORT.email) r.push(['mail', `mailto:${RESORT.email}`, 'Email', RESORT.email]);
+  if (RESORT.website) r.push(['globe', RESORT.website, 'Website', 'cinnamonhotels.com']);
+  return r;
+}
+function contactBlock(){
+  return `<section class="contact"><div class="eyebrow rv">We're here for you</div><h2 class="title">Day and night</h2>
+    <div class="cbtns">${contactRows().map(([ic,h,l]) => `<a href="${h}"${h.startsWith('http')?' target="_blank" rel="noopener"':''}>${svg(ic)}${esc(l)}</a>`).join('')}</div>
+    <small>${esc(RESORT.name)} · ${esc(RESORT.tagline)}</small></section>`;
+}
+
+/* ---------- Section pages ---------- */
+function itemCard(title, id, sub){
+  return `<a class="card rv" href="#/doc/${id}">
+    <span class="ph"><span class="fb">${svg('doc')}</span>
+      <img src="${driveImage(id, 600)}" alt="" loading="lazy" onload="this.classList.add('ok')" onerror="this.remove()"></span>
+    <span class="cap"><b>${esc(title)}</b>${sub?`<span>${esc(sub)}</span>`:''}</span></a>`;
+}
+function itemRow(title, id, sub){
+  return `<a class="item" href="#/doc/${id}"><span class="badge">${svg('doc')}</span>
+    <span class="tx"><b>${esc(title)}</b>${sub?`<span>${esc(sub)}</span>`:''}</span>${svg('chev','chev')}</a>`;
+}
+function pageHero(s, key){
+  return `<section class="phero"><span class="bgz" style="${bgVar(key)}"></span><div class="in">
+    <a class="crumb" href="#/">${svg('left')}Home</a>
+    <h2>${esc(s.title)}</h2>${s.intro?`<p>${esc(s.intro)}</p>`:''}</div></section>`;
+}
+function renderSection(key){
+  const s = SECTIONS[key];
+  if (key === 'contacts') return renderContacts(s);
+  let body = '';
+  if (s.image){
+    body += `<div class="group"><a href="${driveView(s.image)}" target="_blank" rel="noopener">
+      <img class="mapimg" src="${driveImage(s.image)}" alt="${esc(s.title)}" loading="lazy"></a>
+      <p class="note">Tap the map to open it full screen and zoom in.</p></div>`;
+  }
+  (s.groups||[]).forEach(g => {
+    if (g.link){
+      body += `<div class="group"><h3>${esc(g.name)}</h3><a class="feature" href="#/${g.link}" style="${bgVar(g.link)}">
+        <div><small>Discover</small><b>${esc(SECTIONS[g.link].intro)}</b></div></a></div>`;
+      return;
+    }
+    const items = itemsOf(g);
+    let rows = '';
+    if (items.length) rows = SHOW_DOCUMENT_PREVIEWS
+      ? `<div class="grid">${items.map(([t,id,sub]) => itemCard(t,id,sub)).join('')}</div>`
+      : `<div class="list">${items.map(([t,id,sub]) => itemRow(t,id,sub)).join('')}</div>`;
+    body += `<div class="group"><h3 class="rv">${esc(g.name)}</h3>${rows || `<div class="empty">Coming soon.</div>`}</div>`;
+  });
+  app.innerHTML = pageHero(s, key) + body + `<div style="height:40px"></div>` + contactBlock();
+}
+function renderContacts(s){
+  const rows = contactRows().map(([ic,h,l,sub]) => `<a class="item" href="${h}"${h.startsWith('http')?' target="_blank" rel="noopener"':''}>
+    <span class="badge">${svg(ic)}</span><span class="tx"><b>${esc(l)}</b><span>${esc(sub)}</span></span>${svg('chev','chev')}</a>`).join('');
+  app.innerHTML = pageHero(s, 'home') + `<div class="group"><h3>Reach us</h3><div class="list">${rows}</div>
+    <p class="note">From your villa, dial reception on the in-room phone at any time.</p></div>`;
+}
+
+/* ---------- Document viewer ---------- */
+function renderDoc(id){
+  const d = DOCS[id] || {t:'Document', from:''};
+  app.innerHTML = `<div class="viewer"><div class="vbar">
+      <a class="back" href="#/${d.from||''}" aria-label="Back">${svg('left')}</a>
+      <span class="ttl">${esc(d.t)}</span>
+      <a class="open" href="${driveView(id)}" target="_blank" rel="noopener">Open</a></div>
+    <iframe src="${drivePreview(id)}" title="${esc(d.t)}" allow="autoplay"></iframe></div>`;
+}
+
+/* ---------- Tabs, top bar & router ---------- */
+const TABS = [["","home","Home"],["menus","menu","Dine"],["spa","spa","Spa"],["activities","calendar","activities"],["contacts","phone","Call"]];
+function renderTabs(cur){
+  document.getElementById('tabs').innerHTML = TABS.map(([r,ic,l]) =>
+    `<a href="#/${r}" class="${cur===r?'on':''}">${svg(ic)}<span>${l}</span></a>`).join('');
+}
+const topnav = document.getElementById('topnav');
+function updateNav(){ topnav.classList.toggle('solid', window.scrollY > 120); }
+window.addEventListener('scroll', updateNav, {passive:true});
+
+function route(){
+  const h = location.hash.replace(/^#\/?/, '');
+  if (h === 'explore') return;
+  const [a,b] = h.split('/');
+  const tabs = document.getElementById('tabs');
+  if (a === 'doc' && b){ renderDoc(b); tabs.style.display='none'; topnav.style.display='none'; return; }
+  tabs.style.display=''; topnav.style.display='';
+  if (a && SECTIONS[a]) renderSection(a); else renderHome();
+  renderTabs(SECTIONS[a] ? a : '');
+  window.scrollTo(0,0); updateNav(); arm();
+}
+/* Reveal elements as they scroll into view */
+const io = 'IntersectionObserver' in window ? new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting){ e.target.classList.add('seen'); io.unobserve(e.target); }
+}), {threshold:.15, rootMargin:'0px 0px -6% 0px'}) : null;
+function arm(){
+  document.querySelectorAll('.grid').forEach(g => [...g.children].forEach((c,i) => c.style.setProperty('--d', (i%4)*0.07+'s')));
+  document.querySelectorAll('.rv:not(.seen), .dial:not(.seen)').forEach(el => io ? io.observe(el) : el.classList.add('seen'));
+  app.classList.remove('enter'); void app.offsetWidth; app.classList.add('enter');
+}
+window.addEventListener('hashchange', route);
+route();
+</script>
+</body>
+</html>
