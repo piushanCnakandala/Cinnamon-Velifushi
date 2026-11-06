@@ -359,7 +359,8 @@ const PHOTOS = {
   compendium: "img/docs/thinadhoo-island.jpg",
   activities: "img/docs/weekly-activities.jpg",
   map:      "1Pnn-vVSgpbs00vP2vWNHh7yJLj_ozRj0",
-  special: "", packages: "",
+  special:    "img/Signature Experiences.jpg",
+  packages:   "",
   spa:      "img/docs/spa-menu.jpg",
   wedding:  "img/docs/wedding-packages.jpg",
   contacts: ""
@@ -506,7 +507,7 @@ const app = document.getElementById('app');
 const driveView = id => `https://drive.google.com/file/d/${id}/view`;
 const drivePreview = id => `https://drive.google.com/file/d/${id}/preview`;
 const driveImage = (id, w=2400) => `https://drive.google.com/thumbnail?id=${id}&sz=w${w}`;
-const photoUrl = (v, w=1800) => !v ? '' : (/^(https?:|\/|\.|img\/)/.test(v) || /\.(jpe?g|png|webp|gif)$/i.test(v)) ? v : driveImage(v, w);
+const photoUrl = (v, w=1800) => !v ? '' : (/^(https?:|\/|\.|img\/)/.test(v) || /\.(jpe?g|png|webp|gif)$/i.test(v)) ? encodeURI(v) : driveImage(v, w);
 const itemsOf = g => g.items === "DEST" ? DESTINATION_DINING : (g.items || []);
 function firstDocId(key){
   for (const g of (SECTIONS[key]?.groups || [])) { const it = itemsOf(g); if (it.length) return it[0][1]; }

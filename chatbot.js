@@ -11,64 +11,65 @@
      1. KNOWLEDGE BASE & INTENT ENGINE
      ===================================================================== */
 
-  const RESORT_DATA = {
-    name: "Cinnamon Velifushi Maldives",
-    atoll: "Vaavu Atoll, Maldives",
-    phone: "+960 670 6000",
-    email: "velifushi@cinnamonhotels.com",
-    whatsapp: "", // Can be filled with digits e.g. "9607000000"
-    receptionExt: "650 or 666",
-    emergencyExt: "0 (Service Centre)",
-    checkoutTime: "12:00 PM (Noon)",
-    wifi: "Complimentary high-speed Wi-Fi is available across the entire island and in all villas. For assistance, dial Ext 650.",
-    doctor: "Resident doctor on call 24 hours. Contact Reception on Ext 666 or 650.",
-    laundry: "Collected before 10:00 AM for same-day delivery. Laundry after 10:00 AM is delivered the next evening. Same-day express incurs a 50% surcharge.",
-    drones: "For guest privacy and safety due to seaplane operations, drones are strictly prohibited on the island.",
-    prayerRoom: "Islamic Prayer Room is available on the island. Prayer mats and Holy Quran can be requested via Housekeeping.",
-    spaHours: "10:00 AM – 1:00 PM | 2:00 PM – 8:00 PM (Last booking at 7:00 PM)",
-    diveHours: "8:00 AM – 12:00 PM | 2:00 PM – 5:00 PM"
-  };
+  function getResortInfo() {
+    const cfg = (typeof RESORT !== 'undefined' ? RESORT : (window.RESORT || {}));
+    return {
+      name: cfg.name || "Cinnamon Velifushi Maldives",
+      atoll: cfg.tagline || "Vaavu Atoll, Maldives",
+      phone: cfg.phone || "+960 670 6000",
+      email: cfg.email || "velifushi@cinnamonhotels.com",
+      whatsapp: cfg.whatsapp || "",
+      website: cfg.website || "https://www.cinnamonhotels.com/cinnamonvelifushimaldives",
+      receptionExt: "650 or 666",
+      emergencyExt: "0 (Service Centre)",
+      checkoutTime: "12:00 PM (Noon)",
+      wifi: "Complimentary high-speed Wi-Fi is available across the entire island and in all villas. For assistance, dial Ext 650.",
+      doctor: "Resident doctor on call 24 hours. Contact Reception on Ext 666 or 650.",
+      laundry: "Collected before 10:00 AM for same-day delivery. Laundry after 10:00 AM is delivered the next evening. Same-day express incurs a 50% surcharge.",
+      drones: "For guest privacy and safety due to seaplane operations, drones are strictly prohibited on the island.",
+      prayerRoom: "Islamic Prayer Room is available on the island. Prayer mats and Holy Quran can be requested via Housekeeping.",
+      spaHours: "10:00 AM – 1:00 PM | 2:00 PM – 8:00 PM (Last booking at 7:00 PM)",
+      diveHours: "8:00 AM – 12:00 PM | 2:00 PM – 5:00 PM",
+      seaplane: "Velifushi is located in Vaavu Atoll, just a scenic 25-minute seaplane flight from Velana International Airport (Malé). Standard seaplane baggage allowance is 20 kg check-in + 5 kg carry-on.",
+      currency: "All resort transactions are quoted in US Dollars (USD). Major credit cards (Visa, MasterCard, Amex) are accepted at checkout. Foreign currency exchange is available at Reception (Ext 650)."
+    };
+  }
 
   const DINING_VENUES = [
     {
       name: "Vah Global Dining",
       type: "Main Buffet Restaurant",
-      desc: "Serves daily international buffets with live cooking stations.",
+      desc: "Daily international themed buffets with live cooking stations.",
       hours: "Breakfast: 7:30 AM – 10:00 AM<br>Lunch: 12:30 PM – 2:30 PM<br>Dinner: 7:00 PM – 9:30 PM",
-      plan: "Included for BB, HB, FB, All-Inclusive & Soft All-Inclusive.",
-      docId: null
+      plan: "Included for BB, HB, FB, All-Inclusive & Soft All-Inclusive."
     },
     {
       name: "Iru Kitchen & Bar",
       type: "À la Carte & Cocktail Bar",
-      desc: "Flavours from all over the world with ocean views.",
+      desc: "Global flavours and snacks overlooking the turquoise lagoon.",
       hours: "Lunch: 12:30 PM – 4:30 PM<br>Dinner: 7:30 PM – 10:00 PM",
-      plan: "All-Inclusive guests dine free (prior reservation required). Chargeable for non-AI.",
-      docId: "1CQ4_X9nN6nSGoCeBavgekDhHSxuGosbd"
+      plan: "All-Inclusive guests dine free (prior reservation required). Chargeable for non-AI."
     },
     {
       name: "Marlin Seafood Restaurant",
       type: "Specialty Seafood & Wine Bar",
-      desc: "Irresistible seafood cuisine under the stars.",
+      desc: "Fresh ocean catches and lobster specialties by the beach.",
       hours: "Dinner: 7:00 PM – 10:00 PM",
-      plan: "Chargeable to all guests regardless of meal plan. Prior reservation required.",
-      docId: "1kzzvnGOaXkl53C5DSd-CFTkmld5QYqn_"
+      plan: "Chargeable to all guests regardless of meal plan. Prior reservation required."
     },
     {
       name: "Fen Pool Bar",
       type: "Poolside Diner & Cocktails",
-      desc: "À la carte poolside bar serving exotic drinks and light bites.",
+      desc: "À la carte poolside diner serving exotic drinks and light snacks.",
       hours: "Pool Menu: 11:00 AM – 4:00 PM<br>Snacks: 4:00 PM – 5:30 PM<br>Bar open until Midnight",
-      plan: "Included for All-Inclusive & Soft All-Inclusive.",
-      docId: null
+      plan: "Included for All-Inclusive & Soft All-Inclusive."
     },
     {
       name: "In-Room Dining",
       type: "Villa Dining & Champagne Breakfasts",
       desc: "Private dining delivered to your terrace or overwater villa.",
       hours: "8:00 AM – 11:30 PM (Last food order at 11:00 PM)",
-      plan: "Chargeable on consumption. Dial Ext 650 or 666 to order.",
-      docId: "1LYwhnm_JNL2PzSBHKRXtBQKkZx836Nut"
+      plan: "Chargeable on consumption. Dial Ext 650 or 666 to order."
     }
   ];
 
@@ -148,7 +149,6 @@
       const docTitle = (window.DOCS && window.DOCS[docId] && window.DOCS[docId].t) || "Resort Document";
 
       for (const block of doc.blocks) {
-        // Items (dishes, drinks, spa packages)
         if (block.i) {
           const itemText = block.i.toLowerCase();
           const descText = (block.d || []).join(' ').toLowerCase();
@@ -157,7 +157,6 @@
             const cleanName = block.i.replace(/\s*\{(\w+)\}/g, '');
             if (!seen.has(cleanName)) {
               seen.add(cleanName);
-              // Extract allergens
               const allergens = (block.i.match(/\{(\w+)\}/g) || []).map(m => m.replace(/[{}]/g, ''));
               results.push({
                 name: cleanName,
@@ -180,15 +179,21 @@
   /* Core response generator */
   function getBotResponse(rawText) {
     const text = rawText.toLowerCase().trim();
+    const info = getResortInfo();
+
+    // Helper: default contact action
+    const contactAction = info.whatsapp
+      ? { text: "💬 WhatsApp Team", url: `https://wa.me/${info.whatsapp}` }
+      : { text: "📞 Call Reception", url: `tel:${info.phone.replace(/\s/g, '')}` };
 
     // 1. Greetings
     if (/^(hi|hello|hey|good\s*(morning|afternoon|evening)|hola|aloha|ayubowan|assalamu\s*alaikum)\b/.test(text)) {
       return {
-        reply: `Hello and warm greetings from <strong>Cinnamon Velifushi Maldives</strong>! 🌴<br><br>I am <strong>Veli</strong>, your digital Island Concierge. How can I make your holiday even more wonderful today?`,
+        reply: `Hello and warm greetings from <strong>${info.name}</strong>! 🌴✨<br><br>I am <strong>Veli</strong>, your digital Island Concierge. How can I assist you in making the most of your Maldivian stay today?`,
         actions: [
-          { text: "🍽️ Dining & Timings", query: "dining timings" },
-          { text: "📅 Today's Activities", query: "today schedule" },
-          { text: "🍹 All-Inclusive Info", query: "all inclusive package" },
+          { text: "🍽️ Dining Timings", query: "dining timings" },
+          { text: "📅 Today's Schedule", query: "today schedule" },
+          { text: "🍹 All-Inclusive Perks", query: "all inclusive package" },
           { text: "💆 Mandara Spa", query: "spa treatments" }
         ]
       };
@@ -197,10 +202,10 @@
     // 2. Thank you
     if (/^(thank|thanks|great|awesome|perfect|appreciate)\b/.test(text)) {
       return {
-        reply: `You are very welcome! ✨ We are delighted to have you on the island. Please let me know if you need anything else!`,
+        reply: `You are very welcome! ✨ It is our absolute pleasure to take care of you. Please let me know whenever you need anything else!`,
         actions: [
-          { text: "🗺️ View Resort Map", url: "#/map" },
-          { text: "📞 Call Reception", url: "tel:+9606706000" }
+          { text: "🗺️ Resort Map", url: "#/map" },
+          contactAction
         ]
       };
     }
@@ -210,11 +215,11 @@
       const sched = getTodaySchedule();
       return {
         reply: `🌴 <strong>Today's Island Schedule (${sched.day}):</strong><br><br>
-                <strong>🎯 Activities:</strong><br>${sched.activities}<br>
+                <strong>🎯 Activities:</strong><br>${sched.activities}<br><br>
                 <strong>✨ Evening Entertainment:</strong><br>${sched.entertainment}<br><br>
                 <em>Timings may vary slightly depending on weather conditions.</em>`,
         actions: [
-          { text: "📅 Full Week Schedule", url: "#/activities" },
+          { text: "📅 Full Week Activities", url: "#/activities" },
           { text: "🗺️ Resort Map", url: "#/map" }
         ]
       };
@@ -240,17 +245,17 @@
     if (/(all[-\s]*inclusive|soft\s*all[-\s]*inclusive|ai\s*package|meal\s*plan|included|drinks\s*included|cocktail|beer|wine|minibar|mini\s*bar)/.test(text)) {
       return {
         reply: `🍹 <strong>All-Inclusive (AI) Package Highlights:</strong><br><br>
-        • <strong>Valid Hours:</strong> 7:30 AM – Midnight (Alcohol served from 9:00 AM onwards).<br>
-        • <strong>Meals:</strong> Breakfast, Lunch & Dinner buffet at <em>Vah Global Dining</em>, plus poolside snacks at <em>Fen Pool Bar</em>.<br>
+        • <strong>Valid Hours:</strong> 7:30 AM – Midnight (Alcohol served 9:00 AM onwards).<br>
+        • <strong>Meals:</strong> Daily Breakfast, Lunch & Dinner buffets at <em>Vah Global Dining</em>, plus poolside snacks at <em>Fen Pool Bar</em>.<br>
         • <strong>À la Carte Dinner:</strong> Free dinner at <em>Iru Kitchen</em> (prior reservation required).<br>
-        • <strong>Beverages:</strong> Draft beer, house wines by the glass, spirits, signature cocktails, mocktails, juices, milkshakes, and soft drinks.<br>
-        • <strong>In-Villa Mini Bar:</strong> Soft drinks and canned beer, refilled once daily.<br>
-        • <strong>Excursion:</strong> Choice of <em>Sunset Fishing</em> OR <em>Dolphin Watching</em> excursion included!<br>
+        • <strong>Beverages:</strong> Draft beer, regular house wines by the glass, spirits, cocktails, mocktails, seasonal juices, milkshakes & soft drinks.<br>
+        • <strong>In-Villa Mini Bar:</strong> Soft drinks & canned beer refilled once daily.<br>
+        • <strong>Excursion:</strong> Choice of <em>Sunset Fishing</em> OR <em>Dolphin Watching</em> included!<br>
         • <strong>Recreation:</strong> Complimentary snorkelling gear & non-motorised water sports.<br><br>
         <em>Note: Marlin Seafood Restaurant, Room Service, champagne, and motorized water sports/diving are chargeable.</em>`,
         actions: [
           { text: "📜 All-Inclusive Details", url: "#/packages" },
-          { text: "🍷 Wine & Beverage List", url: "#/menus" }
+          { text: "🍷 Beverage Lists", url: "#/packages" }
         ]
       };
     }
@@ -259,33 +264,33 @@
     if (/(spa|massage|mandara|facial|scrub|body\s*glow|wellness|relax|elemis|treatment)/.test(text)) {
       return {
         reply: `🌺 <strong>Mandara Spa at Velifushi:</strong><br><br>
-        Located overwater, Mandara Spa combines ancient Balinese healing rituals with award-winning luxury <strong>ELEMIS</strong> skincare.<br><br>
-        • <strong>Opening Hours:</strong> 10:00 AM – 1:00 PM & 2:00 PM – 8:00 PM (Last booking at 7:00 PM).<br>
-        • <strong>Popular Treatments:</strong> Mandara Signature 4-Hand Massage, Balinese Massage, Frangipani Body Glow, Elemis Pro-Glow Facials.<br>
-        • <strong>✨ Fresh on Arrival Offer:</strong> Enjoy <strong>15% OFF</strong> on spa treatments plus a <strong>complimentary 5-minute massage voucher</strong> with refreshing ginger tea!<br><br>
-        Dial Ext 650 to book your treatment.`,
+        Set above the turquoise waters, Mandara Spa blends ancient Balinese healing traditions with luxury <strong>ELEMIS</strong> skincare.<br><br>
+        • <strong>Hours:</strong> ${info.spaHours}.<br>
+        • <strong>Signature Treatments:</strong> Mandara 4-Hand Massage, Balinese Massage, Frangipani Body Glow, Elemis Pro-Glow Facials.<br>
+        • <strong>✨ Fresh on Arrival Offer:</strong> Enjoy <strong>15% OFF</strong> on spa treatments plus a <strong>complimentary 5-minute welcome massage voucher</strong> with refreshing ginger tea!<br><br>
+        Dial Ext 650 from your room phone to reserve your relaxation time.`,
         actions: [
           { text: "💆 View Full Spa Menu", url: "#/spa" },
-          { text: "📞 Contact Reception", url: "tel:+9606706000" }
+          contactAction
         ]
       };
     }
 
     // 7. Diving, Water Sports & Excursions
-    if (/(dive|diving|padi|snorkel|snorkelling|water\s*sport|jet\s*ski|parasail|kayak|fishing|dolphin|sandbank|excursion|boat|cruise|reef)/.test(text)) {
+    if (/(dive|diving|padi|shark|nurse\s*shark|snorkel|snorkelling|water\s*sport|jet\s*ski|parasail|kayak|fishing|dolphin|sandbank|excursion|boat|cruise|reef)/.test(text)) {
       return {
         reply: `🌊 <strong>Ocean Adventures & Excursions:</strong><br><br>
-        • <strong>Dive & Sail Centre:</strong> Open daily 8:00 AM – 12:00 PM & 2:00 PM – 5:00 PM. Access to 25 prime dive sites, PADI courses, night diving & daily <em>free try dives</em> in the lagoon.<br>
+        • <strong>Dive & Sail Centre:</strong> Open daily ${info.diveHours}. Access to 25 dive sites in Vaavu Atoll (famed for nurse sharks & manta rays), PADI courses, night diving & daily <em>free try dives</em> in the lagoon.<br>
         • <strong>Water Sports:</strong> Jet skiing, parasailing, fun tubing, kayaking, stand-up paddleboarding, and catamaran rides.<br>
         • <strong>Signature Excursions:</strong><br>
-          – 🐬 <strong>Dolphin Watching:</strong> Morning or afternoon dolphin safari.<br>
-          – 🎣 <strong>Sunset Fishing & Big Game Fishing:</strong> Catch reef fish or tuna/marlin.<br>
-          – 🏝️ <strong>Sandbank Picnic:</strong> Private virgin sandbank escape.<br>
-          – 🏘️ <strong>Local Village Tour (Thinadhoo):</strong> Experience authentic island life.<br><br>
-        <em>All-Inclusive guests get 1 free excursion (Sunset Fishing or Dolphin Watching)!</em>`,
+          – 🐬 <strong>Dolphin Watching:</strong> Morning or afternoon dolphin cruise.<br>
+          – 🎣 <strong>Sunset Fishing & Big Game Fishing:</strong> Reel in tuna, wahoo or reef fish.<br>
+          – 🏝️ <strong>Sandbank Picnic:</strong> Private castaway experience on pure white sand.<br>
+          – 🏘️ <strong>Local Village Tour (Thinadhoo):</strong> Discover Maldivian island culture.<br><br>
+        <em>All-Inclusive guests enjoy 1 free excursion (Sunset Fishing or Dolphin Watching)!</em>`,
         actions: [
           { text: "🌴 Island Experiences", url: "#/island" },
-          { text: "🗺️ View Dive Centre on Map", url: "#/map" }
+          { text: "🗺️ Dive Centre Map", url: "#/map" }
         ]
       };
     }
@@ -294,10 +299,10 @@
     if (/(wifi|wi-fi|internet|connection|password|network|online)/.test(text)) {
       return {
         reply: `📶 <strong>Wi-Fi Information:</strong><br><br>
-        ${RESORT_DATA.wifi}<br><br>
-        Simply select the resort guest Wi-Fi network and follow the on-screen prompt to connect. No voucher codes required.`,
+        ${info.wifi}<br><br>
+        Simply select the resort guest Wi-Fi network and follow the on-screen prompt to connect. No login code is required.`,
         actions: [
-          { text: "📞 Call Ext 650 for Tech Help", url: "tel:+9606706000" }
+          { text: "📞 Tech Support (Ext 650)", url: `tel:${info.phone.replace(/\s/g, '')}` }
         ]
       };
     }
@@ -306,89 +311,116 @@
     if (/(check\s*out|checkout|departure|leaving|flight|check\s*in|bill|settle|reception)/.test(text)) {
       return {
         reply: `🛎️ <strong>Check-Out & Departure Information:</strong><br><br>
-        • <strong>Check-Out Time:</strong> <strong>${RESORT_DATA.checkoutTime}</strong>.<br>
-        • <strong>Departure Timings:</strong> Detailed boat and seaplane transfer schedules will be delivered to your villa after 6:00 PM on the evening prior to departure.<br>
-        • <strong>Baggage Collection:</strong> Contact Reception (Ext 666) when ready for luggage pick-up.<br>
-        • <strong>All-Inclusive Extension:</strong> AI benefits can be enjoyed until standard checkout at noon.`,
+        • <strong>Check-Out Time:</strong> <strong>${info.checkoutTime}</strong>.<br>
+        • <strong>Departure Notification:</strong> Detailed transfer timings (boat/seaplane) will be delivered to your villa after 6:00 PM on the evening prior to departure.<br>
+        • <strong>Baggage Assistance:</strong> Dial Ext 666 when your luggage is packed and ready.<br>
+        • <strong>All-Inclusive Extension:</strong> AI entitlements remain valid until standard checkout at 12:00 PM noon.`,
         actions: [
-          { text: "📞 Reception Desk", url: "tel:+9606706000" }
+          { text: "📞 Contact Reception", url: `tel:${info.phone.replace(/\s/g, '')}` }
         ]
       };
     }
 
-    // 10. Medical / Doctor / Clinic / Pharmacy
+    // 10. Medical / Doctor / Clinic
     if (/(doctor|medical|clinic|nurse|medicine|sick|hospital|injury|pharmacy|first\s*aid)/.test(text)) {
       return {
         reply: `🏥 <strong>Medical Assistance:</strong><br><br>
         A qualified resident doctor is <strong>on call 24 hours a day</strong> at Cinnamon Velifushi Maldives.<br><br>
-        If you are feeling unwell or require assistance, please call <strong>Ext 666 or 650</strong> from your room phone immediately.<br>
+        If you feel unwell or require medical care, please call <strong>Ext 666 or 650</strong> from your room phone immediately.<br>
         <em>For urgent emergencies, dial <strong>0</strong>.</em>`,
         actions: [
-          { text: "🚨 Emergency Call (Reception)", url: "tel:+9606706000" }
+          { text: "🚨 Emergency Call (Reception)", url: `tel:${info.phone.replace(/\s/g, '')}` }
         ]
       };
     }
 
-    // 11. Laundry Service
-    if (/(laundry|wash|iron|dry\s*clean|clothes)/.test(text)) {
+    // 11. Dietary / Halal / Allergens / Vegan / Gluten-free
+    if (/(dietary|allergen|gluten|celery|nuts|vegan|vegetarian|dairy|pork|halal|kosher)/.test(text)) {
       return {
-        reply: `👔 <strong>Laundry Service:</strong><br><br>
-        ${RESORT_DATA.laundry}<br><br>
-        A laundry bag and price list are located in your villa wardrobe. Contact Housekeeping on Ext 650 for collection.`,
+        reply: `🥗 <strong>Dietary & Allergen Information:</strong><br><br>
+        We cater with care to all dietary preferences and requirements:<br>
+        • <strong>Allergen Labels:</strong> Menu cards clearly indicate {gluten}, {dairy}, {vegetarian}, {nuts}, {pork}, {healthy}, etc.<br>
+        • <strong>Halal Friendly:</strong> Meats served in buffet and dining outlets are Halal-certified (pork items are prepared and displayed separately).<br>
+        • <strong>Custom Requests:</strong> Our culinary team is happy to prepare customized gluten-free, dairy-free, vegan or Jain meals.<br><br>
+        <em>Please notify your server or contact our F&B team upon arrival so the Chef can meet with you directly.</em>`,
         actions: [
-          { text: "👕 View Laundry Package", url: "#/doc/1Fmr9jTzB2e-UzsUA86C3QJQrMzPP0Bkg" }
+          { text: "📖 Browse Menus", url: "#/menus" },
+          contactAction
         ]
       };
     }
 
-    // 12. Drones, Safety & Rules
+    // 12. Seaplane, Transfers & Location
+    if (/(seaplane|transfer|airport|male|distance|arrive|arrival|luggage|baggage\s*weight)/.test(text)) {
+      return {
+        reply: `✈️ <strong>Seaplane & Transfer Information:</strong><br><br>
+        ${info.seaplane}<br><br>
+        • <strong>Baggage Limits:</strong> Standard allowance is 20 kg checked luggage + 5 kg hand luggage per person (excess luggage charged by airline).<br>
+        • <strong>Transfers:</strong> Seaplanes operate during daylight hours. Our airport representatives assist you from arrival at Malé directly to the Cinnamon seaplane lounge.`,
+        actions: [
+          contactAction
+        ]
+      };
+    }
+
+    // 13. Currency & Payment
+    if (/(currency|cash|dollar|usd|credit\s*card|pay|bill|exchange|money|euro)/.test(text)) {
+      return {
+        reply: `💳 <strong>Currency & Payment:</strong><br><br>
+        ${info.currency}<br><br>
+        During your stay, all purchases can simply be signed to your room account and settled upon checkout. Advance payments on credit cards are not required.`,
+        actions: [
+          { text: "📞 Reception Desk", url: `tel:${info.phone.replace(/\s/g, '')}` }
+        ]
+      };
+    }
+
+    // 14. Honeymoon & Celebrations
+    if (/(honeymoon|anniversary|birthday|celebrat|wedding|romantic)/.test(text)) {
+      return {
+        reply: `💍 <strong>Celebrations in Paradise:</strong><br><br>
+        Whether celebrating a honeymoon, wedding anniversary or milestone birthday, we love creating unforgettable moments for you:<br>
+        • <strong>Romantic Dining:</strong> Beachfront candlelit dinners, Lobster Lovers nights & Champagne breakfasts on your villa deck.<br>
+        • <strong>Island Weddings:</strong> Renewal of vows and symbolic beach wedding ceremonies.<br>
+        • <strong>Celebration Treats:</strong> Please alert our Guest Relations team so we can prepare special villa bed decorations and a celebration cake!`,
+        actions: [
+          { text: "⭐ Signature Experiences", url: "#/special" },
+          { text: "💍 Wedding Packages", url: "#/wedding" }
+        ]
+      };
+    }
+
+    // 15. Drones, Safety & Policies
     if (/(drone|camera|safety|rule|coral|swim|smoking|smoke)/.test(text)) {
       return {
-        reply: `🛡️ <strong>Resort Safety & Policies:</strong><br><br>
-        • <strong>Drones:</strong> Strictly prohibited across the entire island and airspace for guest privacy and seaplane flight safety.<br>
-        • <strong>Marine Life & Corals:</strong> Removing or damaging coral and shells is strictly illegal under Maldivian law. Please use reef-safe sunscreen.<br>
-        • <strong>Swimming:</strong> Avoid swimming or snorkelling alone, and wear life vests in open water. Night swimming is not advised.<br>
-        • <strong>Emergency:</strong> Dial <strong>0</strong> from your villa phone.`,
+        reply: `🛡️ <strong>Island Safety & Policies:</strong><br><br>
+        • <strong>Drones:</strong> Strictly prohibited across the entire island and airspace for guest privacy and seaplane operations.<br>
+        • <strong>Coral Conservation:</strong> Corals are protected under Maldivian law. Please wear reef-safe sunscreen and avoid touching corals.<br>
+        • <strong>Lagoon Safety:</strong> Always swim with a buddy and wear life vests in deep water. Night swimming is not recommended.<br>
+        • <strong>Emergency:</strong> Dial <strong>0</strong> from your villa phone at any time.`,
         actions: [
-          { text: "📖 Read Resort Compendium", url: "#/compendium" }
+          { text: "📖 Full Resort Compendium", url: "#/compendium" }
         ]
       };
     }
 
-    // 13. Contact & Phone Extensions
-    if (/(contact|phone|call|extension|number|reception|email|reach)/.test(text)) {
+    // 16. Contact & Extensions
+    if (/(contact|phone|call|extension|number|reception|email|reach|whatsapp)/.test(text)) {
       return {
-        reply: `📞 <strong>Direct Resort Contacts:</strong><br><br>
-        • <strong>Reception / Guest Service:</strong> Ext <strong>650</strong> or <strong>666</strong><br>
-        • <strong>Emergency Service Centre:</strong> Ext <strong>0</strong><br>
-        • <strong>Resort Telephone:</strong> ${RESORT_DATA.phone}<br>
-        • <strong>Email:</strong> ${RESORT_DATA.email}<br>
-        • <strong>Location:</strong> Vaavu Atoll, Maldives`,
+        reply: `📞 <strong>Resort Contact Information:</strong><br><br>
+        • <strong>Reception / Guest Service:</strong> Ext <strong>${info.receptionExt}</strong><br>
+        • <strong>Emergency Service Centre:</strong> Ext <strong>${info.emergencyExt}</strong><br>
+        • <strong>Telephone:</strong> ${info.phone}<br>
+        • <strong>Email:</strong> ${info.email}<br>
+        • <strong>Location:</strong> ${info.atoll}`,
         actions: [
-          { text: "📞 Call Now", url: `tel:${RESORT_DATA.phone.replace(/\s/g, '')}` },
-          { text: "✉️ Email Resort", url: `mailto:${RESORT_DATA.email}` }
+          { text: "📞 Call Now", url: `tel:${info.phone.replace(/\s/g, '')}` },
+          contactAction
         ]
       };
     }
 
-    // 14. Destination & Romantic Dining
-    if (/(destination\s*dining|private\s*dinner|romantic|candlelight|lobster|champagne\s*breakfast|bbq|beach\s*dinner)/.test(text)) {
-      return {
-        reply: `✨ <strong>Signature Destination Dining:</strong><br><br>
-        Celebrate love under the stars with our curated bespoke dining experiences:<br><br>
-        • 🦞 <strong>Lobster Lovers Night:</strong> Fresh lagoon lobster dinner on the beach.<br>
-        • 🥂 <strong>Champagne Breakfast:</strong> Bubbly & gourmet feast on your private villa deck.<br>
-        • 🕯️ <strong>Romance Under the Stars:</strong> Intimate 5-course beachfront candlelight dinner.<br>
-        • 🥩 <strong>Private BBQ & Surf & Turf:</strong> Chef-crafted grill experience.<br><br>
-        Reservations should be made 24 hours in advance via Reception or F&B Curator.`,
-        actions: [
-          { text: "⭐ Explore Experiences", url: "#/special" },
-          { text: "📞 Inquire at Reception", url: "tel:+9606706000" }
-        ]
-      };
-    }
-
-    // 15. Item & Menu Search Fallback
+    // 17. Deep Content & Menu Search
     const searchMatches = searchContentItems(text);
     if (searchMatches.length > 0) {
       let matchHtml = `🔍 <strong>Found in our Menus & Directory:</strong><br><br>`;
@@ -410,28 +442,28 @@
       };
     }
 
-    // 16. General Friendly Fallback
+    // 18. Default Friendly Fallback
     return {
       reply: `I would love to help you with that! 😊<br><br>
-      You can ask me about:<br>
-      • <strong>Dining & Menus:</strong> Buffet timings, Iru Kitchen, Marlin Seafood, wine & cocktails.<br>
-      • <strong>Today's Schedule:</strong> Real-time activities & evening entertainment.<br>
-      • <strong>Packages:</strong> What is included in All-Inclusive.<br>
-      • <strong>Mandara Spa:</strong> Massages, Elemis treatments & 15% arrival discount.<br>
-      • <strong>Island Tours:</strong> Diving, dolphin trips, sandbank & fishing.<br>
-      • <strong>Resort Info:</strong> Wi-Fi, 24h doctor, checkout at 12 noon, room extensions.<br><br>
-      Or dial <strong>Ext 650</strong> from your villa to speak directly with our Island Team!`,
+      You can ask me anything about:<br>
+      • <strong>Dining & Menus:</strong> Buffet hours, Iru Kitchen, Marlin Seafood, wine lists.<br>
+      • <strong>Today's Schedule:</strong> Live activities & evening entertainment.<br>
+      • <strong>Packages:</strong> Inclusions under All-Inclusive.<br>
+      • <strong>Mandara Spa:</strong> Massages, Elemis facials & 15% welcome discount.<br>
+      • <strong>Ocean Tours:</strong> Diving, dolphin cruises, sandbank picnics & fishing.<br>
+      • <strong>Resort Services:</strong> Wi-Fi, 24h doctor, checkout at 12 noon, room extensions.<br><br>
+      Or dial <strong>Ext 650</strong> from your villa to speak directly with our team!`,
       actions: [
         { text: "🍽️ Dining Timings", query: "dining timings" },
-        { text: "📅 Today's Activities", query: "today schedule" },
+        { text: "📅 Today's Schedule", query: "today schedule" },
         { text: "🍹 All-Inclusive", query: "all inclusive" },
-        { text: "📞 Call Reception", url: "tel:+9606706000" }
+        contactAction
       ]
     };
   }
 
   /* =====================================================================
-     2. STYLES (MATCHING CINNAMON PURPLE & GOLD BRANDING)
+     2. STYLES
      ===================================================================== */
   const STYLES = `
     /* Floating Launcher Button */
@@ -794,6 +826,36 @@
     .veli-input::placeholder {
       color: #9b9ab8;
     }
+
+    .veli-mic-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #f1f0fa;
+      border: 1px solid #dcdbf5;
+      color: #252776;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background 0.2s, color 0.2s;
+    }
+    .veli-mic-btn.listening {
+      background: #ef4444;
+      color: #ffffff;
+      border-color: #ef4444;
+      animation: veliPulse 1.2s infinite;
+    }
+    .veli-mic-btn svg {
+      width: 17px;
+      height: 17px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
     .veli-send-btn {
       width: 38px;
       height: 38px;
@@ -831,7 +893,7 @@
         right: 14px;
       }
       .veli-badge-chip {
-        display: none; /* Keep clean on small screens */
+        display: none;
       }
       #veli-chat-modal {
         right: 0;
@@ -854,6 +916,11 @@
      ===================================================================== */
 
   function injectChatbot() {
+    function getCurrentTime() {
+      const d = new Date();
+      return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+
     // Inject Styles
     const styleEl = document.createElement('style');
     styleEl.textContent = STYLES;
@@ -870,11 +937,11 @@
     if (!chatHistory.length) {
       chatHistory.push({
         sender: 'bot',
-        text: `Welcome to <strong>Cinnamon Velifushi Maldives</strong>! 🌴✨<br><br>I am <strong>Veli</strong>, your island virtual concierge. Tap any quick option below or ask me about restaurants, packages, today's entertainment, spa, or resort services!`,
+        text: `Welcome to <strong>Cinnamon Velifushi Maldives</strong>! 🌴✨<br><br>I am <strong>Veli</strong>, your island virtual concierge. Tap any quick option below or ask me about dining, packages, today's entertainment, spa, or resort services!`,
         time: getCurrentTime(),
         actions: [
-          { text: "🍽️ Dining Timings", query: "restaurant timings" },
-          { text: "📅 Today's Activities", query: "today schedule" },
+          { text: "🍽️ Dining Timings", query: "dining timings" },
+          { text: "📅 Today's Schedule", query: "today schedule" },
           { text: "🍹 All-Inclusive Drinks", query: "all inclusive package" },
           { text: "💆 Mandara Spa", query: "spa menu" }
         ]
@@ -934,6 +1001,9 @@
 
       <div class="veli-footer">
         <input type="text" class="veli-input" id="veli-user-input" placeholder="Ask about menus, spa, activities..." aria-label="Message Island Concierge">
+        <button class="veli-mic-btn" id="veli-mic-btn" title="Voice input" aria-label="Voice input" style="display:none">
+          <svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8"/></svg>
+        </button>
         <button class="veli-send-btn" id="veli-send-btn" aria-label="Send message">
           <svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
         </button>
@@ -946,13 +1016,38 @@
     const msgContainer = document.getElementById('veli-messages-container');
     const input = document.getElementById('veli-user-input');
     const sendBtn = document.getElementById('veli-send-btn');
+    const micBtn = document.getElementById('veli-mic-btn');
     const closeBtn = document.getElementById('veli-close-btn');
     const clearBtn = document.getElementById('veli-clear-btn');
 
-    // Helper: current time formatted
-    function getCurrentTime() {
-      const d = new Date();
-      return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    // Speech Recognition Support
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    let recognition = null;
+    if (SpeechRecognition) {
+      micBtn.style.display = 'grid';
+      recognition = new SpeechRecognition();
+      recognition.continuous = false;
+      recognition.interimResults = false;
+      recognition.lang = 'en-US';
+
+      recognition.onstart = () => micBtn.classList.add('listening');
+      recognition.onend = () => micBtn.classList.remove('listening');
+      recognition.onerror = () => micBtn.classList.remove('listening');
+      recognition.onresult = e => {
+        const transcript = e.results[0][0].transcript;
+        if (transcript) {
+          input.value = transcript;
+          handleSend();
+        }
+      };
+
+      micBtn.addEventListener('click', () => {
+        if (micBtn.classList.contains('listening')) {
+          recognition.stop();
+        } else {
+          try { recognition.start(); } catch (err) {}
+        }
+      });
     }
 
     // Render message stream
@@ -998,7 +1093,6 @@
       const q = (customText || input.value).trim();
       if (!q) return;
 
-      // Add user message
       chatHistory.push({
         sender: 'user',
         text: q,
@@ -1015,7 +1109,7 @@
       msgContainer.appendChild(typingEl);
       msgContainer.scrollTop = msgContainer.scrollHeight;
 
-      // Response with natural brief delay
+      // Realistic response delay
       setTimeout(() => {
         if (typingEl.parentNode) typingEl.remove();
 
@@ -1090,14 +1184,13 @@
         handleSend(btn.dataset.query);
         return;
       }
-      // If user clicks internal site link (e.g. #/menus), close chat on mobile if desirable or let it navigate
       const link = e.target.closest('a[href^="#/"]');
       if (link && window.innerWidth <= 480) {
         toggleChat(false);
       }
     });
 
-    // Global hook so any button on the page can open chat!
+    // Global hook so any button on the page can open chat
     window.openIslandConcierge = function (prompt) {
       toggleChat(true);
       if (prompt) {
@@ -1115,4 +1208,3 @@
     injectChatbot();
   }
 })();
-
