@@ -5,12 +5,13 @@ A mobile-first guest directory that guests open by scanning a QR code. Each sect
 ## Files
 - `index.html` – the whole site (design, content and logic in one file)
 - `content.js` – the text of every document, extracted from the PDFs
+- `chatbot.js` – Veli, the intelligent client-side Island Concierge chatbot
 - `img/docs/` – photos taken from the PDFs, used as page banners
 - `.nojekyll` – tells GitHub Pages to serve the file as-is
 
 ## Publish on GitHub Pages (about 5 minutes)
 1. Sign in to GitHub and create a new **public** repository, e.g. `velifushi-guest-directory`.
-2. Click **Add file → Upload files**, drag in `index.html`, `content.js`, the `img` folder and `.nojekyll`, then **Commit changes**.
+2. Click **Add file → Upload files**, drag in `index.html`, `content.js`, `chatbot.js`, the `img` folder and `.nojekyll`, then **Commit changes**.
    (On a Mac, `.nojekyll` is hidden – press `Cmd + Shift + .` in Finder to see it.)
 3. Go to **Settings → Pages**. Under *Build and deployment*, choose **Deploy from a branch**, branch **main**, folder **/ (root)**, then **Save**.
 4. After a minute your site is live at

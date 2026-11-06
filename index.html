@@ -327,6 +327,7 @@ html,body{overflow-x:clip}
 <nav class="tabs" id="tabs"></nav>
 
 <script src="content.js"></script>
+<script src="chatbot.js"></script>
 <script>
 window.CONTENT_READY = typeof CONTENT !== 'undefined';
 /* =====================================================================
@@ -596,6 +597,7 @@ function renderHome(){
 }
 function contactRows(){
   const r = [];
+  r.push(['chat', 'javascript:openIslandConcierge()', 'Island Concierge', 'Instant answers 24/7']);
   if (RESORT.phone) r.push(['phone', `tel:${RESORT.phone.replace(/\s/g,'')}`, 'Call Reception', RESORT.phone]);
   if (RESORT.whatsapp) r.push(['chat', `https://wa.me/${RESORT.whatsapp}`, 'WhatsApp', 'Message the team']);
   if (RESORT.email) r.push(['mail', `mailto:${RESORT.email}`, 'Email', RESORT.email]);
@@ -604,7 +606,7 @@ function contactRows(){
 }
 function contactBlock(){
   return `<section class="contact"><div class="eyebrow rv">We're here for you</div><h2 class="title">Day and night</h2>
-    <div class="cbtns">${contactRows().map(([ic,h,l]) => `<a href="${h}"${h.startsWith('http')?' target="_blank" rel="noopener"':''}>${svg(ic)}${esc(l)}</a>`).join('')}</div>
+    <div class="cbtns">${contactRows().map(([ic,h,l]) => `<a href="${h}"${h.startsWith('http')?' target="_blank" rel="noopener"':''}${h.startsWith('javascript:')?' onclick="event.preventDefault();window.openIslandConcierge&&window.openIslandConcierge();"':''}>${svg(ic)}${esc(l)}</a>`).join('')}</div>
     <small>${esc(RESORT.name)} · ${esc(RESORT.tagline)}</small></section>`;
 }
 
@@ -649,7 +651,7 @@ function renderSection(key){
   app.innerHTML = pageHero(s, key) + body + `<div style="height:40px"></div>` + contactBlock();
 }
 function renderContacts(s){
-  const rows = contactRows().map(([ic,h,l,sub]) => `<a class="item" href="${h}"${h.startsWith('http')?' target="_blank" rel="noopener"':''}>
+  const rows = contactRows().map(([ic,h,l,sub]) => `<a class="item" href="${h}"${h.startsWith('http')?' target="_blank" rel="noopener"':''}${h.startsWith('javascript:')?' onclick="event.preventDefault();window.openIslandConcierge&&window.openIslandConcierge();"':''}>
     <span class="badge">${svg(ic)}</span><span class="tx"><b>${esc(l)}</b><span>${esc(sub)}</span></span>${svg('chev','chev')}</a>`).join('');
   app.innerHTML = pageHero(s, 'home') + `<div class="group"><h3>Reach us</h3><div class="list">${rows}</div>
     <p class="note">From your villa, dial reception on the in-room phone at any time.</p></div>`;
