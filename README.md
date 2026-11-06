@@ -1,14 +1,16 @@
 # Cinnamon Velifushi – Guest Directory
 
-A mobile-first guest directory that guests open by scanning a QR code. Each section on the dial links to the matching folder of your **Resort information** Google Drive, and documents open inside the site in a viewer.
+A mobile-first guest directory that guests open by scanning a QR code. Each section on the dial lists the resort's documents, and their content (menus, prices, allergens, schedules and so on) is shown as proper pages inside the site. The original PDFs stay on Google Drive and each page links to its original.
 
 ## Files
 - `index.html` – the whole site (design, content and logic in one file)
+- `content.js` – the text of every document, extracted from the PDFs
+- `img/docs/` – photos taken from the PDFs, used as page banners
 - `.nojekyll` – tells GitHub Pages to serve the file as-is
 
 ## Publish on GitHub Pages (about 5 minutes)
 1. Sign in to GitHub and create a new **public** repository, e.g. `velifushi-guest-directory`.
-2. Click **Add file → Upload files**, drag in `index.html` and `.nojekyll`, then **Commit changes**.
+2. Click **Add file → Upload files**, drag in `index.html`, `content.js`, the `img` folder and `.nojekyll`, then **Commit changes**.
    (On a Mac, `.nojekyll` is hidden – press `Cmd + Shift + .` in Finder to see it.)
 3. Go to **Settings → Pages**. Under *Build and deployment*, choose **Deploy from a branch**, branch **main**, folder **/ (root)**, then **Save**.
 4. After a minute your site is live at
@@ -37,7 +39,7 @@ Example: `https://<username>.github.io/velifushi-guest-directory/#/menus`
 Generate the QR code with any free QR generator (paste the full URL).
 
 ## Important: Drive sharing
-Guests can only open documents if the Drive folder is shared as **Anyone with the link → Viewer**. Check this before printing QR codes – test on a phone that isn't signed in to Google.
+Document text no longer depends on Drive, but card thumbnails, the resort map and the "View the original document" links do. They only work if the Drive folder is shared as **Anyone with the link → Viewer**. Check this before printing QR codes – test on a phone that isn't signed in to Google.
 
 ## Updating content
 Open `index.html` on GitHub (pencil icon to edit) and change the **CONFIGURATION** block near the top of the `<script>`:
@@ -47,12 +49,20 @@ Open `index.html` on GitHub (pencil icon to edit) and change the **CONFIGURATION
   `drive.google.com/file/d/`**`THIS_PART`**`/view`, and paste it in place of the old ID.
 - **Add a document**: add a line like `["Title shown to guests", "DRIVE_FILE_ID", "optional subtitle"],` to the right group.
 
-Tip: if you *replace* a file in Drive using **Manage versions → Upload new version**, the ID stays the same and the site updates automatically with no code change.
+### Updating what a document page says
+Page text lives in `content.js`, **not** in the PDF, so uploading a new PDF to Drive does **not** change it. When a menu, price or weekly schedule changes, edit `content.js` too (each document is marked with a comment, e.g. `/* Wine List */`):
+
+- A dish or drink looks like `{"i": "Greek Salad {dairy} {vegetarian}", "p": "USD 15", "d": ["Description"]}`, where `i` is the name, `p` the price and `d` the description lines.
+- `{gluten}`-style markers become allergen tags: `alcohol gluten mustard dairy pork vegetarian nuts egg celery fish molluscs soya crustaceans peanut sesame coconut spicy healthy`. **Always have the kitchen confirm allergen changes.**
+- Weekly schedules are under `/* Weekly Activities */` and `/* Weekly Entertainment */`, written as `"Activity|where"`.
+
+A document with no entry in `content.js` (for example one you just added) opens in the Drive PDF viewer instead, so new documents still work straight away.
 
 ## Photos
 The site is photo-led, in the style of the Cinnamon Hotels website:
 
-- **Home hero and Island Experiences banner** use two Velifushi photos from Cinnamon's own image library (`CINNAMON_IMG` in the `PHOTOS` block). If Cinnamon ever renames or removes them, the site falls back to your Drive document covers automatically.
+- **Home hero** uses `img/hero-aerial.jpg`. The logos are `img/logo-white.png` (top bar) and `img/logo-flower.png` (centre of the dial and browser icon).
+- **Island Experiences banner** uses a Velifushi photo from Cinnamon's own image library (`CINNAMON_IMG` in the `PHOTOS` block). If Cinnamon ever renames or removes it, the site falls back to your Drive document covers automatically.
 - **Every other banner and tile** uses its own photo if you set one, otherwise the cover of that section's first PDF.
 - **Document cards** show each PDF's cover page from Drive automatically.
 

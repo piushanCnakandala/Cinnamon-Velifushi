@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#252776">
+<link rel="icon" type="image/png" href="img/logo-flower.png">
+<link rel="apple-touch-icon" href="img/logo-flower.png">
 <title>Cinnamon Velifushi – Guest Directory</title>
 <meta name="description" content="Digital guest directory for Cinnamon Velifushi Maldives: menus, island experiences, spa, activities, resort map and more.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,8 +45,9 @@ main{min-height:100vh;padding-bottom:calc(70px + var(--safeB))}
 .topnav{position:fixed;top:0;left:0;right:0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:calc(12px + env(safe-area-inset-top,0px)) 18px 12px;transition:background .3s,box-shadow .3s,color .3s;color:#fff}
 .topnav.solid{background:rgba(255,255,255,.96);backdrop-filter:blur(10px);box-shadow:0 1px 0 var(--line);color:var(--ink)}
 .logo{display:flex;flex-direction:column;line-height:1}
-.logo b{font-family:var(--serif);font-weight:600;font-size:21px;letter-spacing:.02em}
-.logo small{font-size:9.5px;letter-spacing:.34em;text-transform:uppercase;margin-top:4px;opacity:.85}
+.logo img{height:40px;width:auto;transition:filter .3s}
+/* the logo file is white: tint it the logo's purple once the bar turns white on scroll */
+.topnav.solid .logo img{filter:brightness(0) saturate(100%) invert(20%) sepia(38%) saturate(2960%) hue-rotate(247deg) brightness(92%) contrast(94%)}
 .clock{font-size:12px;letter-spacing:.06em;opacity:.9;text-align:right}
 
 /* ---------- hero ---------- */
@@ -155,6 +158,83 @@ main{min-height:100vh;padding-bottom:calc(70px + var(--safeB))}
 .mapimg{width:100%;background:#e9e8f6;box-shadow:0 1px 0 var(--line)}
 .note{font-size:13px;color:var(--muted);margin:12px 4px 0}
 
+/* ---------- document content ---------- */
+.phero.flat{min-height:230px}
+.djump{position:sticky;top:calc(56px + env(safe-area-inset-top,0px));z-index:20;display:flex;gap:8px;overflow-x:auto;padding:10px 16px;background:rgba(255,255,255,.97);border-bottom:1px solid var(--line);scrollbar-width:none}
+.djump::-webkit-scrollbar{display:none}
+.djump button{flex:none;font:inherit;font-size:12px;color:var(--cinnamon);background:var(--paper);border:1px solid var(--line);padding:7px 12px;cursor:pointer;white-space:nowrap}
+.doc{max-width:760px;margin:0 auto;padding:26px 20px 48px}
+.dh{font-family:var(--serif);font-weight:500;font-size:29px;line-height:1.15;margin:34px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line);scroll-margin-top:125px}
+.doc > .dh:first-child{margin-top:0}
+.dpart{font-family:var(--serif);font-weight:500;font-size:36px;color:var(--cinnamon);margin:52px 0 0;text-align:center}
+.dsub{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--cinnamon);font-weight:500;margin:24px 0 8px}
+.dkick{font-family:var(--serif);font-style:italic;font-size:21px;line-height:1.3;color:var(--cinnamon);margin:0 0 12px}
+.dp{margin:0 0 12px;font-weight:300;font-size:16px}
+.dul{margin:0 0 14px;padding:0;list-style:none}
+.dul li{position:relative;padding:6px 0 6px 18px;font-weight:300;border-bottom:1px solid #f0f0f7}
+.dul li::before{content:"";position:absolute;left:2px;top:15px;width:6px;height:6px;border-radius:50%;background:var(--gold)}
+.dnote{font-size:14px;color:var(--muted);margin:12px 0}
+.dcall{background:var(--paper);border-left:3px solid var(--cinnamon);padding:12px 14px;margin:0 0 18px;font-weight:500;font-size:15px}
+.dcall.soft{font-weight:400;font-size:13.5px;color:var(--muted)}
+.dq{font-family:var(--serif);font-style:italic;font-size:24px;line-height:1.25;text-align:center;color:var(--cinnamon);margin:26px 0}
+.dor{display:flex;align-items:center;gap:12px;margin:2px 0;color:var(--muted);font-family:var(--serif);font-style:italic}
+.dor::before,.dor::after{content:"";flex:1;height:1px;background:var(--line)}
+.dprice{display:flex;flex-direction:column;align-items:flex-start;background:var(--cinnamon);color:#fff;padding:16px 18px;margin:0 0 18px}
+.dprice b{font-family:var(--serif);font-weight:600;font-size:32px;line-height:1.1}
+.dprice span{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--tint);margin-top:3px}
+.dprice small{font-size:13px;margin-top:8px;color:#fff}
+.ditem{padding:12px 0;border-bottom:1px solid #f0f0f7}
+.dn{display:flex;justify-content:space-between;align-items:baseline;gap:16px}
+.dn .nm{font-weight:500;font-size:16px;line-height:1.4}
+.dn .pr{flex:0 0 auto;max-width:46%;text-align:right;font-weight:500;font-size:14px;color:var(--cinnamon)}
+.dd{font-weight:300;font-size:15px;color:#3f3f5c;margin-top:3px}
+.dw{font-size:13px;font-style:italic;color:var(--muted);margin-top:5px}
+.tag{display:inline-block;font-size:10.5px;font-weight:500;letter-spacing:.03em;line-height:1;color:#7a4a12;background:#fbf1e2;border:1px solid #f0dcbc;border-radius:20px;padding:3px 7px;margin:1px 1px;vertical-align:1px;white-space:nowrap}
+.tag.good{color:#17663a;background:#e8f5ec;border-color:#c9e6d3}
+.dcards{display:grid;gap:10px;margin:0 0 16px}
+@media (min-width:620px){.dcards{grid-template-columns:1fr 1fr}}
+.dcard{background:var(--paper);padding:14px 16px;box-shadow:0 1px 0 var(--line)}
+.dcard b{display:block;font-weight:500;margin-bottom:4px}
+.dcard p{font-size:14px;font-weight:300;margin-top:3px;overflow-wrap:anywhere}
+.dqa > div{padding:10px 0;border-bottom:1px solid #f0f0f7}
+.dqa b{font-weight:500}
+.dqa p{font-weight:300;font-size:15px;margin-top:3px}
+.dtable{width:100%;border-collapse:collapse;margin:0 0 16px;font-size:15px}
+.dtable th{text-align:left;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500;padding:6px 8px 6px 0;border-bottom:1px solid var(--line)}
+.dtable td{padding:9px 8px 9px 0;border-bottom:1px solid #f0f0f7;font-weight:300}
+.dtable td:first-child{font-weight:500}
+.ptable{margin:0 0 20px}
+.ptable h4{display:flex;justify-content:space-between;gap:12px;font-weight:500;font-size:16px;padding:9px 12px;background:var(--paper);border-left:3px solid var(--cinnamon)}
+.ptable h4 span{flex:none;color:var(--cinnamon)}
+.ptable .tn{display:block;font-size:12px;color:var(--muted);padding:5px 12px 0}
+.ptable table{width:100%;border-collapse:collapse}
+.ptable td{padding:8px 12px;border-bottom:1px solid #f0f0f7;vertical-align:baseline;font-size:15px}
+.ptable td b{font-weight:400}
+.ptable td small{display:block;font-size:12px;color:var(--muted)}
+.ptable .num{text-align:right;white-space:nowrap;font-weight:500;color:var(--cinnamon);font-size:14px}
+.sched{display:grid;gap:12px}
+@media (min-width:620px){.sched{grid-template-columns:1fr 1fr}}
+.day{background:var(--paper);padding:14px 16px;box-shadow:0 1px 0 var(--line)}
+.day.today{box-shadow:inset 0 0 0 2px var(--cinnamon)}
+.day h4{display:flex;align-items:center;justify-content:space-between;font-family:var(--serif);font-weight:500;font-size:24px;margin-bottom:6px}
+.day h4 em{font-family:var(--sans);font-style:normal;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:var(--cinnamon);padding:3px 8px}
+.slot{padding:8px 0;border-top:1px solid var(--line)}
+.slot .when{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--cinnamon);margin-bottom:3px}
+.slot b{display:block;font-weight:500}
+.slot small{display:block;font-size:13px;color:var(--muted);margin-bottom:3px}
+.dcontact{display:flex;flex-direction:column;gap:6px;margin:0 0 12px}
+.dcontact a{color:var(--cinnamon);border-bottom:1px solid var(--line);padding:8px 0;overflow-wrap:anywhere}
+.dlink{background:var(--paper);margin:0 0 16px}
+.dcodes{background:var(--paper);padding:12px 14px;margin:0 0 16px}
+.dcodes summary{cursor:pointer;font-weight:500;color:var(--cinnamon)}
+.dcodes .cq{width:100%;font:inherit;font-size:16px;padding:10px 12px;margin:12px 0;border:1px solid var(--line);background:#fff}
+.dcodes ul{list-style:none}
+.dcodes li{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px solid var(--line);font-size:14px}
+.dcodes li[hidden]{display:none}
+.dcodes li b{font-weight:500;white-space:nowrap}
+.dfoot{font-size:13px;color:var(--muted);text-align:center;margin:28px 0 0;padding-top:16px;border-top:1px solid var(--line)}
+.dorig{display:flex;width:max-content;max-width:100%;margin:20px auto 0}
+
 /* ---------- document viewer ---------- */
 .viewer{position:fixed;inset:0;background:#1b1b1b;display:flex;flex-direction:column;z-index:60}
 .vbar{display:flex;align-items:center;gap:10px;padding:10px 14px;padding-top:max(10px,env(safe-area-inset-top));background:var(--cream);border-bottom:1px solid var(--line)}
@@ -242,11 +322,13 @@ html,body{overflow-x:clip}
 </style>
 </head>
 <body>
-<header class="topnav" id="topnav"><a class="logo" href="#/"><b id="logoName"></b><small>Maldives</small></a><span class="clock" id="clock"></span></header>
+<header class="topnav" id="topnav"><a class="logo" href="#/"><img id="logoImg" src="img/logo-white.png" width="600" height="199" alt=""></a><span class="clock" id="clock"></span></header>
 <main id="app"></main>
 <nav class="tabs" id="tabs"></nav>
 
+<script src="content.js"></script>
 <script>
+window.CONTENT_READY = typeof CONTENT !== 'undefined';
 /* =====================================================================
    CONFIGURATION — edit this block to update the site.
    Documents are Google Drive file IDs (the long code in a file's link:
@@ -269,13 +351,17 @@ const RESORT = {
    Leave "" to use the cover of that section's first document instead. */
 const CINNAMON_IMG = "https://cinnamonweb.blob.core.windows.net/cinnamonweb-prd/misc/";
 const PHOTOS = {
-  home:     CINNAMON_IMG + "velifush-intro-01-200122.jpeg",
+  home:     "img/hero-aerial.jpg",
   island:   CINNAMON_IMG + "velifushi-arrivals-00-530x498.jpg",
-  menus: "", sustain: "", compendium: "", activities: "",
+  menus: "",
+  sustain:    "img/docs/sustainability.jpg",
+  compendium: "img/docs/thinadhoo-island.jpg",
+  activities: "img/docs/weekly-activities.jpg",
   map:      "1Pnn-vVSgpbs00vP2vWNHh7yJLj_ozRj0",
   special: "", packages: "",
-  spa:      "1tpOXMbRNiQ5cusDIwjvYw4RNAyfYTFes",
-  wedding: "", contacts: ""
+  spa:      "img/docs/spa-menu.jpg",
+  wedding:  "img/docs/wedding-packages.jpg",
+  contacts: ""
 };
 /* Set to false to show plain text lists instead of picture cards */
 const SHOW_DOCUMENT_PREVIEWS = true;
@@ -437,7 +523,7 @@ const DOCS = {};
 for (const [k,s] of Object.entries(SECTIONS))
   (s.groups||[]).forEach(g => itemsOf(g).forEach(([t,id]) => { DOCS[id] = DOCS[id] || {t, from:k}; }));
 
-document.getElementById('logoName').textContent = RESORT.name;
+document.getElementById('logoImg').alt = RESORT.name + ' Maldives';
 function tickClock(){
   const el = document.getElementById('clock');
   el.textContent = new Date().toLocaleString([], {weekday:'short', day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'});
@@ -468,7 +554,7 @@ function dialSvg(){
     <circle class="pulse" cx="200" cy="200" r="112"/>
     <a class="ctr" href="#/packages" aria-label="${esc(SECTIONS.packages.title)}">
       <circle class="c1" cx="200" cy="200" r="112"/><circle class="c2" cx="200" cy="200" r="100"/>
-      <g transform="translate(184,146) scale(1.35)"><g class="ic">${ICONS.flower}</g></g>
+      <image href="img/logo-flower.png" x="178" y="136" width="44" height="44"/>
       <text class="t1" x="200" y="202">All-Inclusive</text>
       <text class="t2" x="200" y="224">PACKAGES &amp; MENUS</text></a></svg>`;
 }
@@ -570,8 +656,74 @@ function renderContacts(s){
 }
 
 /* ---------- Document viewer ---------- */
+const TAGS = { alcohol:'Alcohol', gluten:'Gluten', mustard:'Mustard', dairy:'Dairy', pork:'Pork', vegetarian:'Vegetarian',
+  nuts:'Nuts', egg:'Egg', celery:'Celery', fish:'Fish', molluscs:'Molluscs', soya:'Soya', crustaceans:'Crustaceans',
+  peanut:'Peanut', sesame:'Sesame', coconut:'Coconut', spicy:'Spicy', healthy:'Healthy option' };
+const GOOD_TAGS = ['vegetarian','healthy'];
+/* Escapes text, then turns {gluten} markers into visible tags */
+const rich = s => esc(s).replace(/\s*\{(\w+)\}/g, (m,k) => ` <span class="tag${GOOD_TAGS.includes(k)?' good':''}">${esc(TAGS[k]||k)}</span>`);
+const anchor = i => `sec-${i}`;
+const ALLERGY_NOTE = "Tags show allergen and dietary information as marked on the resort's menu. A dish without a tag is not guaranteed to be allergen free. If you have any concerns regarding food allergies, please alert your server prior to ordering.";
+
+function scheduleBlock(s){
+  const today = new Intl.DateTimeFormat('en-US', {weekday:'long', timeZone:'Indian/Maldives'}).format(new Date());
+  const slot = (time, list) => list.length ? `<div class="slot"><span class="when">${esc(time)}</span>${list.map(x => {
+      const [name, where] = x.split('|');
+      return `<b>${esc(name)}</b>${where?`<small>${esc(where)}</small>`:''}`; }).join('')}</div>` : '';
+  return `<div class="sched">${s.days.map(([day,a,b]) => `<div class="day${day===today?' today':''}">
+    <h4>${esc(day)}${day===today?'<em>Today</em>':''}</h4>${slot(s.times[0],a)}${slot(s.times[1],b)}</div>`).join('')}</div>`;
+}
+function priceTable(t){
+  return `<div class="ptable"><h4>${esc(t.cap)}${t.total?`<span>USD ${esc(t.total)}</span>`:''}</h4>${t.note?`<small class="tn">${esc(t.note)}</small>`:''}
+    <table>${t.rows.map(([n,d,v]) => `<tr><td><b>${esc(n||d)}</b>${n&&d?`<small>${esc(d)}</small>`:''}</td><td class="num">${v?`USD ${esc(v)}`:''}</td></tr>`).join('')}</table></div>`;
+}
+function renderBlock(b, i){
+  /* items and price panels first: an item's "p" is its price, and a panel's "note" is its caption */
+  if (b.price) return `<div class="dprice"><b>${esc(b.price)}</b><span>${esc(b.unit||'')}</span>${b.note?`<small>${esc(b.note)}</small>`:''}</div>`;
+  if (b.i)     return `<div class="ditem"><div class="dn"><span class="nm">${rich(b.i)}</span>${b.p?`<span class="pr">${esc(b.p).replace(/ \| /g,'<br>')}</span>`:''}</div>
+      ${(b.d||[]).map(x => `<p class="dd">${rich(x)}</p>`).join('')}${b.w?`<p class="dw">Wine pairing: ${esc(b.w)}</p>`:''}</div>`;
+  if (b.part)  return `<h2 class="dpart">${esc(b.part)}</h2>`;
+  if (b.h)     return `<h3 class="dh" id="${anchor(i)}">${esc(b.h)}</h3>`;
+  if (b.sub)   return `<h4 class="dsub">${esc(b.sub)}</h4>`;
+  if (b.kicker)return `<p class="dkick">${esc(b.kicker)}</p>`;
+  if (b.p)     return `<p class="dp">${rich(b.p)}</p>`;
+  if (b.ul)    return `<ul class="dul">${b.ul.map(x => `<li>${rich(x)}</li>`).join('')}</ul>`;
+  if (b.note)  return `<p class="dnote">${rich(b.note)}</p>`;
+  if (b.callout) return `<p class="dcall">${esc(b.callout)}</p>`;
+  if (b.quote) return `<blockquote class="dq">${esc(b.quote)}</blockquote>`;
+  if (b.or)    return `<div class="dor"><span>or</span></div>`;
+  if (b.cards) return `<div class="dcards">${b.cards.map(c => `<div class="dcard"><b>${esc(c.t)}</b>${c.d.map(x => `<p>${esc(x)}</p>`).join('')}</div>`).join('')}</div>`;
+  if (b.qa)    return `<div class="dqa">${b.qa.map(([q,a]) => `<div><b>${esc(q)}</b><p>${esc(a)}</p></div>`).join('')}</div>`;
+  if (b.schedule) return scheduleBlock(b.schedule);
+  if (b.table) return b.table.cap ? priceTable(b.table) : `<table class="dtable"><thead><tr>${b.table.head.map(h => `<th>${esc(h)}</th>`).join('')}</tr></thead>
+      <tbody>${b.table.rows.map(r => `<tr>${r.map(c => `<td>${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+  if (b.contact) return `<div class="dcontact">${b.contact.map(([h,l]) => `<a href="${esc(h)}">${esc(l)}</a>`).join('')}</div>`;
+  if (b.link)  return `<a class="item dlink" href="#/doc/${esc(b.link)}"><span class="tx"><b>${esc(b.t)}</b><span>${esc(b.d||'')}</span></span>${svg('chev','chev')}</a>`;
+  if (b.codes) return `<details class="dcodes"><summary>Show ${b.codes.length} country codes</summary>
+      <input class="cq" type="search" placeholder="Search for a country" aria-label="Search for a country">
+      <ul>${b.codes.map(([n,c]) => `<li data-n="${esc(n.toLowerCase())}"><span>${esc(n)}</span><b>${esc(c)}</b></li>`).join('')}</ul></details>`;
+  return '';
+}
 function renderDoc(id){
   const d = DOCS[id] || {t:'Document', from:''};
+  const c = window.CONTENT_READY && CONTENT[id];
+  if (!c) return renderPdfViewer(id, d);
+  const heads = c.blocks.map((b,i) => b.h ? [b.h,i] : null).filter(Boolean);
+  const jump = heads.length >= 4 ? `<nav class="djump" aria-label="On this page">${heads.map(([h,i]) => `<button type="button" data-to="${anchor(i)}">${esc(h)}</button>`).join('')}</nav>` : '';
+  const hero = c.hero ? `<span class="bgz" style="--img:url('img/docs/${c.hero}.jpg')"></span>` : '';
+  app.innerHTML = `<section class="phero${c.hero?'':' flat'}">${hero}<div class="in">
+      <a class="crumb" href="#/${d.from||''}">${svg('left')}${esc(SECTIONS[d.from]?.title || 'Home')}</a>
+      <h2>${esc(d.t)}</h2>${d.sub?`<p>${esc(d.sub)}</p>`:''}</div></section>
+    ${jump}
+    <article class="doc"${c.lang?` lang="${esc(c.lang)}"`:''}>
+      ${c.allergy?`<p class="dcall soft">${esc(ALLERGY_NOTE)}</p>`:''}
+      ${c.blocks.map(renderBlock).join('')}
+      ${c.foot?`<p class="dfoot">${esc(c.foot)}</p>`:''}
+      <a class="link dorig" href="${driveView(id)}" target="_blank" rel="noopener">View the original document ${svg('arrow')}</a>
+    </article>`;
+}
+/* Documents without extracted content (e.g. newly added ones) still open in the Drive viewer */
+function renderPdfViewer(id, d){
   app.innerHTML = `<div class="viewer"><div class="vbar">
       <a class="back" href="#/${d.from||''}" aria-label="Back">${svg('left')}</a>
       <span class="ttl">${esc(d.t)}</span>
@@ -594,8 +746,10 @@ function route(){
   if (h === 'explore') return;
   const [a,b] = h.split('/');
   const tabs = document.getElementById('tabs');
-  if (a === 'doc' && b){ renderDoc(b); tabs.style.display='none'; topnav.style.display='none'; return; }
+  const viewerOnly = a === 'doc' && b && !(window.CONTENT_READY && CONTENT[b]);
+  if (viewerOnly){ renderDoc(b); tabs.style.display='none'; topnav.style.display='none'; return; }
   tabs.style.display=''; topnav.style.display='';
+  if (a === 'doc' && b){ renderDoc(b); renderTabs(DOCS[b]?.from || ''); window.scrollTo(0,0); updateNav(); arm(); return; }
   if (a && SECTIONS[a]) renderSection(a); else renderHome();
   renderTabs(SECTIONS[a] ? a : '');
   window.scrollTo(0,0); updateNav(); arm();
@@ -609,6 +763,16 @@ function arm(){
   document.querySelectorAll('.rv:not(.seen), .dial:not(.seen)').forEach(el => io ? io.observe(el) : el.classList.add('seen'));
   app.classList.remove('enter'); void app.offsetWidth; app.classList.add('enter');
 }
+/* Document pages: "on this page" chips and the country code search */
+app.addEventListener('click', e => {
+  const b = e.target.closest('.djump button');
+  if (b) document.getElementById(b.dataset.to)?.scrollIntoView({behavior:'smooth', block:'start'});
+});
+app.addEventListener('input', e => {
+  if (!e.target.classList.contains('cq')) return;
+  const q = e.target.value.trim().toLowerCase();
+  e.target.parentElement.querySelectorAll('li').forEach(li => { li.hidden = q && !li.dataset.n.includes(q); });
+});
 window.addEventListener('hashchange', route);
 route();
 </script>
