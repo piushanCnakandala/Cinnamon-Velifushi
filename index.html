@@ -354,6 +354,25 @@ main{min-height:100vh;padding-bottom:calc(70px + var(--safeB))}
 .toast{position:fixed;bottom:calc(75px + var(--safeB, 0px));left:50%;transform:translateX(-50%) translateY(20px);background:rgba(23,24,63,.95);color:#fff;padding:9px 16px;border-radius:20px;font-size:12px;letter-spacing:.03em;z-index:80;box-shadow:0 4px 18px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;white-space:nowrap}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
+/* today activities spotlight */
+.today-act-card{background:var(--paper);border:1px solid var(--line);border-top:3px solid var(--cinnamon);padding:22px 20px;box-shadow:0 4px 18px rgba(37,39,118,.06);margin-bottom:8px}
+.today-act-badge{display:inline-block;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:var(--cinnamon);padding:4px 10px;border-radius:20px;font-weight:600;margin-bottom:10px}
+.today-act-card h3{font-family:var(--serif);font-size:26px;font-weight:500;margin:0 0 6px;color:var(--ink)}
+.today-act-sub{font-size:14px;color:var(--muted);font-weight:300;margin:0 0 18px}
+.today-act-grid{display:grid;gap:16px}
+@media (min-width:680px){.today-act-grid{grid-template-columns:1fr 1fr;gap:20px}}
+.today-act-col{background:#fff;border:1px solid var(--line);padding:16px}
+.today-act-col h4{display:flex;align-items:center;gap:8px;font-family:var(--sans);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--cinnamon);font-weight:600;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.today-act-col h4 svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8}
+.today-act-slot{padding:8px 0;border-bottom:1px solid #f2f2fa}
+.today-act-slot:last-child{border-bottom:0;padding-bottom:0}
+.today-act-time{display:block;font-size:11px;font-weight:600;color:var(--gold);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.today-act-ev{margin-bottom:6px}
+.today-act-ev:last-child{margin-bottom:0}
+.today-act-ev b{display:block;font-size:14.5px;font-weight:500;color:var(--ink);line-height:1.3}
+.today-act-ev small{display:block;font-size:12.5px;color:var(--muted);margin-top:2px}
+.empty-act{font-size:13px;color:var(--muted);font-style:italic;margin:6px 0}
+
 /* =================== ANIMATIONS =================== */
 @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
@@ -505,7 +524,7 @@ const PHOTOS = {
   special:    "img/Signature Experiences.jpg",
   packages:   "",
   spa:      "img/docs/spa-menu.jpg",
-  wedding:  "img/docs/wedding-packages.jpg",
+  wedding:  "img/Wedding 01.avif",
   contacts: ""
 };
 /* Set to false to show plain text lists instead of picture cards */
@@ -652,7 +671,7 @@ const app = document.getElementById('app');
 const driveView = id => `https://drive.google.com/file/d/${id}/view`;
 const drivePreview = id => `https://drive.google.com/file/d/${id}/preview`;
 const driveImage = (id, w=2400) => `https://drive.google.com/thumbnail?id=${id}&sz=w${w}`;
-const photoUrl = (v, w=1800) => !v ? '' : (/^(https?:|\/|\.|img\/)/.test(v) || /\.(jpe?g|png|webp|gif)$/i.test(v)) ? encodeURI(v) : driveImage(v, w);
+const photoUrl = (v, w=1800) => !v ? '' : (/^(https?:|\/|\.|img\/)/.test(v) || /\.(jpe?g|png|webp|gif|avif)$/i.test(v)) ? encodeURI(v) : driveImage(v, w);
 const itemsOf = g => g.items === "DEST" ? DESTINATION_DINING : (g.items || []);
 function firstDocId(key){
   for (const g of (SECTIONS[key]?.groups || [])) { const it = itemsOf(g); if (it.length) return it[0][1]; }
@@ -743,24 +762,35 @@ function renderHome(){
 }
 function contactRows(){
   const r = [];
-  r.push(['chat', 'javascript:openIslandConcierge()', 'Island Concierge', 'Instant answers 24/7']);
   if (RESORT.phone) r.push(['phone', `tel:${RESORT.phone.replace(/\s/g,'')}`, 'Call Reception', RESORT.phone]);
   if (RESORT.whatsapp) r.push(['chat', `https://wa.me/${RESORT.whatsapp}`, 'WhatsApp', 'Message the team']);
   if (RESORT.email) r.push(['mail', `mailto:${RESORT.email}`, 'Email', RESORT.email]);
   if (RESORT.website) r.push(['globe', RESORT.website, 'Website', 'cinnamonhotels.com']);
+  r.push(['image', '#/gallery', 'Island Gallery', 'View resort photos & moments']);
+  r.push(['news', 'javascript:showToast("Island News & updates coming soon!")', 'Island News', 'Coming soon']);
+  r.push(['chat', 'javascript:openIslandConcierge()', 'Island Concierge', 'Instant answers 24/7']);
   return r;
 }
 function contactBlock(){
   return `<section class="contact"><div class="eyebrow rv">We're here for you</div><h2 class="title">Day and night</h2>
-    <div class="cbtns">${contactRows().map(([ic,h,l]) => `<a href="${h}"${h.startsWith('http')?' target="_blank" rel="noopener"':''}${h.startsWith('javascript:')?' onclick="event.preventDefault();window.openIslandConcierge&&window.openIslandConcierge();"':''}>${svg(ic)}${esc(l)}</a>`).join('')}</div>
+    <div class="cbtns">${contactRows().map(([ic,h,l]) => {
+      const isExt = h.startsWith('http');
+      const isJs = h.startsWith('javascript:');
+      const jsCode = isJs ? h.slice(11) : '';
+      return `<a href="${isJs ? '#' : h}"${isExt ? ' target="_blank" rel="noopener"' : ''}${isJs ? ` onclick="event.preventDefault();${jsCode};"` : ''}>${svg(ic)}${esc(l)}</a>`;
+    }).join('')}</div>
     <small>${esc(RESORT.name)} · ${esc(RESORT.tagline)}</small></section>`;
 }
 
 /* ---------- Section pages ---------- */
+const DOC_COVERS = {
+  "1N6iaVZSfNeGc6YsOZ16z-B19E5aiOQMX": "img/Wedding 01.avif"
+};
 function itemCard(title, id, sub){
+  const imgUrl = DOC_COVERS[id] ? encodeURI(DOC_COVERS[id]) : driveImage(id, 600);
   return `<a class="card rv" href="#/doc/${id}">
     <span class="ph"><span class="fb">${svg('doc')}</span>
-      <img src="${driveImage(id, 600)}" alt="" loading="lazy" onload="this.classList.add('ok')" onerror="this.remove()"></span>
+      <img src="${imgUrl}" alt="" loading="lazy" onload="this.classList.add('ok')" onerror="this.remove()"></span>
     <span class="cap"><b>${esc(title)}</b>${sub?`<span>${esc(sub)}</span>`:''}</span></a>`;
 }
 function itemRow(title, id, sub){
@@ -772,10 +802,77 @@ function pageHero(s, key){
     <a class="crumb" href="#/">${svg('left')}Home</a>
     <h2>${esc(s.title)}</h2>${s.intro?`<p>${esc(s.intro)}</p>`:''}</div></section>`;
 }
+function todayActivitiesBanner(){
+  const today = new Intl.DateTimeFormat('en-US', {weekday:'long', timeZone:'Indian/Maldives'}).format(new Date());
+  let actItems = [];
+  let entItems = [];
+
+  if (window.CONTENT_READY && window.CONTENT){
+    const aDoc = CONTENT["1Wq_R_jAfc4T5hKfC2_5rj5Ywj1z1jTBu"];
+    if (aDoc && aDoc.blocks){
+      aDoc.blocks.forEach(b => {
+        if (b.schedule && b.schedule.days){
+          const m = b.schedule.days.find(d => d[0].toLowerCase() === today.toLowerCase());
+          if (m){
+            const t = b.schedule.times || ["Morning", "Afternoon"];
+            if (m[1] && m[1].length) actItems.push({ time: t[0], events: m[1] });
+            if (m[2] && m[2].length) actItems.push({ time: t[1], events: m[2] });
+          }
+        }
+      });
+    }
+    const eDoc = CONTENT["1e-M6ZcV7hsaUQbsou82lkROJvxzCSJJk"];
+    if (eDoc && eDoc.blocks){
+      eDoc.blocks.forEach(b => {
+        if (b.schedule && b.schedule.days){
+          const m = b.schedule.days.find(d => d[0].toLowerCase() === today.toLowerCase());
+          if (m){
+            const t = b.schedule.times || ["Sunset", "Night"];
+            if (m[1] && m[1].length) entItems.push({ time: t[0], events: m[1] });
+            if (m[2] && m[2].length) entItems.push({ time: t[1], events: m[2] });
+          }
+        }
+      });
+    }
+  }
+
+  const renderSlot = slot => `
+    <div class="today-act-slot">
+      <span class="today-act-time">${esc(slot.time)}</span>
+      <div class="today-act-events">
+        ${slot.events.map(ev => {
+          const [name, loc] = ev.split('|');
+          return `<div class="today-act-ev"><b>${esc(name)}</b>${loc ? `<small>📍 ${esc(loc)}</small>` : ''}</div>`;
+        }).join('')}
+      </div>
+    </div>`;
+
+  return `
+    <div class="group">
+      <div class="today-act-card rv">
+        <span class="today-act-badge">Today's Schedule · ${esc(today)}</span>
+        <h3>Today on Velifushi</h3>
+        <p class="today-act-sub">Happening today across the island. All resort guests are warmly welcomed.</p>
+        <div class="today-act-grid">
+          <div class="today-act-col">
+            <h4>${svg('calendar')} Daytime Activities</h4>
+            ${actItems.length ? actItems.map(renderSlot).join('') : '<p class="empty-act">Relax on the beach or explore the reef lagoon.</p>'}
+          </div>
+          <div class="today-act-col">
+            <h4>${svg('star')} Evening Entertainment</h4>
+            ${entItems.length ? entItems.map(renderSlot).join('') : '<p class="empty-act">Chill music and signature drinks at Fen Bar.</p>'}
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
 function renderSection(key){
   const s = SECTIONS[key];
   if (key === 'contacts') return renderContacts(s);
   let body = '';
+  if (key === 'activities'){
+    body += todayActivitiesBanner();
+  }
   if (s.image){
     body += `<div class="group"><a href="${driveView(s.image)}" target="_blank" rel="noopener">
       <img class="mapimg" src="${driveImage(s.image)}" alt="${esc(s.title)}" loading="lazy"></a>
@@ -797,8 +894,13 @@ function renderSection(key){
   app.innerHTML = pageHero(s, key) + body + `<div style="height:40px"></div>` + contactBlock();
 }
 function renderContacts(s){
-  const rows = contactRows().map(([ic,h,l,sub]) => `<a class="item" href="${h}"${h.startsWith('http')?' target="_blank" rel="noopener"':''}${h.startsWith('javascript:')?' onclick="event.preventDefault();window.openIslandConcierge&&window.openIslandConcierge();"':''}>
-    <span class="badge">${svg(ic)}</span><span class="tx"><b>${esc(l)}</b><span>${esc(sub)}</span></span>${svg('chev','chev')}</a>`).join('');
+  const rows = contactRows().map(([ic,h,l,sub]) => {
+    const isExt = h.startsWith('http');
+    const isJs = h.startsWith('javascript:');
+    const jsCode = isJs ? h.slice(11) : '';
+    return `<a class="item" href="${isJs ? '#' : h}"${isExt ? ' target="_blank" rel="noopener"' : ''}${isJs ? ` onclick="event.preventDefault();${jsCode};"` : ''}>
+      <span class="badge">${svg(ic)}</span><span class="tx"><b>${esc(l)}</b><span>${esc(sub)}</span></span>${svg('chev','chev')}</a>`;
+  }).join('');
   app.innerHTML = pageHero(s, 'home') + `<div class="group"><h3>Reach us</h3><div class="list">${rows}</div>
     <p class="note">From your villa, dial reception on the in-room phone at any time.</p></div>`;
 }
@@ -858,7 +960,8 @@ function renderDoc(id){
   if (!c) return renderPdfViewer(id, d);
   const heads = c.blocks.map((b,i) => b.h ? [b.h,i] : null).filter(Boolean);
   const jump = heads.length >= 4 ? `<nav class="djump" aria-label="On this page">${heads.map(([h,i]) => `<button type="button" data-to="${anchor(i)}">${esc(h)}</button>`).join('')}</nav>` : '';
-  const hero = c.hero ? `<span class="bgz" style="--img:url('img/docs/${c.hero}.jpg')"></span>` : '';
+  const heroPath = DOC_COVERS[id] || (c.hero ? `img/docs/${c.hero}.jpg` : '');
+  const hero = heroPath ? `<span class="bgz" style="--img:url('${encodeURI(heroPath)}')"></span>` : '';
   app.innerHTML = `<section class="phero${c.hero?'':' flat'}">${hero}<div class="in">
       <a class="crumb" href="#/${d.from||''}">${svg('left')}${esc(SECTIONS[d.from]?.title || 'Home')}</a>
       <h2>${esc(d.t)}</h2>${d.sub?`<p>${esc(d.sub)}</p>`:''}</div></section>
@@ -941,7 +1044,7 @@ const GALLERY_ITEMS = [
     title: "Island Wedding Setup",
     category: "Spa & Wellness",
     catKey: "spa",
-    src: "img/docs/wedding-packages.jpg",
+    src: "img/Wedding 01.avif",
     desc: "Barefoot beach weddings and renewal of vows framed by palm arches and floral blooms."
   },
   {
@@ -1050,20 +1153,16 @@ document.addEventListener('keydown', e => {
 
 /* ---------- Tabs, top bar & router ---------- */
 const TABS = [
+  ["activities", "calendar", "Activities"],
   ["", "home", "Home"],
   ["menus", "menu", "Dine"],
-  ["gallery", "image", "Gallery"],
   ["spa", "spa", "Spa"],
-  ["news", "news", "News", true],
   ["contacts", "phone", "Call"]
 ];
 function renderTabs(cur){
-  document.getElementById('tabs').innerHTML = TABS.map(([r,ic,l,disabled]) => {
-    if (disabled) {
-      return `<div class="tab-item tab-disabled" onclick="showToast('Island News & updates coming soon!')" title="News coming soon">${svg(ic)}<span>${l}</span><span class="tab-soon">Soon</span></div>`;
-    }
-    return `<a href="#/${r}" class="tab-item ${cur===r?'on':''}">${svg(ic)}<span>${l}</span></a>`;
-  }).join('');
+  document.getElementById('tabs').innerHTML = TABS.map(([r,ic,l]) =>
+    `<a href="#/${r}" class="tab-item ${cur===r?'on':''}">${svg(ic)}<span>${l}</span></a>`
+  ).join('');
 }
 function showToast(msg){
   let t = document.getElementById('toast');
@@ -1091,7 +1190,7 @@ function route(){
   if (viewerOnly){ renderDoc(b); tabs.style.display='none'; topnav.style.display='none'; return; }
   tabs.style.display=''; topnav.style.display='';
   if (a === 'doc' && b){ renderDoc(b); renderTabs(DOCS[b]?.from || ''); window.scrollTo(0,0); updateNav(); arm(); return; }
-  if (a === 'gallery'){ renderGallery(); renderTabs('gallery'); window.scrollTo(0,0); updateNav(); arm(); return; }
+  if (a === 'gallery'){ renderGallery(); renderTabs(''); window.scrollTo(0,0); updateNav(); arm(); return; }
   if (a && SECTIONS[a]) renderSection(a); else renderHome();
   renderTabs(SECTIONS[a] ? a : '');
   window.scrollTo(0,0); updateNav(); arm();
