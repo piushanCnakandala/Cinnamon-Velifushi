@@ -210,6 +210,18 @@
       };
     }
 
+    // 2b. Gallery & Photos
+    if (/(photo|photos|picture|pictures|gallery|image|images|scenery)/.test(text)) {
+      return {
+        reply: `📸 <strong>Cinnamon Velifushi Island Gallery:</strong><br><br>
+        Take a visual tour across our paradise! Explore high-resolution captures of our aerial views, overwater villas, Mandara Spa, dolphin safaris, and beachfront dining.`,
+        actions: [
+          { text: "🖼️ View Island Gallery", url: "#/gallery" },
+          { text: "🗺️ View Resort Map", url: "#/map" }
+        ]
+      };
+    }
+
     // 3. Today's Activities & Entertainment
     if (/(today|schedule|activity|activities|entertainment|events|happening|dj|live\s*band|karaoke|zumba|cinema)/.test(text)) {
       const sched = getTodaySchedule();
