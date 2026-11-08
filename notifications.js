@@ -19,52 +19,141 @@
     }
   }
 
+  // Master weekly schedule fallback & lookup
+  const RESORT_WEEKLY_SCHEDULE = {
+    Sunday: {
+      activities: [
+        { time: "11:00 am – 11:45 am", name: "Zumba Dance", location: "Pool Deck" },
+        { time: "4:30 pm – 5:30 pm", name: "Beach Volleyball Tournament", location: "Game Zone" }
+      ],
+      entertainment: [
+        { time: "5:30 pm – 7:00 pm", name: "Sunset DJ Tunes", location: "Fen Bar" },
+        { time: "9:30 pm – 11:30 pm", name: "DJ Tunes", location: "Hama Bar" }
+      ]
+    },
+    Monday: {
+      activities: [
+        { time: "11:00 am – 11:45 am", name: "Art of Massage", location: "Mandara Spa" },
+        { time: "4:30 pm – 5:30 pm", name: "Trial Diving", location: "Lagoon (pickup at Dive Center)" }
+      ],
+      entertainment: [
+        { time: "5:30 pm – 7:00 pm", name: "Live Saxophone Music", location: "Fen Bar" },
+        { time: "9:30 pm – 11:30 pm", name: "Karaoke Night", location: "Fen Bar" }
+      ]
+    },
+    Tuesday: {
+      activities: [
+        { time: "11:00 am – 11:45 am", name: "Traditional Maldivian Handicraft Lessons", location: "Iru Kitchen & Bar" },
+        { time: "4:30 pm – 5:30 pm", name: "Pool Party", location: "Pool Deck" }
+      ],
+      entertainment: [
+        { time: "5:30 pm – 7:00 pm", name: "Pool Party Music", location: "Pool Deck" },
+        { time: "9:30 pm – 11:30 pm", name: "Balinese Dance", location: "Fen Bar" }
+      ]
+    },
+    Wednesday: {
+      activities: [
+        { time: "11:00 am – 11:45 am", name: "Live Cooking with Chef", location: "Iru Kitchen & Bar (All-Inclusive)" },
+        { time: "4:30 pm – 5:30 pm", name: "Beach Volleyball & Sundown Yoga", location: "Game Zone & Fen Pool Bar Deck" }
+      ],
+      entertainment: [
+        { time: "9:30 pm – 11:30 pm", name: "Beach Cinema", location: "Fen Beach" }
+      ]
+    },
+    Thursday: {
+      activities: [
+        { time: "11:00 am – 11:45 am", name: "Retail Bazaar", location: "Mandara Spa at Fen Bar" },
+        { time: "4:30 pm – 5:30 pm", name: "Trial Diving", location: "Lagoon (pickup at Dive Center)" }
+      ],
+      entertainment: [
+        { time: "5:30 pm – 7:00 pm", name: "Sunset DJ Tunes", location: "Fen Beach / Fen Bar" },
+        { time: "9:30 pm – 11:30 pm", name: "DJ Tunes", location: "Fen Beach / Fen Bar" }
+      ]
+    },
+    Friday: {
+      activities: [
+        { time: "11:00 am – 11:45 am", name: "Make Your Own Cocktails", location: "Iru Kitchen & Bar" },
+        { time: "4:30 pm – 5:30 pm", name: "Beach Cleaning Hour & Sundown Yoga", location: "Reception & Fen Pool Bar Deck" }
+      ],
+      entertainment: [
+        { time: "5:30 pm – 7:00 pm", name: "Sunset Sax & Sea Breeze", location: "Fen Beach" },
+        { time: "9:30 pm – 11:30 pm", name: "Karaoke Night", location: "Fen Bar" }
+      ]
+    },
+    Saturday: {
+      activities: [
+        { time: "11:00 am – 11:45 am", name: "Explore our Resort Tour", location: "pickup at Reception" },
+        { time: "4:30 pm – 5:30 pm", name: "Dart Championship", location: "Fen Pool Bar Deck" }
+      ],
+      entertainment: [
+        { time: "5:30 pm – 7:00 pm", name: "Live Band Sunset Session", location: "Fen Bar" },
+        { time: "9:30 pm – 11:30 pm", name: "Live Band Performance", location: "Fen Bar" }
+      ]
+    }
+  };
+
   // Build real-time notifications data based on current day and resort content
   function getNotificationsData() {
     const today = getMaldivesDayName();
-    let todayActTitle = "Weekly Activities & Sports";
-    let todayActTimes = "Morning & Afternoon";
-    let todayActDesc = "Join our recreation team for today's island activities.";
-    let todayActPerks = ["Complimentary for resort guests", "Equipment provided by recreation team", "Meet at designated location on schedule"];
+    const contentStore = (typeof CONTENT !== 'undefined' ? CONTENT : (window.CONTENT || null));
 
-    let todayEntTitle = "Live Evening Entertainment";
-    let todayEntTimes = "5:30 PM – 7:00 PM & 9:30 PM – 11:30 PM";
-    let todayEntDesc = "Unwind at Fen Bar with live music, sunset views, and craft cocktails.";
+    // Base schedule from master table
+    let daySched = RESORT_WEEKLY_SCHEDULE[today] || RESORT_WEEKLY_SCHEDULE['Sunday'];
 
-    if (window.CONTENT) {
-      // 1. Weekly Activities
-      const actDoc = window.CONTENT["1Wq_R_jAfc4T5hKfC2_5rj5Ywj1z1jTBu"];
+    // If CONTENT is present, dynamically sync from weekly documents
+    if (contentStore) {
+      // 1. Activities sync
+      const actDoc = contentStore["1Wq_R_jAfc4T5hKfC2_5rj5Ywj1z1jTBu"];
       if (actDoc && actDoc.blocks) {
         actDoc.blocks.forEach(b => {
           if (b.schedule && b.schedule.days) {
             const match = b.schedule.days.find(d => d[0].toLowerCase() === today.toLowerCase());
             if (match) {
-              const times = b.schedule.times || ["Morning", "Afternoon"];
-              const s1 = (match[1] || []).map(x => x.replace(/\|/g, ' ')).join(" & ");
-              const s2 = (match[2] || []).map(x => x.replace(/\|/g, ' ')).join(" & ");
-              todayActTitle = [s1, s2].filter(Boolean).join(" · ");
-              todayActTimes = `${times[0]} & ${times[1]}`;
-              todayActDesc = `Today's scheduled activities on the island: ${todayActTitle}. All guests are warmly invited to take part!`;
+              const times = b.schedule.times || ["11:00 am", "4:30 pm"];
+              const actList = [];
+              if (match[1] && match[1].length) {
+                match[1].forEach(x => {
+                  const [n, l] = x.split('|');
+                  actList.push({ time: times[0] || "11:00 am", name: n.trim(), location: (l || '').trim() });
+                });
+              }
+              if (match[2] && match[2].length) {
+                match[2].forEach(x => {
+                  const [n, l] = x.split('|');
+                  actList.push({ time: times[1] || "4:30 pm", name: n.trim(), location: (l || '').trim() });
+                });
+              }
+              if (actList.length > 0) {
+                daySched = { ...daySched, activities: actList };
+              }
             }
           }
         });
       }
 
-      // 2. Weekly Entertainment
-      const entDoc = window.CONTENT["1e-M6ZcV7hsaUQbsou82lkROJvxzCSJJk"];
+      // 2. Entertainment sync
+      const entDoc = contentStore["1e-M6ZcV7hsaUQbsou82lkROJvxzCSJJk"];
       if (entDoc && entDoc.blocks) {
         entDoc.blocks.forEach(b => {
           if (b.schedule && b.schedule.days) {
             const match = b.schedule.days.find(d => d[0].toLowerCase() === today.toLowerCase());
             if (match) {
-              const times = b.schedule.times || ["Sunset", "Night"];
-              const s1 = (match[1] || []).map(x => x.replace(/\|/g, ' ')).join(" & ");
-              const s2 = (match[2] || []).map(x => x.replace(/\|/g, ' ')).join(" & ");
-              const parts = [s1, s2].filter(Boolean);
-              if (parts.length) {
-                todayEntTitle = parts.join(" · ");
-                todayEntTimes = `${times[0]} & ${times[1]}`;
-                todayEntDesc = `Tonight at Fen Bar & Beach: ${todayEntTitle}. Enjoy island tunes and relaxing ocean breezes under the stars.`;
+              const times = b.schedule.times || ["5:30 pm", "9:30 pm"];
+              const entList = [];
+              if (match[1] && match[1].length) {
+                match[1].forEach(x => {
+                  const [n, l] = x.split('|');
+                  entList.push({ time: times[0] || "5:30 pm", name: n.trim(), location: (l || '').trim() });
+                });
+              }
+              if (match[2] && match[2].length) {
+                match[2].forEach(x => {
+                  const [n, l] = x.split('|');
+                  entList.push({ time: times[1] || "9:30 pm", name: n.trim(), location: (l || '').trim() });
+                });
+              }
+              if (entList.length > 0) {
+                daySched = { ...daySched, entertainment: entList };
               }
             }
           }
@@ -72,41 +161,58 @@
       }
     }
 
+    // Format Daytime Activities
+    const actNames = daySched.activities.map(a => a.name).join(' & ');
+    const actLocations = [...new Set(daySched.activities.map(a => a.location.replace(/^at\s+/i, '')))].join(' & ');
+    const actShortDesc = daySched.activities.map(a => `${a.time.split('–')[0].trim()}: ${a.name} (${a.location.replace(/^at\s+/i, '')})`).join(' · ');
+    const actPerks = [
+      ...daySched.activities.map(a => `🕒 ${a.time}: ${a.name} (${a.location})`),
+      "Complimentary for all in-house resort guests",
+      "All sports equipment provided by our recreation team",
+      "Open to all skill levels — meet directly at the location"
+    ];
+
+    // Format Evening Entertainment
+    const entNames = daySched.entertainment.length > 0
+      ? daySched.entertainment.map(e => `${e.name} (${e.location.replace(/^at\s+/i, '')})`).join(' & ')
+      : "Relaxing Ocean Lounge Music";
+    const entShortDesc = daySched.entertainment.length > 0
+      ? daySched.entertainment.map(e => `${e.time.split('–')[0].trim()}: ${e.name} (${e.location.replace(/^at\s+/i, '')})`).join(' · ')
+      : "Chill lounge music at Fen Bar tonight";
+    const entPerks = [
+      ...daySched.entertainment.map(e => `🕒 ${e.time}: ${e.name} (${e.location})`),
+      "Signature cocktails & premium beverages available",
+      "Open-air poolside seating overlooking the sea",
+      "No cover charge or advance reservation needed"
+    ];
+
     return [
       {
         id: "act-today",
-        category: "Today's Activity",
+        category: "Today's Activities",
         tagColor: "#252776",
         icon: "calendar",
-        title: todayActTitle,
-        shortDesc: `${today}'s island activities: ${todayActTimes}`,
-        image: "img/docs/weekly-activities.jpg",
-        meta: `📅 ${today} · 🕒 ${todayActTimes} · 📍 Island Game Zone & Pool Deck`,
-        fullDesc: todayActDesc,
-        perks: [
-          "Open to all in-house resort guests",
-          "All sports equipment provided",
-          "Fun friendly tournaments & island exploration"
-        ],
-        actionText: "View Weekly Activities",
+        title: `${today} Activities: ${actNames}`,
+        shortDesc: actShortDesc,
+        image: "img/YOGA.jpg.jpeg",
+        meta: `📅 ${today} · 📍 ${actLocations}`,
+        fullDesc: `Join our recreation team today for exciting island sports and fitness! Take part in ${actNames} scheduled throughout the day. All in-house resort guests are warmly welcomed!`,
+        perks: actPerks,
+        actionText: "View Full Schedule",
         actionUrl: "#/activities",
-        chatPrompt: "tell me more about today's activities"
+        chatPrompt: `tell me about today's ${today} activities: ${actNames}`
       },
       {
         id: "ent-tonight",
         category: "Live Tonight",
         tagColor: "#7c3aed",
         icon: "star",
-        title: todayEntTitle,
-        shortDesc: `Live music & entertainment at Fen Bar: ${todayEntTimes}`,
+        title: `Live Tonight: ${entNames}`,
+        shortDesc: entShortDesc,
         image: "img/docs/signature-cocktail.jpg",
-        meta: `✨ Tonight (${today}) · 🕒 ${todayEntTimes} · 📍 Fen Bar & Pool Deck`,
-        fullDesc: todayEntDesc,
-        perks: [
-          "Signature cocktails & premium beverages available",
-          "Indoor & open-air poolside seating overlooking the sea",
-          "No admission fee or advance ticket required"
-        ],
+        meta: `✨ Tonight (${today}) · 📍 Fen Bar & Pool Deck`,
+        fullDesc: `Unwind tonight at Cinnamon Velifushi Maldives with live evening entertainment: ${entNames}. Sip tropical cocktails and enjoy relaxing ocean breezes under the stars.`,
+        perks: entPerks,
         actionText: "Check Entertainment",
         actionUrl: "#/activities",
         chatPrompt: "what is the entertainment tonight?"
@@ -118,7 +224,7 @@
         icon: "spa",
         title: "15% Off Spa Treatments + Free 5-Min Welcome Massage",
         shortDesc: "Enjoy 15% discount at Mandara Spa plus a complimentary welcome massage voucher.",
-        image: "img/docs/spa-menu.jpg",
+        image: "img/WhatsApp Image 2026-11-07 at 01.10.31.jpeg",
         meta: "🌺 Mandara Spa · 🕒 10:00 AM – 8:00 PM · 📍 Overwater Spa Pavilion",
         fullDesc: "Take time to relax, recharge and restore during your stay. Visit Mandara Spa for a complimentary 5-minute massage and a refreshing ginger tea, plus enjoy an exclusive 15% discount on all published treatment rates throughout your stay.",
         perks: [
@@ -202,9 +308,10 @@
       readIds = JSON.parse(sessionStorage.getItem('veli_notifs_read') || '[]');
     } catch (e) { }
 
-    const items = getNotificationsData();
+    let items = getNotificationsData();
 
     function updateBadge() {
+      items = getNotificationsData();
       const unreadCount = items.filter(it => !readIds.includes(it.id)).length;
       if (unreadCount > 0) {
         notifDot.style.display = 'block';
@@ -217,6 +324,7 @@
 
     // Render dropdown menu items
     function renderDropdown() {
+      items = getNotificationsData();
       const today = getMaldivesDayName();
       notifMenu.innerHTML = `
         <div class="notif-head">
@@ -247,6 +355,7 @@
 
       document.getElementById('notifMarkRead')?.addEventListener('click', e => {
         e.stopPropagation();
+        items = getNotificationsData();
         readIds = items.map(it => it.id);
         try { sessionStorage.setItem('veli_notifs_read', JSON.stringify(readIds)); } catch (err) { }
         renderDropdown();
@@ -318,11 +427,14 @@
     // Toggle dropdown
     function toggleDropdown(show) {
       const willShow = show !== undefined ? show : !notifWrap.classList.contains('open');
+      if (willShow) {
+        renderDropdown();
+      }
       notifWrap.classList.toggle('open', willShow);
       notifBtn.setAttribute('aria-expanded', String(willShow));
     }
 
-    // Click / hover handlers
+    // Click handlers
     notifBtn.addEventListener('click', e => {
       e.stopPropagation();
       toggleDropdown();
@@ -339,6 +451,7 @@
     notifMenu.addEventListener('click', e => {
       const row = e.target.closest('.notif-item');
       if (row && row.dataset.id) {
+        items = getNotificationsData();
         const item = items.find(it => it.id === row.dataset.id);
         if (item) {
           toggleDropdown(false);
@@ -373,4 +486,5 @@
     injectNotifications();
   }
 })();
+
 

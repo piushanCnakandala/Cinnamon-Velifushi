@@ -91,10 +91,11 @@
     const today = getMaldivesDayName();
     let actHtml = "";
     let entHtml = "";
+    const contentStore = (typeof CONTENT !== 'undefined' ? CONTENT : (window.CONTENT || null));
 
-    if (window.CONTENT) {
+    if (contentStore) {
       // Weekly Activities doc
-      const actDoc = window.CONTENT["1Wq_R_jAfc4T5hKfC2_5rj5Ywj1z1jTBu"];
+      const actDoc = contentStore["1Wq_R_jAfc4T5hKfC2_5rj5Ywj1z1jTBu"];
       if (actDoc && actDoc.blocks) {
         actDoc.blocks.forEach(b => {
           if (b.schedule && b.schedule.days) {
@@ -111,7 +112,7 @@
       }
 
       // Weekly Entertainment doc
-      const entDoc = window.CONTENT["1e-M6ZcV7hsaUQbsou82lkROJvxzCSJJk"];
+      const entDoc = contentStore["1e-M6ZcV7hsaUQbsou82lkROJvxzCSJJk"];
       if (entDoc && entDoc.blocks) {
         entDoc.blocks.forEach(b => {
           if (b.schedule && b.schedule.days) {
@@ -137,14 +138,15 @@
 
   /* Deep search through CONTENT for dishes, drinks, prices, and allergen tags */
   function searchContentItems(query) {
-    if (!window.CONTENT) return [];
+    const contentStore = (typeof CONTENT !== 'undefined' ? CONTENT : (window.CONTENT || null));
+    if (!contentStore) return [];
     const q = query.toLowerCase().trim();
     if (q.length < 3) return [];
 
     const results = [];
     const seen = new Set();
 
-    for (const [docId, doc] of Object.entries(window.CONTENT)) {
+    for (const [docId, doc] of Object.entries(contentStore)) {
       if (!doc.blocks) continue;
       const docTitle = (window.DOCS && window.DOCS[docId] && window.DOCS[docId].t) || "Resort Document";
 
@@ -213,10 +215,10 @@
     // 2b. Gallery & Photos
     if (/(photo|photos|picture|pictures|gallery|image|images|scenery)/.test(text)) {
       return {
-        reply: `📸 <strong>Cinnamon Velifushi Island Gallery:</strong><br><br>
+        reply: `📸 <strong>Cinnamon Velifushi Gallery:</strong><br><br>
         Take a visual tour across our paradise! Explore high-resolution captures of our aerial views, overwater villas, Mandara Spa, dolphin safaris, and beachfront dining.`,
         actions: [
-          { text: "🖼️ View Island Gallery", url: "#/gallery" },
+          { text: "🖼️ View Gallery", url: "#/gallery" },
           { text: "🗺️ View Resort Map", url: "#/map" }
         ]
       };

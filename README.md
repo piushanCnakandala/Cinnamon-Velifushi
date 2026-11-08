@@ -34,7 +34,7 @@ Every section has its own address, so you can print a QR code that opens a speci
 | All-Inclusive Packages & Menus | `#/packages` |
 | Mandara Spa | `#/spa` |
 | Weddings | `#/wedding` |
-| Island Gallery | `#/gallery` |
+| Gallery | `#/gallery` |
 | Contacts | `#/contacts` |
 
 Example: `https://<username>.github.io/velifushi-guest-directory/#/menus`

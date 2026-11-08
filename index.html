@@ -81,7 +81,7 @@ main{min-height:100vh;padding-bottom:calc(70px + var(--safeB))}
 .notif-item-ic svg{width:18px;height:18px;stroke:var(--cinnamon);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .notif-item-tx{flex:1;min-width:0}
 .notif-item-tag{display:inline-block;font-size:9.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:10px;margin-bottom:3px}
-.notif-item-tx b{display:block;font-size:13.5px;font-weight:500;line-height:1.25;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.notif-item-tx b{display:block;font-size:13.5px;font-weight:600;line-height:1.25;color:var(--ink);margin-bottom:2px}
 .notif-item-tx p{font-size:12px;color:var(--muted);margin-top:2px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .notif-item-dot{position:absolute;top:10px;right:10px;width:7px;height:7px;border-radius:50%;background:#ef4444}
 .notif-foot{margin-top:10px;padding-top:10px;border-top:1px solid var(--line);text-align:center;font-size:11.5px;color:var(--cinnamon);font-weight:500}
@@ -166,6 +166,8 @@ main{min-height:100vh;padding-bottom:calc(70px + var(--safeB))}
 @media (min-width:760px){.split .tx{padding:40px 48px}}
 .split .title{font-size:34px;margin-top:8px}
 .split p{color:var(--muted);margin-top:10px;font-weight:300}
+.split-spa-logo{display:inline-flex;align-items:center;background:#fff;padding:6px 14px;border-radius:10px;border:1px solid var(--line);box-shadow:0 3px 12px rgba(37,39,118,.08);margin-bottom:12px}
+.split-spa-logo img{height:38px;width:auto;display:block;object-fit:contain}
 .link{display:inline-flex;align-items:center;gap:8px;margin-top:18px;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--cinnamon);border-bottom:1px solid currentColor;padding-bottom:4px}
 .link svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.6}
 
@@ -183,6 +185,8 @@ main{min-height:100vh;padding-bottom:calc(70px + var(--safeB))}
 .phero::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(var(--shade),.5),rgba(var(--shade),.15) 40%,rgba(var(--shade),.78))}
 .phero .in{position:relative;width:100%;max-width:1080px;margin:0 auto;padding:90px 22px 30px}
 .phero .eyebrow{color:var(--tint)}
+.phero-logo{display:inline-flex;align-items:center;background:#fff;padding:8px 16px;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.28);margin-bottom:12px}
+.phero-logo img{height:46px;width:auto;display:block;object-fit:contain}
 .phero h2{font-family:var(--serif);font-weight:500;font-size:clamp(34px,7vw,56px);line-height:1.05;margin-top:8px}
 .phero p{max-width:560px;margin-top:8px;font-weight:300;color:#ecebf7}
 .crumb{display:inline-flex;align-items:center;gap:6px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#fff;opacity:.9}
@@ -476,7 +480,7 @@ html,body{overflow-x:clip}
     <button type="button" class="lightbox-btn prev" onclick="prevLightbox()" aria-label="Previous image">
       <svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>
     </button>
-    <img id="lightboxImg" src="" alt="Island Gallery Image">
+    <img id="lightboxImg" src="" alt="Gallery Image">
     <button type="button" class="lightbox-btn next" onclick="nextLightbox()" aria-label="Next image">
       <svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
     </button>
@@ -488,6 +492,12 @@ html,body{overflow-x:clip}
 </div>
 
 <script src="content.js"></script>
+<script>
+  if (typeof CONTENT !== 'undefined') {
+    window.CONTENT = CONTENT;
+    window.CONTENT_READY = true;
+  }
+</script>
 <script src="chatbot.js"></script>
 <script src="notifications.js"></script>
 <script>
@@ -519,11 +529,11 @@ const PHOTOS = {
   menus: "",
   sustain:    "img/docs/sustainability.jpg",
   compendium: "img/docs/thinadhoo-island.jpg",
-  activities: "img/docs/weekly-activities.jpg",
+  activities: "img/YOGA.jpg.jpeg",
   map:      "1Pnn-vVSgpbs00vP2vWNHh7yJLj_ozRj0",
   special:    "img/Signature Experiences.jpg",
   packages:   "",
-  spa:      "img/docs/spa-menu.jpg",
+  spa:      "img/WhatsApp Image 2026-11-07 at 01.10.31.jpeg",
   wedding:  "img/Wedding 01.avif",
   contacts: ""
 };
@@ -730,10 +740,13 @@ function renderHome(){
   const tiles = HOME_TILES.map((k,i) => `<a class="tile rv${i===0?' wide':''}" style="--d:${(i%2)*0.12}s" href="#/${k}">
       <span class="pic" style="${bgVar(k)}"></span>
       <span class="cap"><b>${esc(SECTIONS[k].title)}</b><span>Explore</span></span></a>`).join('');
-  const split = (k, eyebrow, title, rev) => `<section class="split rv${rev?' rev':''}">
+  const split = (k, eyebrow, title, rev) => {
+    const logo = k === 'spa' ? `<div class="split-spa-logo"><img src="img/mandara-spa-logo.png" alt="Mandara Spa"></div>` : '';
+    return `<section class="split rv${rev?' rev':''}">
       <a class="ph" href="#/${k}" style="${bgVar(k)}" aria-label="${esc(SECTIONS[k].title)}"></a>
-      <div class="tx"><div class="eyebrow">${esc(eyebrow)}</div><h3 class="title">${title}</h3>
+      <div class="tx">${logo}<div class="eyebrow">${esc(eyebrow)}</div><h3 class="title">${title}</h3>
         <p>${esc(SECTIONS[k].intro)}</p><a class="link" href="#/${k}">Discover ${svg('arrow')}</a></div></section>`;
+  };
   app.innerHTML = `
     <section class="hero"><span class="bgz" style="${bgVar('home')}"></span>
       <div class="in"><div class="eyebrow">${esc(RESORT.tagline)} · Guest Directory</div>
@@ -766,7 +779,7 @@ function contactRows(){
   if (RESORT.whatsapp) r.push(['chat', `https://wa.me/${RESORT.whatsapp}`, 'WhatsApp', 'Message the team']);
   if (RESORT.email) r.push(['mail', `mailto:${RESORT.email}`, 'Email', RESORT.email]);
   if (RESORT.website) r.push(['globe', RESORT.website, 'Website', 'cinnamonhotels.com']);
-  r.push(['image', '#/gallery', 'Island Gallery', 'View resort photos & moments']);
+  r.push(['image', '#/gallery', 'Gallery', 'View resort photos & moments']);
   r.push(['news', 'javascript:showToast("Island News & updates coming soon!")', 'Island News', 'Coming soon']);
   r.push(['chat', 'javascript:openIslandConcierge()', 'Island Concierge', 'Instant answers 24/7']);
   return r;
@@ -784,7 +797,9 @@ function contactBlock(){
 
 /* ---------- Section pages ---------- */
 const DOC_COVERS = {
-  "1N6iaVZSfNeGc6YsOZ16z-B19E5aiOQMX": "img/Wedding 01.avif"
+  "1N6iaVZSfNeGc6YsOZ16z-B19E5aiOQMX": "img/Wedding 01.avif",
+  "1Wq_R_jAfc4T5hKfC2_5rj5Ywj1z1jTBu": "img/YOGA.jpg.jpeg",
+  "1iC_YteBk_fjPN4wInjbWayYQz9F--_Cw": "img/WhatsApp Image 2026-11-07 at 01.10.31.jpeg"
 };
 function itemCard(title, id, sub){
   const imgUrl = DOC_COVERS[id] ? encodeURI(DOC_COVERS[id]) : driveImage(id, 600);
@@ -798,8 +813,10 @@ function itemRow(title, id, sub){
     <span class="tx"><b>${esc(title)}</b>${sub?`<span>${esc(sub)}</span>`:''}</span>${svg('chev','chev')}</a>`;
 }
 function pageHero(s, key){
+  const extraLogo = key === 'spa' ? `<div class="phero-logo"><img src="img/mandara-spa-logo.png" alt="Mandara Spa"></div>` : '';
   return `<section class="phero"><span class="bgz" style="${bgVar(key)}"></span><div class="in">
     <a class="crumb" href="#/">${svg('left')}Home</a>
+    ${extraLogo}
     <h2>${esc(s.title)}</h2>${s.intro?`<p>${esc(s.intro)}</p>`:''}</div></section>`;
 }
 function todayActivitiesBanner(){
@@ -1009,7 +1026,7 @@ const GALLERY_ITEMS = [
     title: "Mandara Spa Overwater Sanctuary",
     category: "Spa & Wellness",
     catKey: "spa",
-    src: "img/docs/spa-menu.jpg",
+    src: "img/WhatsApp Image 2026-11-07 at 01.10.31.jpeg",
     desc: "Holistic Balinese healing treatments, aromatic baths, and luxury ELEMIS rituals."
   },
   {
@@ -1062,11 +1079,11 @@ const GALLERY_ITEMS = [
     desc: "Freshly shaken tropical cocktails and chilled drinks at Fen Pool Bar."
   },
   {
-    title: "Weekly Island Activities",
+    title: "Weekly Island Activities & Yoga",
     category: "Island & Aerial",
     catKey: "island",
-    src: "img/docs/weekly-activities.jpg",
-    desc: "Friendly volleyball matches, zumba, dart championships, and water sports."
+    src: "img/YOGA.jpg.jpeg",
+    desc: "Friendly volleyball matches, sunrise yoga, zumba, dart championships, and water sports."
   }
 ];
 
@@ -1102,7 +1119,7 @@ function renderGallery(){
   `).join('')}</div>`;
 
   app.innerHTML = pageHero({
-    title: "Island Gallery",
+    title: "Gallery",
     intro: "Glimpses of paradise, azure lagoons, and unforgettable memories at Cinnamon Velifushi."
   }, 'home') + chipsHtml + cardsHtml + `<div style="height:30px"></div>` + contactBlock();
 }
