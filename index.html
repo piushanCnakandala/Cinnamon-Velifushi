@@ -528,8 +528,8 @@ const PHOTOS = {
   island:   "img/island-experiences.jpg",
   menus: "",
   sustain:    "img/docs/sustainability.jpg",
-  compendium: "img/docs/thinadhoo-island.jpg",
-  activities: "img/YOGA.jpg.jpeg",
+  compendium: "img/compendium-cover.jpg",
+  activities: "img/yoga.jpg",
   map:      "1Pnn-vVSgpbs00vP2vWNHh7yJLj_ozRj0",
   special:    "img/Signature Experiences.jpg",
   packages:   "",
@@ -798,8 +798,11 @@ function contactBlock(){
 /* ---------- Section pages ---------- */
 const DOC_COVERS = {
   "1N6iaVZSfNeGc6YsOZ16z-B19E5aiOQMX": "img/Wedding 01.avif",
-  "1Wq_R_jAfc4T5hKfC2_5rj5Ywj1z1jTBu": "img/YOGA.jpg.jpeg",
-  "1iC_YteBk_fjPN4wInjbWayYQz9F--_Cw": "img/WhatsApp Image 2026-11-07 at 01.10.31.jpeg"
+  "1Wq_R_jAfc4T5hKfC2_5rj5Ywj1z1jTBu": "img/yoga.jpg",
+  "1iC_YteBk_fjPN4wInjbWayYQz9F--_Cw": "img/spa-portrait.jpg",
+  "1eX_1Iuzz5GOQVfBAgaXWOhydB14687Px": "img/compendium-cover.jpg",
+  "1sFDPuT8A_tWKe73oaFN3JDgBpDTJDvh8": "img/signature-experiences-setup.jpg",
+  "1teGbSK25HeuBRblcZESVpNi7K1NNAmJQ": "img/sunset-dining-ambience.jpg"
 };
 function itemCard(title, id, sub){
   const imgUrl = DOC_COVERS[id] ? encodeURI(DOC_COVERS[id]) : driveImage(id, 600);
@@ -1009,11 +1012,39 @@ const GALLERY_ITEMS = [
     desc: "A breathtaking aerial perspective of our private island oasis in Vaavu Atoll."
   },
   {
+    title: "Sunset Aerial of Vaavu Atoll",
+    category: "Island & Aerial",
+    catKey: "island",
+    src: "img/aerial-sunset-drone.jpg",
+    desc: "A breathtaking golden hour perspective of Cinnamon Velifushi surrounded by crystal clear lagoon reefs."
+  },
+  {
+    title: "Overwater Luxury Villas & Ocean Lagoon",
+    category: "Island & Aerial",
+    catKey: "island",
+    src: "img/velifushi-luxury-stay.jpg",
+    desc: "Iconic overwater living perched directly above the shimmering turquoise waters of Cinnamon Velifushi."
+  },
+  {
     title: "Private Beachfront Dining",
     category: "Dining",
     catKey: "dining",
     src: "img/Signature Experiences.jpg",
     desc: "Candlelit destination dining under the stars right by the gently lapping ocean waves."
+  },
+  {
+    title: "Candlelit Shoreline Dinner Setup",
+    category: "Dining",
+    catKey: "dining",
+    src: "img/signature-experiences-setup.jpg",
+    desc: "An unforgettable private dining setup under the Maldivian stars framed by gentle ocean waves."
+  },
+  {
+    title: "Sunset Beach Lounge & Cocktails",
+    category: "Dining",
+    catKey: "dining",
+    src: "img/sunset-dining-ambience.jpg",
+    desc: "Relaxing beachfront dining atmosphere with chilled drinks, ambient evening glow, and island breezes."
   },
   {
     title: "Big Game Fishing Adventure",
@@ -1028,6 +1059,13 @@ const GALLERY_ITEMS = [
     catKey: "spa",
     src: "img/WhatsApp Image 2026-11-07 at 01.10.31.jpeg",
     desc: "Holistic Balinese healing treatments, aromatic baths, and luxury ELEMIS rituals."
+  },
+  {
+    title: "Balinese Healing & ELEMIS Rituals",
+    category: "Spa & Wellness",
+    catKey: "spa",
+    src: "img/spa-portrait.jpg",
+    desc: "Authentic Balinese wellness therapies, soothing aromatic oils, and restorative overwater spa treatments."
   },
   {
     title: "Sunset Dhoni Cruise",
@@ -1065,6 +1103,13 @@ const GALLERY_ITEMS = [
     desc: "Barefoot beach weddings and renewal of vows framed by palm arches and floral blooms."
   },
   {
+    title: "Resort Compendium & Welcome Guide",
+    category: "Island & Aerial",
+    catKey: "island",
+    src: "img/compendium-cover.jpg",
+    desc: "Your comprehensive guide to resort services, villa amenities, dining, and island experiences."
+  },
+  {
     title: "Thinadhoo Island Village",
     category: "Island & Aerial",
     catKey: "island",
@@ -1082,7 +1127,7 @@ const GALLERY_ITEMS = [
     title: "Weekly Island Activities & Yoga",
     category: "Island & Aerial",
     catKey: "island",
-    src: "img/YOGA.jpg.jpeg",
+    src: "img/yoga.jpg",
     desc: "Friendly volleyball matches, sunrise yoga, zumba, dart championships, and water sports."
   }
 ];

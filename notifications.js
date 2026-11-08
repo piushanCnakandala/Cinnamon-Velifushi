@@ -194,7 +194,7 @@
         icon: "calendar",
         title: `${today} Activities: ${actNames}`,
         shortDesc: actShortDesc,
-        image: "img/YOGA.jpg.jpeg",
+        image: "img/yoga.jpg",
         meta: `📅 ${today} · 📍 ${actLocations}`,
         fullDesc: `Join our recreation team today for exciting island sports and fitness! Take part in ${actNames} scheduled throughout the day. All in-house resort guests are warmly welcomed!`,
         perks: actPerks,
