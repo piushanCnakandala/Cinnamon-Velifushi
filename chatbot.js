@@ -335,6 +335,21 @@
       };
     }
 
+    // 9b. Island News & Updates
+    if (/(news|announcement|update|cake\s*mixing|christmas|festive|coral\s*propagation|coral\s*restoration|7\s*years|education)/.test(text)) {
+      return {
+        reply: `📰 <strong>Latest Island News & Stories at Cinnamon Velifushi:</strong><br><br>
+        • 🎄 <strong>Mixing Traditions, Sharing Joy & Christmas Cheer:</strong> Annual Christmas Cake Mixing ceremony uniting guests and associates under the palms.<br>
+        • 🏆 <strong>Celebrating 7 Years of Excellence:</strong> Seven inspiring years of hospitality education, talent empowerment, and leadership.<br>
+        • 🪸 <strong>Cinnamon Coral Restoration Initiative:</strong> Active coral frame propagation project rejuvenating our house reef in Vaavu Atoll.<br><br>
+        Tap below to read the full stories and view the photo posters.`,
+        actions: [
+          { text: "📰 Read Island News", url: "#/news" },
+          { text: "📸 View Photo Gallery", url: "#/gallery" }
+        ]
+      };
+    }
+
     // 10. Medical / Doctor / Clinic
     if (/(doctor|medical|clinic|nurse|medicine|sick|hospital|injury|pharmacy|first\s*aid)/.test(text)) {
       return {
