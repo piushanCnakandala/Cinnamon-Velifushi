@@ -333,7 +333,7 @@ main{min-height:100vh;padding-bottom:calc(70px + var(--safeB))}
 .gallery-card:hover img{transform:scale(1.06)}
 .gallery-card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(0,0,0,.75) 100%)}
 .gallery-card .cap{position:absolute;left:12px;right:12px;bottom:10px;z-index:1;color:#fff}
-.gallery-card .cap small{display:block;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--tint);font-weight:500}
+.gallery-card .cap small{display:block;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--tint);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .gallery-card .cap b{display:block;font-family:var(--serif);font-size:16px;font-weight:600;line-height:1.2;margin-top:2px;text-shadow:0 1px 3px rgba(0,0,0,.8)}
 
 .lightbox{position:fixed;inset:0;z-index:100;background:rgba(14,15,35,.94);backdrop-filter:blur(10px);display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity .3s ease}
@@ -351,6 +351,7 @@ main{min-height:100vh;padding-bottom:calc(70px + var(--safeB))}
 .lightbox-btn.next{right:12px}
 .lightbox-btn svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2.2}
 .lightbox-bottom{padding:14px 20px calc(14px + var(--safeB, 0px));text-align:center;color:#fff;max-width:700px;margin:0 auto}
+.lightbox-cat{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--tint);font-weight:600;margin-bottom:6px}
 .lightbox-title{font-family:var(--serif);font-size:22px;font-weight:500}
 .lightbox-desc{font-size:13px;color:#d5d4ea;margin-top:4px;font-weight:300}
 
@@ -486,6 +487,7 @@ html,body{overflow-x:clip}
     </button>
   </div>
   <div class="lightbox-bottom">
+    <small class="lightbox-cat" id="lightboxCat"></small>
     <h3 class="lightbox-title" id="lightboxTitle"></h3>
     <p class="lightbox-desc" id="lightboxDesc"></p>
   </div>
@@ -802,7 +804,8 @@ const DOC_COVERS = {
   "1iC_YteBk_fjPN4wInjbWayYQz9F--_Cw": "img/spa-portrait.jpg",
   "1eX_1Iuzz5GOQVfBAgaXWOhydB14687Px": "img/compendium-cover.jpg",
   "1sFDPuT8A_tWKe73oaFN3JDgBpDTJDvh8": "img/signature-experiences-setup.jpg",
-  "1teGbSK25HeuBRblcZESVpNi7K1NNAmJQ": "img/sunset-dining-ambience.jpg"
+  "1teGbSK25HeuBRblcZESVpNi7K1NNAmJQ": "img/sunset-dining-ambience.jpg",
+  "1ufUhu-A6tu8hHB9hm80U7SNqppkmnmpI": "img/Coral_1.png"
 };
 function itemCard(title, id, sub){
   const imgUrl = DOC_COVERS[id] ? encodeURI(DOC_COVERS[id]) : driveImage(id, 600);
@@ -1129,6 +1132,41 @@ const GALLERY_ITEMS = [
     catKey: "island",
     src: "img/yoga.jpg",
     desc: "Friendly volleyball matches, sunrise yoga, zumba, dart championships, and water sports."
+  },
+  {
+    title: "Christmas Cake Mixing Ceremony",
+    category: "Mixing Traditions, Sharing Joy, and Spreading Christmas Cheer | Cinnamon Velifushi Maldives",
+    catKey: ["festive", "dining"],
+    src: "img/CAKE.png",
+    desc: "Guests and associates uniting in festive holiday spirit for the annual Christmas cake mixing ceremony at Cinnamon Velifushi Maldives."
+  },
+  {
+    title: "Spreading Christmas Cheer",
+    category: "Mixing Traditions, Sharing Joy, and Spreading Christmas Cheer | Cinnamon Velifushi Maldives",
+    catKey: ["festive", "dining"],
+    src: "img/CAKE 2.png",
+    desc: "Blending rich dry fruits, candied peels, aromatic spices, and warm holiday traditions under the Maldivian palm trees."
+  },
+  {
+    title: "7 Years of Hospitality Excellence",
+    category: "Celebrating 7 Years of Excellence Through Education and Inspiration",
+    catKey: ["education", "island"],
+    src: "img/EDU 01.png",
+    desc: "Empowering talent and celebrating seven inspiring years of hospitality excellence, learning, and achievement at Cinnamon Velifushi."
+  },
+  {
+    title: "Education & Inspiration Across the Island",
+    category: "Celebrating 7 Years of Excellence Through Education and Inspiration",
+    catKey: ["education", "island"],
+    src: "img/EDU 02.png",
+    desc: "Fostering professional career growth, community education, and inspiring leadership across our island team."
+  },
+  {
+    title: "Coral Restoration & Propagation Project",
+    category: "Cinnamon Coral Restoration Initiative - Coral Propagation Project",
+    catKey: ["coral", "ocean"],
+    src: "img/Coral_1.png",
+    desc: "Protecting and rejuvenating the house reef ecosystem through active coral frame propagation and marine conservation in Vaavu Atoll."
   }
 ];
 
@@ -1139,14 +1177,17 @@ let activeGalleryList = GALLERY_ITEMS;
 function renderGallery(){
   activeGalleryList = curGalleryFilter === 'all'
     ? GALLERY_ITEMS
-    : GALLERY_ITEMS.filter(it => it.catKey === curGalleryFilter);
+    : GALLERY_ITEMS.filter(it => Array.isArray(it.catKey) ? it.catKey.includes(curGalleryFilter) : it.catKey === curGalleryFilter);
 
   const filters = [
     ['all', 'All Photos'],
     ['island', 'Island & Aerial'],
     ['dining', 'Dining & Cocktails'],
     ['spa', 'Spa & Romance'],
-    ['ocean', 'Ocean & Excursions']
+    ['ocean', 'Ocean & Excursions'],
+    ['festive', 'Christmas Cheer'],
+    ['education', '7 Years of Excellence'],
+    ['coral', 'Coral Restoration']
   ];
 
   const chipsHtml = `<nav class="gallery-bar">${filters.map(([k,l]) =>
@@ -1190,6 +1231,8 @@ function updateLightboxContent(){
   if (!it) return;
   document.getElementById('lightboxImg').src = it.src;
   document.getElementById('lightboxCounter').textContent = `${curLightboxIndex + 1} / ${activeGalleryList.length}`;
+  const catEl = document.getElementById('lightboxCat');
+  if (catEl) catEl.textContent = it.category || '';
   document.getElementById('lightboxTitle').textContent = it.title;
   document.getElementById('lightboxDesc').textContent = it.desc;
 }
