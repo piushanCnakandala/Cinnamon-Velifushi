@@ -1029,131 +1029,134 @@ function renderPdfViewer(id, d){
 
 /* ---------- Gallery & Lightbox ---------- */
 const GALLERY_ITEMS = [
+  /* --- Resort Tour --- */
   {
     title: "Aerial View of Cinnamon Velifushi",
-    category: "Island & Aerial",
-    catKey: "island",
+    category: "Resort Tour",
+    catKey: "tour",
     src: "img/hero-aerial.jpg",
     desc: "A breathtaking aerial perspective of our private island oasis in Vaavu Atoll."
   },
   {
-    title: "Sunset Aerial of Vaavu Atoll",
-    category: "Island & Aerial",
-    catKey: "island",
-    src: "img/aerial-sunset-drone.jpg",
-    desc: "A breathtaking golden hour perspective of Cinnamon Velifushi surrounded by crystal clear lagoon reefs."
-  },
-  {
     title: "Overwater Luxury Villas & Ocean Lagoon",
-    category: "Island & Aerial",
-    catKey: "island",
+    category: "Resort Tour",
+    catKey: "tour",
     src: "img/velifushi-luxury-stay.jpg",
     desc: "Iconic overwater living perched directly above the shimmering turquoise waters of Cinnamon Velifushi."
   },
   {
-    title: "Private Beachfront Dining",
-    category: "Dining",
-    catKey: "dining",
-    src: "img/Signature Experiences.jpg",
-    desc: "Candlelit destination dining under the stars right by the gently lapping ocean waves."
-  },
-  {
-    title: "Candlelit Shoreline Dinner Setup",
-    category: "Dining",
-    catKey: "dining",
-    src: "img/signature-experiences-setup.jpg",
-    desc: "An unforgettable private dining setup under the Maldivian stars framed by gentle ocean waves."
-  },
-  {
-    title: "Sunset Beach Lounge & Cocktails",
-    category: "Dining",
-    catKey: "dining",
-    src: "img/sunset-dining-ambience.jpg",
-    desc: "Relaxing beachfront dining atmosphere with chilled drinks, ambient evening glow, and island breezes."
-  },
-  {
-    title: "Big Game Fishing Adventure",
-    category: "Ocean & Wildlife",
-    catKey: "ocean",
-    src: "img/island-experiences.jpg",
-    desc: "Sail for the horizon seeking marlin, sailfish, and tuna with our experienced local crew."
+    title: "Sunset Aerial of Vaavu Atoll",
+    category: "Resort Tour",
+    catKey: "tour",
+    src: "img/aerial-sunset-drone.jpg",
+    desc: "A breathtaking golden hour perspective of Cinnamon Velifushi surrounded by crystal clear lagoon reefs."
   },
   {
     title: "Mandara Spa Overwater Sanctuary",
-    category: "Spa & Wellness",
-    catKey: "spa",
+    category: "Resort Tour",
+    catKey: "tour",
     src: "img/WhatsApp Image 2026-11-07 at 01.10.31.jpeg",
     desc: "Holistic Balinese healing treatments, aromatic baths, and luxury ELEMIS rituals."
   },
   {
     title: "Balinese Healing & ELEMIS Rituals",
-    category: "Spa & Wellness",
-    catKey: "spa",
+    category: "Resort Tour",
+    catKey: "tour",
     src: "img/spa-portrait.jpg",
     desc: "Authentic Balinese wellness therapies, soothing aromatic oils, and restorative overwater spa treatments."
   },
   {
-    title: "Sunset Dhoni Cruise",
-    category: "Ocean & Wildlife",
-    catKey: "ocean",
-    src: "img/docs/sunset-cruise.jpg",
-    desc: "Unwind on a traditional wooden Dhoni boat as golden hour illuminates the Maldives."
+    title: "Private Beachfront Dining",
+    category: "Resort Tour",
+    catKey: "tour",
+    src: "img/Signature Experiences.jpg",
+    desc: "Candlelit destination dining under the stars right by the gently lapping ocean waves."
   },
   {
-    title: "Dolphin Safari",
-    category: "Ocean & Wildlife",
-    catKey: "ocean",
-    src: "img/docs/dolphin-watching.jpg",
-    desc: "Encounter playful spinner dolphins leaping in their natural turquoise habitat."
+    title: "Candlelit Shoreline Dinner Setup",
+    category: "Resort Tour",
+    catKey: "tour",
+    src: "img/signature-experiences-setup.jpg",
+    desc: "An unforgettable private dining setup under the Maldivian stars framed by gentle ocean waves."
   },
   {
-    title: "Castaway Sandbank Picnic",
-    category: "Island & Aerial",
-    catKey: "island",
-    src: "img/docs/sandbank-excursion.jpg",
-    desc: "An untouched expanse of pure white sand encircled by crystalline coral lagoons."
-  },
-  {
-    title: "Traditional Sunset Fishing",
-    category: "Ocean & Wildlife",
-    catKey: "ocean",
-    src: "img/docs/sunset-fishing.jpg",
-    desc: "Reel in fresh reef fish using traditional Maldivian handlines as dusk settles."
-  },
-  {
-    title: "Island Wedding Setup",
-    category: "Spa & Wellness",
-    catKey: "spa",
-    src: "img/Wedding 01.avif",
-    desc: "Barefoot beach weddings and renewal of vows framed by palm arches and floral blooms."
-  },
-  {
-    title: "Resort Compendium & Welcome Guide",
-    category: "Island & Aerial",
-    catKey: "island",
-    src: "img/compendium-cover.jpg",
-    desc: "Your comprehensive guide to resort services, villa amenities, dining, and island experiences."
-  },
-  {
-    title: "Thinadhoo Island Village",
-    category: "Island & Aerial",
-    catKey: "island",
-    src: "img/docs/thinadhoo-island.jpg",
-    desc: "Discover rich cultural traditions and local crafts on neighbouring island communities."
+    title: "Sunset Beach Lounge & Cocktails",
+    category: "Resort Tour",
+    catKey: "tour",
+    src: "img/sunset-dining-ambience.jpg",
+    desc: "Relaxing beachfront dining atmosphere with chilled drinks, ambient evening glow, and island breezes."
   },
   {
     title: "Signature Poolside Cocktails",
-    category: "Dining",
-    catKey: "dining",
+    category: "Resort Tour",
+    catKey: "tour",
     src: "img/docs/signature-cocktail.jpg",
     desc: "Freshly shaken tropical cocktails and chilled drinks at Fen Pool Bar."
   },
   {
     title: "Weekly Island Activities & Yoga",
-    category: "Island & Aerial",
-    catKey: "island",
+    category: "Resort Tour",
+    catKey: "tour",
     src: "img/yoga.jpg",
     desc: "Friendly volleyball matches, sunrise yoga, zumba, dart championships, and water sports."
+  },
+  {
+    title: "Island Wedding Setup",
+    category: "Resort Tour",
+    catKey: "tour",
+    src: "img/Wedding 01.avif",
+    desc: "Barefoot beach weddings and renewal of vows framed by palm arches and floral blooms."
+  },
+  {
+    title: "Resort Compendium & Welcome Guide",
+    category: "Resort Tour",
+    catKey: "tour",
+    src: "img/compendium-cover.jpg",
+    desc: "Your comprehensive guide to resort services, villa amenities, dining, and island experiences."
+  },
+
+  /* --- Catway experience --- */
+  {
+    title: "Castaway Sandbank Picnic",
+    category: "Catway experience",
+    catKey: "catway",
+    src: "img/docs/sandbank-excursion.jpg",
+    desc: "An untouched expanse of pure white sand encircled by crystalline coral lagoons on a private castaway trip."
+  },
+  {
+    title: "Sunset Dhoni Cruise",
+    category: "Catway experience",
+    catKey: "catway",
+    src: "img/docs/sunset-cruise.jpg",
+    desc: "Unwind on a traditional wooden Dhoni boat as golden hour illuminates the Maldives."
+  },
+  {
+    title: "Dolphin Safari Adventure",
+    category: "Catway experience",
+    catKey: "catway",
+    src: "img/docs/dolphin-watching.jpg",
+    desc: "Encounter playful spinner dolphins leaping in their natural turquoise habitat."
+  },
+  {
+    title: "Big Game Fishing Adventure",
+    category: "Catway experience",
+    catKey: "catway",
+    src: "img/island-experiences.jpg",
+    desc: "Sail for the horizon seeking marlin, sailfish, and tuna with our experienced local crew."
+  },
+  {
+    title: "Traditional Sunset Fishing",
+    category: "Catway experience",
+    catKey: "catway",
+    src: "img/docs/sunset-fishing.jpg",
+    desc: "Reel in fresh reef fish using traditional Maldivian handlines as dusk settles."
+  },
+  {
+    title: "Thinadhoo Island Village",
+    category: "Catway experience",
+    catKey: "catway",
+    src: "img/docs/thinadhoo-island.jpg",
+    desc: "Discover rich cultural traditions and local crafts on neighbouring island communities."
   }
 ];
 
@@ -1168,10 +1171,8 @@ function renderGallery(){
 
   const filters = [
     ['all', 'All Photos'],
-    ['island', 'Island & Aerial'],
-    ['dining', 'Dining & Cocktails'],
-    ['spa', 'Spa & Romance'],
-    ['ocean', 'Ocean & Excursions']
+    ['tour', 'Resort Tour'],
+    ['catway', 'Catway experience']
   ];
 
   const chipsHtml = `<nav class="gallery-bar">${filters.map(([k,l]) =>
