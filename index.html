@@ -378,6 +378,27 @@ main{min-height:100vh;padding-bottom:calc(70px + var(--safeB))}
 .today-act-ev small{display:block;font-size:12.5px;color:var(--muted);margin-top:2px}
 .empty-act{font-size:13px;color:var(--muted);font-style:italic;margin:6px 0}
 
+/* ---------- island news ---------- */
+.news-feed{max-width:860px;margin:0 auto;padding:20px 16px 40px;display:flex;flex-direction:column;gap:32px}
+.news-card{background:var(--paper);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 4px 20px rgba(37,39,118,.06);transition:transform .3s ease,box-shadow .3s ease}
+.news-card:hover{box-shadow:0 8px 28px rgba(37,39,118,.12)}
+.news-card-body{padding:22px 20px 24px}
+.news-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.news-badge{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--cinnamon);background:var(--tint);padding:4px 12px;border-radius:20px;font-weight:600}
+.news-badge svg{width:12px;height:12px;fill:currentColor}
+.news-date{font-size:12px;color:var(--muted);font-weight:400}
+.news-category-tag{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:6px;line-height:1.4}
+.news-title{font-family:var(--serif);font-size:22px;line-height:1.3;color:var(--ink);margin:0 0 10px;font-weight:600}
+.news-sub{font-size:14px;color:var(--muted);line-height:1.5;margin:0 0 18px;font-weight:400}
+.news-media-grid{display:grid;grid-template-columns:1fr;gap:14px;margin:18px 0 20px}
+.news-media-grid.two-col{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.news-photo-wrap{position:relative;border-radius:10px;overflow:hidden;background:#141537;cursor:pointer;aspect-ratio:1414/2000;max-height:520px;box-shadow:0 3px 12px rgba(0,0,0,.08);margin:0 auto;width:100%}
+.news-photo-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .5s cubic-bezier(.2,.7,.2,1);display:block}
+.news-photo-wrap:hover img{transform:scale(1.03)}
+.news-photo-wrap .zoom-pill{position:absolute;bottom:12px;right:12px;background:rgba(23,24,63,.85);backdrop-filter:blur(6px);color:#fff;font-size:11px;padding:6px 12px;border-radius:16px;display:flex;align-items:center;gap:6px;pointer-events:none;font-weight:500;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.news-photo-wrap .zoom-pill svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.2}
+.news-desc{font-size:14.5px;color:#333;line-height:1.7;margin:0}
+
 /* =================== ANIMATIONS =================== */
 @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
@@ -675,6 +696,7 @@ const ICONS = {
   chat:'<path d="M4 20l1.5-4A8 8 0 1 1 9 19Z"/>',
   image:'<rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>',
   news:'<path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8V6Z"/>',
+  expand:'<path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>',
   chev:'<path d="m9 6 6 6-6 6"/>', left:'<path d="m15 6-6 6 6 6"/>', arrow:'<path d="M4 12h16M14 6l6 6-6 6"/>', down:'<path d="M12 4v16M6 14l6 6 6-6"/>'
 };
 const svg = (n, cls='') => `<svg viewBox="0 0 24 24" class="${cls}" aria-hidden="true">${ICONS[n]||''}</svg>`;
@@ -782,7 +804,7 @@ function contactRows(){
   if (RESORT.email) r.push(['mail', `mailto:${RESORT.email}`, 'Email', RESORT.email]);
   if (RESORT.website) r.push(['globe', RESORT.website, 'Website', 'cinnamonhotels.com']);
   r.push(['image', '#/gallery', 'Gallery', 'View resort photos & moments']);
-  r.push(['news', 'javascript:showToast("Island News & updates coming soon!")', 'Island News', 'Coming soon']);
+  r.push(['news', '#/news', 'Island News', 'Stories, initiatives & updates']);
   r.push(['chat', 'javascript:openIslandConcierge()', 'Island Concierge', 'Instant answers 24/7']);
   return r;
 }
@@ -1132,41 +1154,6 @@ const GALLERY_ITEMS = [
     catKey: "island",
     src: "img/yoga.jpg",
     desc: "Friendly volleyball matches, sunrise yoga, zumba, dart championships, and water sports."
-  },
-  {
-    title: "Christmas Cake Mixing Ceremony",
-    category: "Mixing Traditions, Sharing Joy, and Spreading Christmas Cheer | Cinnamon Velifushi Maldives",
-    catKey: ["festive", "dining"],
-    src: "img/CAKE.png",
-    desc: "Guests and associates uniting in festive holiday spirit for the annual Christmas cake mixing ceremony at Cinnamon Velifushi Maldives."
-  },
-  {
-    title: "Spreading Christmas Cheer",
-    category: "Mixing Traditions, Sharing Joy, and Spreading Christmas Cheer | Cinnamon Velifushi Maldives",
-    catKey: ["festive", "dining"],
-    src: "img/CAKE 2.png",
-    desc: "Blending rich dry fruits, candied peels, aromatic spices, and warm holiday traditions under the Maldivian palm trees."
-  },
-  {
-    title: "7 Years of Hospitality Excellence",
-    category: "Celebrating 7 Years of Excellence Through Education and Inspiration",
-    catKey: ["education", "island"],
-    src: "img/EDU 01.png",
-    desc: "Empowering talent and celebrating seven inspiring years of hospitality excellence, learning, and achievement at Cinnamon Velifushi."
-  },
-  {
-    title: "Education & Inspiration Across the Island",
-    category: "Celebrating 7 Years of Excellence Through Education and Inspiration",
-    catKey: ["education", "island"],
-    src: "img/EDU 02.png",
-    desc: "Fostering professional career growth, community education, and inspiring leadership across our island team."
-  },
-  {
-    title: "Coral Restoration & Propagation Project",
-    category: "Cinnamon Coral Restoration Initiative - Coral Propagation Project",
-    catKey: ["coral", "ocean"],
-    src: "img/Coral_1.png",
-    desc: "Protecting and rejuvenating the house reef ecosystem through active coral frame propagation and marine conservation in Vaavu Atoll."
   }
 ];
 
@@ -1177,17 +1164,14 @@ let activeGalleryList = GALLERY_ITEMS;
 function renderGallery(){
   activeGalleryList = curGalleryFilter === 'all'
     ? GALLERY_ITEMS
-    : GALLERY_ITEMS.filter(it => Array.isArray(it.catKey) ? it.catKey.includes(curGalleryFilter) : it.catKey === curGalleryFilter);
+    : GALLERY_ITEMS.filter(it => it.catKey === curGalleryFilter);
 
   const filters = [
     ['all', 'All Photos'],
     ['island', 'Island & Aerial'],
     ['dining', 'Dining & Cocktails'],
     ['spa', 'Spa & Romance'],
-    ['ocean', 'Ocean & Excursions'],
-    ['festive', 'Christmas Cheer'],
-    ['education', '7 Years of Excellence'],
-    ['coral', 'Coral Restoration']
+    ['ocean', 'Ocean & Excursions']
   ];
 
   const chipsHtml = `<nav class="gallery-bar">${filters.map(([k,l]) =>
@@ -1256,6 +1240,93 @@ document.addEventListener('keydown', e => {
   }
 });
 
+/* ---------- Island News ---------- */
+const NEWS_ITEMS = [
+  {
+    id: "christmas-cake-mixing",
+    category: "Mixing Traditions, Sharing Joy, and Spreading Christmas Cheer | Cinnamon Velifushi Maldives",
+    badge: "Festive Tradition",
+    date: "Cinnamon Velifushi Maldives",
+    title: "Mixing Traditions, Sharing Joy, and Spreading Christmas Cheer",
+    subtitle: "Annual Christmas Cake Mixing Ceremony unites guests and associates in festive holiday spirit.",
+    desc: "Guests and resort associates unite in festive spirit for the annual Christmas cake mixing ceremony at Cinnamon Velifushi Maldives. Blending rich dry fruits, candied peels, fragrant island spices, and warm holiday traditions under the swaying palms of Vaavu Atoll.",
+    images: [
+      { src: "img/CAKE.png", title: "Christmas Cake Mixing Ceremony", desc: "Guests and associates uniting in festive holiday spirit for the annual Christmas cake mixing ceremony at Cinnamon Velifushi Maldives." },
+      { src: "img/CAKE 2.png", title: "Spreading Christmas Cheer", desc: "Blending rich dry fruits, candied peels, aromatic spices, and warm holiday traditions under the Maldivian palm trees." }
+    ]
+  },
+  {
+    id: "7-years-of-excellence",
+    category: "Celebrating 7 Years of Excellence Through Education and Inspiration",
+    badge: "Resort Milestone",
+    date: "7-Year Anniversary",
+    title: "Celebrating 7 Years of Excellence Through Education and Inspiration",
+    subtitle: "Honouring dedication, career learning, and world-class hospitality leadership across the island.",
+    desc: "Empowering talent and celebrating seven inspiring years of hospitality excellence, learning, and achievement at Cinnamon Velifushi Maldives. Fostering continuous professional growth, community education, and inspiring leadership across our entire island family.",
+    images: [
+      { src: "img/EDU 01.png", title: "7 Years of Hospitality Excellence", desc: "Empowering talent and celebrating seven inspiring years of hospitality excellence, learning, and achievement at Cinnamon Velifushi." },
+      { src: "img/EDU 02.png", title: "Education & Inspiration Across the Island", desc: "Fostering professional career growth, community education, and inspiring leadership across our island team." }
+    ]
+  },
+  {
+    id: "coral-propagation",
+    category: "Cinnamon Coral Restoration Initiative - Coral Propagation Project",
+    badge: "Marine Conservation",
+    date: "Sustainability & House Reef Care",
+    title: "Cinnamon Coral Restoration Initiative – Coral Propagation Project",
+    subtitle: "Protecting and rejuvenating the house reef ecosystem through active coral frame propagation in Vaavu Atoll.",
+    desc: "Cinnamon Velifushi Maldives is dedicated to protecting and rejuvenating the delicate marine ecosystem of Vaavu Atoll. Through our active coral frame propagation project, coral fragments are nurtured to maturity, revitalizing the house reef and providing thriving sanctuary habitats for diverse marine life.",
+    images: [
+      { src: "img/Coral_1.png", title: "Coral Restoration & Propagation Project", desc: "Protecting and rejuvenating the house reef ecosystem through active coral frame propagation and marine conservation in Vaavu Atoll." }
+    ]
+  }
+];
+
+function renderNews(){
+  const newsHtml = `<div class="news-feed">${NEWS_ITEMS.map((item, nIdx) => `
+    <article class="news-card rv">
+      <div class="news-card-body">
+        <div class="news-header">
+          <span class="news-badge">${svg('star')}${esc(item.badge)}</span>
+          <span class="news-date">${esc(item.date)}</span>
+        </div>
+        <small class="news-category-tag">${esc(item.category)}</small>
+        <h3 class="news-title">${esc(item.title)}</h3>
+        <p class="news-sub">${esc(item.subtitle)}</p>
+        
+        <div class="news-media-grid ${item.images.length > 1 ? 'two-col' : ''}">
+          ${item.images.map((img, iIdx) => `
+            <div class="news-photo-wrap" onclick="openNewsLightbox(${nIdx}, ${iIdx})">
+              <img src="${img.src}" alt="${esc(img.title)}" loading="lazy">
+              <span class="zoom-pill">${svg('expand')} View Poster</span>
+            </div>
+          `).join('')}
+        </div>
+        
+        <p class="news-desc">${esc(item.desc)}</p>
+      </div>
+    </article>
+  `).join('')}</div>`;
+
+  app.innerHTML = pageHero({
+    title: "Island News",
+    intro: "Stories, celebrations, environmental initiatives, and island happenings at Cinnamon Velifushi Maldives."
+  }, 'home') + newsHtml + `<div style="height:20px"></div>` + contactBlock();
+}
+
+function openNewsLightbox(newsIdx, imgIdx){
+  const news = NEWS_ITEMS[newsIdx];
+  if (!news || !news.images[imgIdx]) return;
+  const img = news.images[imgIdx];
+  document.getElementById('lightboxImg').src = img.src;
+  document.getElementById('lightboxCounter').textContent = `Story ${newsIdx + 1} of ${NEWS_ITEMS.length}`;
+  const catEl = document.getElementById('lightboxCat');
+  if (catEl) catEl.textContent = news.category;
+  document.getElementById('lightboxTitle').textContent = img.title;
+  document.getElementById('lightboxDesc').textContent = img.desc;
+  document.getElementById('lightbox').classList.add('open');
+}
+
 /* ---------- Tabs, top bar & router ---------- */
 const TABS = [
   ["activities", "calendar", "Activities"],
@@ -1296,6 +1367,7 @@ function route(){
   tabs.style.display=''; topnav.style.display='';
   if (a === 'doc' && b){ renderDoc(b); renderTabs(DOCS[b]?.from || ''); window.scrollTo(0,0); updateNav(); arm(); return; }
   if (a === 'gallery'){ renderGallery(); renderTabs(''); window.scrollTo(0,0); updateNav(); arm(); return; }
+  if (a === 'news'){ renderNews(); renderTabs(''); window.scrollTo(0,0); updateNav(); arm(); return; }
   if (a && SECTIONS[a]) renderSection(a); else renderHome();
   renderTabs(SECTIONS[a] ? a : '');
   window.scrollTo(0,0); updateNav(); arm();

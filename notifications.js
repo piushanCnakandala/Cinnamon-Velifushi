@@ -276,6 +276,25 @@
         actionText: "View Destination Dining",
         actionUrl: "#/special",
         chatPrompt: "tell me about lobster lovers dinner and beach bbq"
+      },
+      {
+        id: "island-news-bulletin",
+        category: "Resort News",
+        tagColor: "#252776",
+        icon: "star",
+        title: "Island News: Festive Traditions & Milestones",
+        shortDesc: "Annual Cake Mixing, 7 Years of Excellence, and Coral Reef Propagation.",
+        image: "img/CAKE.png",
+        meta: "📰 Cinnamon Velifushi Maldives · Resort Updates",
+        fullDesc: "Discover the latest stories, festive traditions, educational milestones, and marine conservation initiatives taking place at Cinnamon Velifushi Maldives.",
+        perks: [
+          "Christmas Cake Mixing: Blending holiday fruits, aromatic spices, and island joy",
+          "7 Years of Excellence: Celebrating 7 years of hospitality learning & team dedication",
+          "Coral Restoration Initiative: Active house reef coral propagation in Vaavu Atoll"
+        ],
+        actionText: "Read Island News",
+        actionUrl: "#/news",
+        chatPrompt: "tell me about island news"
       }
     ];
   }
