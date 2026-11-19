@@ -150,17 +150,63 @@ main{min-height:100vh;padding-bottom:calc(70px + var(--safeB))}
 .ctr text.t2{font-family:var(--sans);font-size:9.5px;fill:var(--tint);text-anchor:middle;letter-spacing:.18em}
 .ctr .ic{stroke:var(--tint);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 
-/* ---------- photo tiles (home) ---------- */
-.tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:0 14px;max-width:1080px;margin:0 auto}
-@media (min-width:760px){.tiles{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}}
-.tile{position:relative;display:block;aspect-ratio:3/4;overflow:hidden;background:var(--sea);color:#fff}
-.tile.wide{grid-column:span 2;aspect-ratio:16/10}
-.tile .pic{position:absolute;inset:0;background-image:var(--img);background-position:center;background-size:cover;background-repeat:no-repeat;transition:transform .6s}
-.tile:hover .pic{transform:scale(1.05)}
-.tile::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(var(--shade),0) 40%,rgba(var(--shade),.78))}
-.tile .cap{position:absolute;left:14px;right:14px;bottom:14px;z-index:1}
-.tile .cap b{display:block;font-family:var(--serif);font-weight:500;font-size:22px;line-height:1.1}
-.tile .cap span{display:block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--tint);margin-top:6px}
+/* ---------- photo tiles (home / Things to do) ---------- */
+.things-section{padding:56px 0 64px}
+.things-head{text-align:center;max-width:1120px;margin:0 auto 28px;padding:0 16px}
+.things-head .eyebrow{font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.things-title-row{display:flex;align-items:center;justify-content:center;gap:20px;margin-top:8px}
+.things-rule{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(97,45,135,.28),rgba(97,45,135,.16));max-width:320px}
+.things-rule:last-child{background:linear-gradient(90deg,rgba(97,45,135,.16),rgba(97,45,135,.28),transparent)}
+.things-title-row .title{font-size:clamp(26px,5vw,38px);margin:0;white-space:nowrap;color:var(--cinnamon)}
+@media (max-width:640px){
+  .things-rule{max-width:36px}
+  .things-title-row{gap:10px}
+}
+
+.tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:0 16px;max-width:1120px;margin:0 auto}
+@media (min-width:820px){
+  .tiles{grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+}
+
+.tile{position:relative;display:block;aspect-ratio:4/5;border-radius:18px;overflow:hidden;background:var(--sea);color:#fff;box-shadow:0 4px 18px rgba(0,0,0,.08);transform:translateZ(0);-webkit-mask-image:-webkit-radial-gradient(white,black);transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s ease}
+.tile:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(97,45,135,.22)}
+
+@media (min-width:820px){
+  .tile.wide{grid-column:span 2;aspect-ratio:auto;height:100%}
+}
+@media (max-width:819px){
+  .tile.wide{grid-column:span 1;aspect-ratio:4/5}
+}
+
+.tile .pic{position:absolute;inset:0;background-image:var(--img);background-position:center;background-size:cover;background-repeat:no-repeat;transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+.tile:hover .pic{transform:scale(1.06)}
+.tile::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 35%,rgba(15,8,25,.55) 68%,rgba(15,8,25,.92) 100%);pointer-events:none}
+
+.tile-badge{position:absolute;top:14px;right:14px;z-index:2;background:#fff;color:#1a1a1a;font-size:11.5px;font-weight:600;font-family:var(--sans);padding:4px 12px;border-radius:999px;box-shadow:0 2px 8px rgba(0,0,0,.18);letter-spacing:.02em}
+@media (max-width:600px){
+  .tile-badge{top:8px;right:8px;font-size:9.5px;padding:3px 9px}
+}
+
+.tile .cap{position:absolute;left:18px;right:18px;bottom:18px;z-index:2;text-align:left}
+@media (max-width:600px){
+  .tile .cap{left:12px;right:12px;bottom:12px}
+}
+.tile .cap b{display:block;font-family:var(--serif);font-weight:500;color:#fff;line-height:1.2;text-shadow:0 2px 8px rgba(0,0,0,.6)}
+.tile.wide .cap b{font-size:24px;font-weight:500;text-transform:none;letter-spacing:0}
+.tile:not(.wide) .cap b{font-size:14.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+@media (max-width:600px){
+  .tile.wide .cap b{font-size:13.5px;text-transform:uppercase;letter-spacing:.03em}
+  .tile:not(.wide) .cap b{font-size:12px;letter-spacing:.03em}
+}
+
+.tile-explore{display:inline-flex;align-items:center;gap:5px;font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.88);margin-top:6px;transition:color .2s}
+.tile:hover .tile-explore{color:#fff}
+.tile-explore span{font-size:13px;transition:transform .25s ease;display:inline-block}
+.tile:hover .tile-explore span{transform:translateX(4px)}
+@media (max-width:600px){
+  .tile-explore{font-size:9.5px;margin-top:4px}
+  .tile-explore span{font-size:11px}
+}
 
 /* ---------- feature split ---------- */
 .split{display:grid;gap:0;max-width:1080px;margin:0 auto}
@@ -475,7 +521,7 @@ html,body{overflow-x:clip}
    body 300 / 15px / lh 26px / +0.01em, buttons 500 / 12px / +0.06em / radius 16px 0 */
 body{line-height:1.75;letter-spacing:.01em}
 .title,.hero h1,.phero h2,.group h3,.dh,.dpart,.today-act-card h3{font-family:var(--serif);font-weight:300;text-transform:uppercase;letter-spacing:-.0125em;line-height:1.2}
-.tile .cap b,.feature b{font-family:var(--serif);font-weight:300;text-transform:uppercase;letter-spacing:.011em;line-height:1.2}
+.feature b{font-family:var(--serif);font-weight:300;text-transform:uppercase;letter-spacing:.011em;line-height:1.2}
 .title,.dh,.dpart,.group h3,.today-act-card h3{color:var(--cinnamon)}
 .hero h1{line-height:1.1}
 /* cinnamonhotels.com uses no italics anywhere: keep all emphasis upright (incl. chatbot replies) */
@@ -785,9 +831,19 @@ function dialSvg(){
 
 /* ---------- Home ---------- */
 function renderHome(){
-  const tiles = HOME_TILES.map((k,i) => `<a class="tile rv${i===0?' wide':''}" style="--d:${(i%2)*0.12}s" href="#/${k}">
+  const tiles = HOME_TILES.map((k,i) => {
+    const isWide = i === 0;
+    const badge = isWide ? `<span class="tile-badge">Featured</span>` : '';
+    const rawTitle = esc(SECTIONS[k]?.title || k);
+    const title = isWide ? rawTitle : rawTitle.toUpperCase();
+    return `<a class="tile rv${isWide ? ' wide' : ''}" style="--d:${(i%4)*0.08}s" href="#/${k}">
+      ${badge}
       <span class="pic" style="${bgVar(k)}"></span>
-      <span class="cap"><b>${esc(SECTIONS[k].title)}</b><span>Explore</span></span></a>`).join('');
+      <span class="cap">
+        <b>${title}</b>
+        <span class="tile-explore">EXPLORE <span>&rarr;</span></span>
+      </span></a>`;
+  }).join('');
   const split = (k, eyebrow, title, rev) => {
     const logo = k === 'spa' ? `<div class="split-spa-logo"><img src="img/mandara-spa-logo.png" alt="Mandara Spa"></div>` : '';
     return `<section class="split rv${rev?' rev':''}">
@@ -808,8 +864,15 @@ function renderHome(){
         <p>Tap a section of the dial to explore menus, experiences, activities and more.</p></div>
       <div class="dial">${dialSvg()}</div>
     </section>
-    <section class="block alt">
-      <div class="head rv"><div class="eyebrow">Discover</div><h2 class="title"><span class="tilde">~</span>Things to do</h2></div>
+    <section class="block alt things-section">
+      <div class="things-head rv">
+        <div class="eyebrow">DISCOVER</div>
+        <div class="things-title-row">
+          <span class="things-rule"></span>
+          <h2 class="title"><span class="tilde">~</span>THINGS TO DO</h2>
+          <span class="things-rule"></span>
+        </div>
+      </div>
       <div class="tiles">${tiles}</div>
     </section>
     <section class="block">
