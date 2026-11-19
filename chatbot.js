@@ -566,12 +566,12 @@
     .veli-badge-chip {
       background: rgba(255, 255, 255, 0.96);
       backdrop-filter: blur(10px);
-      color: #1c1c3c;
+      color: #1f1f1f;
       font-size: 12px;
       font-weight: 500;
       padding: 7px 12px;
       border-radius: 18px;
-      border: 1px solid #e3e3ef;
+      border: 1px solid #e9e2ef;
       box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
       letter-spacing: 0.02em;
       white-space: nowrap;
@@ -593,7 +593,7 @@
       max-height: calc(100vh - 120px);
       background: #ffffff;
       border-radius: 20px;
-      box-shadow: 0 12px 40px rgba(23, 24, 63, 0.22), 0 0 0 1px rgba(97, 45, 135, 0.12);
+      box-shadow: 0 12px 40px rgba(48,22,67, 0.22), 0 0 0 1px rgba(97, 45, 135, 0.12);
       display: flex;
       flex-direction: column;
       z-index: 70;
@@ -630,7 +630,7 @@
       height: 38px;
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.15);
-      border: 1px solid rgba(184, 182, 227, 0.4);
+      border: 1px solid rgba(232,220,240, 0.4);
       display: grid;
       place-items: center;
       flex-shrink: 0;
@@ -652,7 +652,7 @@
       align-items: center;
       gap: 5px;
       font-size: 11px;
-      color: #b8b6e3;
+      color: #e8dcf0;
       letter-spacing: 0.04em;
     }
     .veli-status-dot {
@@ -669,7 +669,7 @@
     .veli-btn-icon {
       background: none;
       border: none;
-      color: #ecebf7;
+      color: #e8dcf0;
       cursor: pointer;
       width: 32px;
       height: 32px;
@@ -697,7 +697,7 @@
       flex: 1;
       overflow-y: auto;
       padding: 16px 14px;
-      background: #f8f8fc;
+      background: #f7f4f9;
       display: flex;
       flex-direction: column;
       gap: 12px;
@@ -730,9 +730,9 @@
     }
     .veli-msg.bot .veli-bubble {
       background: #ffffff;
-      color: #1c1c3c;
+      color: #1f1f1f;
       border-bottom-left-radius: 4px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 0 0 1px #e8e8f2;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 0 0 1px #e9e2ef;
     }
     .veli-msg.user .veli-bubble {
       background: #612D87;
@@ -742,7 +742,7 @@
     }
     .veli-time {
       font-size: 10px;
-      color: #9b9ab8;
+      color: #9a9a9a;
       padding: 0 4px;
     }
     .veli-msg.user .veli-time {
@@ -761,8 +761,8 @@
       font-size: 11.5px;
       font-weight: 500;
       color: #612D87;
-      background: #f1f0fa;
-      border: 1px solid #dcdbf5;
+      background: #f7f4f9;
+      border: 1px solid #e8dcf0;
       padding: 6px 11px;
       border-radius: 12px;
       cursor: pointer;
@@ -773,7 +773,7 @@
       transition: background 0.2s, transform 0.15s;
     }
     .veli-action-btn:hover {
-      background: #e5e3f7;
+      background: #efe7f4;
       transform: translateY(-1px);
     }
     .veli-action-btn:active {
@@ -789,14 +789,14 @@
       background: #ffffff;
       border-radius: 16px;
       border-bottom-left-radius: 4px;
-      border: 1px solid #e8e8f2;
+      border: 1px solid #e9e2ef;
       box-shadow: 0 1px 3px rgba(0,0,0,0.05);
       width: fit-content;
     }
     .veli-typing span {
       width: 6px;
       height: 6px;
-      background: #8b8aa8;
+      background: #9a9a9a;
       border-radius: 50%;
       animation: veliBounce 1.2s infinite ease-in-out both;
     }
@@ -811,7 +811,7 @@
     .veli-chips-bar {
       padding: 8px 12px;
       background: #ffffff;
-      border-top: 1px solid #eeeeff;
+      border-top: 1px solid #e9e2ef;
       display: flex;
       gap: 6px;
       overflow-x: auto;
@@ -827,8 +827,8 @@
       white-space: nowrap;
       padding: 5px 11px;
       border-radius: 14px;
-      background: #f6f6fb;
-      border: 1px solid #e3e3ef;
+      background: #f7f4f9;
+      border: 1px solid #e9e2ef;
       color: #612D87;
       cursor: pointer;
       user-select: none;
@@ -845,7 +845,7 @@
     .veli-footer {
       padding: 10px 12px calc(10px + var(--safeB, 0px));
       background: #ffffff;
-      border-top: 1px solid #e8e8f2;
+      border-top: 1px solid #e9e2ef;
       display: flex;
       align-items: center;
       gap: 8px;
@@ -853,13 +853,13 @@
     }
     .veli-input {
       flex: 1;
-      border: 1px solid #dcdbf5;
+      border: 1px solid #e8dcf0;
       border-radius: 20px;
       padding: 10px 14px;
       font-family: inherit;
       font-size: 13.5px;
-      color: #1c1c3c;
-      background: #fbfbfe;
+      color: #1f1f1f;
+      background: #f7f4f9;
       outline: none;
       transition: border-color 0.2s, box-shadow 0.2s;
     }
@@ -869,15 +869,15 @@
       background: #ffffff;
     }
     .veli-input::placeholder {
-      color: #9b9ab8;
+      color: #9a9a9a;
     }
 
     .veli-mic-btn {
       width: 36px;
       height: 36px;
       border-radius: 50%;
-      background: #f1f0fa;
-      border: 1px solid #dcdbf5;
+      background: #f7f4f9;
+      border: 1px solid #e8dcf0;
       color: #612D87;
       display: grid;
       place-items: center;
