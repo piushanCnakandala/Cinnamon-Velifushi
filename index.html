@@ -10,13 +10,13 @@
 <meta name="description" content="Digital guest directory for Cinnamon Velifushi Maldives: menus, island experiences, spa, activities, resort map and more.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600&family=Outfit:wght@300&display=swap" rel="stylesheet">
 <style>
 :root{
   /* BRAND COLOURS — Cinnamon purple & white. Change these to retheme the whole site. */
   --cream:#ffffff;          /* page background */
   --paper:#f7f4f9;          /* alternate section background (soft purple-white) */
-  --ink:#1f1f1f;            /* main text (near-black, as on cinnamonhotels.com) */
+  --ink:#000000;            /* main text (black, as on cinnamonhotels.com) */
   --muted:#6e6e6e;          /* secondary text */
   --line:#e9e2ef;           /* hairlines & borders */
   --cinnamon:#612D87;       /* primary Cinnamon purple: headings, links, buttons */
@@ -26,10 +26,12 @@
   --night:#3b1b53;          /* dark contact strip */
   --tint:#e8dcf0;           /* light lilac text on photos */
   --shade:48,22,67;         /* RGB of photo overlays (deep purple) */
-  /* Cinnamon Hotels uses a light geometric sans (Proxima Nova); Mulish is the closest free match.
-     --serif is kept as a name so existing rules keep working, but now points to the same sans. */
-  --serif:Mulish,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-  --sans:Mulish,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  /* cinnamonhotels.com: headings = Isidora 300, body = Proxima Nova. Both are licensed fonts, so the
+     free look-alikes Outfit (headings) and Mulish (body) load from Google Fonts as fallbacks; if the
+     licensed fonts are ever added to this site they take over automatically.
+     --serif is kept as a name so existing rules keep working; it now means "heading font". */
+  --serif:Isidora,Outfit,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --sans:"proxima-nova",Mulish,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   --safeB:env(safe-area-inset-bottom,0px);
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -469,17 +471,21 @@ html,body{overflow-x:clip}
 /* ---------- Cinnamon Hotels typography ----------
    Matches cinnamonhotels.com: light uppercase sans headings in Cinnamon purple,
    airy body copy, small letter-spaced uppercase buttons. */
-body{line-height:1.6}
-.title,.hero h1,.phero h2,.group h3,.dh,.dpart,.tile .cap b,.feature b,.today-act-card h3{font-weight:300;text-transform:uppercase;letter-spacing:.02em;line-height:1.15}
+/* metrics measured on the live site: headings 300 / lh 1.2 / -0.0125em, card titles +0.011em,
+   body 300 / 15px / lh 26px / +0.01em, buttons 500 / 12px / +0.06em / radius 16px 0 */
+body{line-height:1.75;letter-spacing:.01em}
+.title,.hero h1,.phero h2,.group h3,.dh,.dpart,.today-act-card h3{font-family:var(--serif);font-weight:300;text-transform:uppercase;letter-spacing:-.0125em;line-height:1.2}
+.tile .cap b,.feature b{font-family:var(--serif);font-weight:300;text-transform:uppercase;letter-spacing:.011em;line-height:1.2}
 .title,.dh,.dpart,.group h3,.today-act-card h3{color:var(--cinnamon)}
-.hero h1{line-height:1.08}
-.title .tilde{font-style:normal}
-.dkick,.dq,.dor{font-style:normal;font-weight:300}
+.hero h1{line-height:1.1}
+/* cinnamonhotels.com uses no italics anywhere: keep all emphasis upright (incl. chatbot replies) */
+em,i,.title .tilde,.dkick,.dq,.dor,.dw,.empty-act{font-style:normal}
+.dkick,.dq,.dor{font-weight:300}
 .dkick,.dq{color:var(--cinnamon)}
-.dp,.block .head p,.split p,.hero p,.phero p{line-height:1.8}
-.hero .cta,.link,.vbar .open{letter-spacing:.12em;font-weight:500}
-.hero .cta:hover{letter-spacing:.16em}
-.hero .cta,.vbar .open,.cbtns a{border-radius:4px}
+.dp,.block .head p,.split p,.hero p,.phero p{font-weight:300;line-height:1.73}
+.hero .cta,.link,.vbar .open,.notif-modal-btn{font-family:var(--sans);font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase}
+.hero .cta:hover{letter-spacing:.1em}
+.hero .cta,.vbar .open,.cbtns a,.notif-modal-btn{border-radius:16px 0}
 
 /* respect "reduce motion" phone settings */
 @media (prefers-reduced-motion: reduce){
