@@ -324,10 +324,10 @@ main{min-height:100vh;padding-bottom:calc(70px + var(--safeB))}
 .tab-soon{position:absolute;top:-3px;right:50%;transform:translateX(16px);font-size:7.5px;font-weight:600;padding:1px 3px;border-radius:3px;background:var(--line);color:var(--cinnamon);line-height:1;letter-spacing:0}
 
 /* ---------- gallery & lightbox ---------- */
-.gallery-bar{display:flex;gap:8px;overflow-x:auto;padding:20px 16px 8px;max-width:1080px;margin:0 auto;scrollbar-width:none}
-.gallery-bar::-webkit-scrollbar{display:none}
-.gallery-chip{flex:none;font:inherit;font-size:12px;color:var(--muted);background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:7px 15px;cursor:pointer;transition:all .2s;font-weight:500}
-.gallery-chip.on{background:var(--cinnamon);color:#fff;border-color:var(--cinnamon)}
+.gallery-bar{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;padding:22px 16px 12px;max-width:1080px;margin:0 auto}
+.gallery-chip{flex:none;font:inherit;font-size:12.5px;color:var(--muted);background:var(--paper);border:1px solid var(--line);border-radius:24px;padding:8px 18px;cursor:pointer;transition:all .25s ease;font-weight:500;letter-spacing:.02em}
+.gallery-chip:hover{border-color:var(--cinnamon);color:var(--cinnamon)}
+.gallery-chip.on{background:var(--cinnamon);color:#fff;border-color:var(--cinnamon);box-shadow:0 4px 14px rgba(97,45,135,.22)}
 .gallery-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:12px 16px 40px;max-width:1080px;margin:0 auto}
 @media (min-width:760px){.gallery-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}}
 @media (min-width:1020px){.gallery-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
@@ -1053,27 +1053,29 @@ function renderPdfViewer(id, d){
 
 /* ---------- Gallery & Lightbox ---------- */
 const GALLERY_ITEMS = [
-  /* --- Resort Tour --- */
+  /* --- Island Weddings --- */
   {
-    title: "Aerial View of Cinnamon Velifushi",
-    category: "Resort Tour",
-    catKey: "tour",
-    src: "img/hero-aerial.jpg",
-    desc: "A breathtaking aerial perspective of our private island oasis in Vaavu Atoll."
+    title: "Island Wedding Setup & Floral Arch",
+    category: "Island Weddings",
+    catKey: "weddings",
+    src: "img/Wedding 01.avif",
+    desc: "Barefoot beach weddings and renewal of vows framed by palm arches and fragrant tropical floral blooms."
   },
+  {
+    title: "Ocean Breeze Wedding Pavilion",
+    category: "Island Weddings",
+    catKey: "weddings",
+    src: "img/docs/wedding-packages.jpg",
+    desc: "Celebrate timeless romance with tailor-made ceremony setups overlooking the turquoise lagoon."
+  },
+
+  /* --- Resort Tour --- */
   {
     title: "Overwater Luxury Villas & Ocean Lagoon",
     category: "Resort Tour",
     catKey: "tour",
     src: "img/velifushi-luxury-stay.jpg",
     desc: "Iconic overwater living perched directly above the shimmering turquoise waters of Cinnamon Velifushi."
-  },
-  {
-    title: "Sunset Aerial of Vaavu Atoll",
-    category: "Resort Tour",
-    catKey: "tour",
-    src: "img/aerial-sunset-drone.jpg",
-    desc: "A breathtaking golden hour perspective of Cinnamon Velifushi surrounded by crystal clear lagoon reefs."
   },
   {
     title: "Mandara Spa Overwater Sanctuary",
@@ -1090,48 +1092,6 @@ const GALLERY_ITEMS = [
     desc: "Authentic Balinese wellness therapies, soothing aromatic oils, and restorative overwater spa treatments."
   },
   {
-    title: "Private Beachfront Dining",
-    category: "Resort Tour",
-    catKey: "tour",
-    src: "img/Signature Experiences.jpg",
-    desc: "Candlelit destination dining under the stars right by the gently lapping ocean waves."
-  },
-  {
-    title: "Candlelit Shoreline Dinner Setup",
-    category: "Resort Tour",
-    catKey: "tour",
-    src: "img/signature-experiences-setup.jpg",
-    desc: "An unforgettable private dining setup under the Maldivian stars framed by gentle ocean waves."
-  },
-  {
-    title: "Sunset Beach Lounge & Cocktails",
-    category: "Resort Tour",
-    catKey: "tour",
-    src: "img/sunset-dining-ambience.jpg",
-    desc: "Relaxing beachfront dining atmosphere with chilled drinks, ambient evening glow, and island breezes."
-  },
-  {
-    title: "Signature Poolside Cocktails",
-    category: "Resort Tour",
-    catKey: "tour",
-    src: "img/docs/signature-cocktail.jpg",
-    desc: "Freshly shaken tropical cocktails and chilled drinks at Fen Pool Bar."
-  },
-  {
-    title: "Weekly Island Activities & Yoga",
-    category: "Resort Tour",
-    catKey: "tour",
-    src: "img/yoga.jpg",
-    desc: "Friendly volleyball matches, sunrise yoga, zumba, dart championships, and water sports."
-  },
-  {
-    title: "Island Wedding Setup",
-    category: "Resort Tour",
-    catKey: "tour",
-    src: "img/Wedding 01.avif",
-    desc: "Barefoot beach weddings and renewal of vows framed by palm arches and floral blooms."
-  },
-  {
     title: "Resort Compendium & Welcome Guide",
     category: "Resort Tour",
     catKey: "tour",
@@ -1139,65 +1099,129 @@ const GALLERY_ITEMS = [
     desc: "Your comprehensive guide to resort services, villa amenities, dining, and island experiences."
   },
 
-  /* --- Catway experience --- */
+  /* --- Dining --- */
   {
-    title: "Castaway Sandbank Picnic",
-    category: "Catway experience",
-    catKey: "catway",
+    title: "Private Beachfront Dining",
+    category: "Dining",
+    catKey: "dining",
+    src: "img/Signature Experiences.jpg",
+    desc: "Candlelit destination dining under the stars right by the gently lapping ocean waves."
+  },
+  {
+    title: "Candlelit Shoreline Dinner Setup",
+    category: "Dining",
+    catKey: "dining",
+    src: "img/signature-experiences-setup.jpg",
+    desc: "An unforgettable private dining setup under the Maldivian stars framed by gentle ocean waves."
+  },
+  {
+    title: "Sunset Beach Lounge & Dining",
+    category: "Dining",
+    catKey: "dining",
+    src: "img/sunset-dining-ambience.jpg",
+    desc: "Relaxing beachfront dining atmosphere with chilled drinks, ambient evening glow, and island breezes."
+  },
+  {
+    title: "Signature Poolside Cocktails",
+    category: "Dining",
+    catKey: "dining",
+    src: "img/docs/signature-cocktail.jpg",
+    desc: "Freshly shaken tropical cocktails and chilled drinks at Fen Pool Bar."
+  },
+
+  /* --- Activities --- */
+  {
+    title: "Sunrise Yoga & Beach Wellness",
+    category: "Activities",
+    catKey: "activities",
+    src: "img/yoga.jpg",
+    desc: "Rejuvenate your body and mind with morning yoga sessions right on the soft sandy shores."
+  },
+  {
+    title: "Weekly Island Activities & Sports",
+    category: "Activities",
+    catKey: "activities",
+    src: "img/docs/weekly-activities.jpg",
+    desc: "Friendly volleyball matches, water aerobics, zumba, dart championships, and island games."
+  },
+  {
+    title: "Dolphin Safari Adventure",
+    category: "Activities",
+    catKey: "activities",
+    src: "img/docs/dolphin-watching.jpg",
+    desc: "Encounter playful spinner dolphins leaping in their natural turquoise habitat."
+  },
+  {
+    title: "Castaway Sandbank Excursion",
+    category: "Activities",
+    catKey: "activities",
     src: "img/docs/sandbank-excursion.jpg",
     desc: "An untouched expanse of pure white sand encircled by crystalline coral lagoons on a private castaway trip."
   },
   {
     title: "Sunset Dhoni Cruise",
-    category: "Catway experience",
-    catKey: "catway",
+    category: "Activities",
+    catKey: "activities",
     src: "img/docs/sunset-cruise.jpg",
     desc: "Unwind on a traditional wooden Dhoni boat as golden hour illuminates the Maldives."
   },
   {
-    title: "Dolphin Safari Adventure",
-    category: "Catway experience",
-    catKey: "catway",
-    src: "img/docs/dolphin-watching.jpg",
-    desc: "Encounter playful spinner dolphins leaping in their natural turquoise habitat."
-  },
-  {
-    title: "Big Game Fishing Adventure",
-    category: "Catway experience",
-    catKey: "catway",
-    src: "img/island-experiences.jpg",
-    desc: "Sail for the horizon seeking marlin, sailfish, and tuna with our experienced local crew."
-  },
-  {
     title: "Traditional Sunset Fishing",
-    category: "Catway experience",
-    catKey: "catway",
+    category: "Activities",
+    catKey: "activities",
     src: "img/docs/sunset-fishing.jpg",
     desc: "Reel in fresh reef fish using traditional Maldivian handlines as dusk settles."
   },
   {
-    title: "Thinadhoo Island Village",
-    category: "Catway experience",
-    catKey: "catway",
+    title: "Big Game Fishing Adventure",
+    category: "Activities",
+    catKey: "activities",
+    src: "img/island-experiences.jpg",
+    desc: "Sail for the horizon seeking marlin, sailfish, and tuna with our experienced local crew."
+  },
+  {
+    title: "Thinadhoo Island Cultural Tour",
+    category: "Activities",
+    catKey: "activities",
     src: "img/docs/thinadhoo-island.jpg",
     desc: "Discover rich cultural traditions and local crafts on neighbouring island communities."
+  },
+
+  /* --- Island View --- */
+  {
+    title: "Aerial View of Cinnamon Velifushi",
+    category: "Island View",
+    catKey: "view",
+    src: "img/hero-aerial.jpg",
+    desc: "A breathtaking aerial perspective of our private island oasis in Vaavu Atoll."
+  },
+  {
+    title: "Sunset Aerial of Vaavu Atoll",
+    category: "Island View",
+    catKey: "view",
+    src: "img/aerial-sunset-drone.jpg",
+    desc: "A breathtaking golden hour perspective of Cinnamon Velifushi surrounded by crystal clear lagoon reefs."
   }
 ];
 
-let curGalleryFilter = 'all';
+let curGalleryFilter = 'weddings';
 let curLightboxIndex = 0;
-let activeGalleryList = GALLERY_ITEMS;
+let activeGalleryList = [];
 
 function renderGallery(){
-  activeGalleryList = curGalleryFilter === 'all'
-    ? GALLERY_ITEMS
-    : GALLERY_ITEMS.filter(it => it.catKey === curGalleryFilter);
-
   const filters = [
-    ['all', 'All Photos'],
+    ['weddings', 'Island Weddings'],
     ['tour', 'Resort Tour'],
-    ['catway', 'Catway experience']
+    ['dining', 'Dining'],
+    ['activities', 'Activities'],
+    ['view', 'Island View']
   ];
+
+  if (!filters.some(f => f[0] === curGalleryFilter)) {
+    curGalleryFilter = filters[0][0];
+  }
+
+  activeGalleryList = GALLERY_ITEMS.filter(it => it.catKey === curGalleryFilter);
 
   const chipsHtml = `<nav class="gallery-bar">${filters.map(([k,l]) =>
     `<button type="button" class="gallery-chip ${curGalleryFilter===k?'on':''}" onclick="setGalleryFilter('${k}')">${esc(l)}</button>`
