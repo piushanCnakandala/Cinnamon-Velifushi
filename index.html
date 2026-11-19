@@ -3,7 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#252776">
+<meta name="theme-color" content="#612D87">
+<link rel="icon" type="image/png" href="img/logo-flower.png">
+<link rel="apple-touch-icon" href="img/logo-flower.png">
 <title>Cinnamon Velifushi – Guest Directory</title>
 <meta name="description" content="Digital guest directory for Cinnamon Velifushi Maldives: menus, island experiences, spa, activities, resort map and more.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,10 +19,10 @@
   --ink:#1c1c3c;            /* main text */
   --muted:#6b6b86;          /* secondary text */
   --line:#e3e3ef;           /* hairlines & borders */
-  --cinnamon:#252776;       /* primary purple: accents, links, buttons */
-  --cinnamon-d:#1a1b57;     /* darker purple */
+  --cinnamon:#612D87;       /* primary Cinnamon purple: accents, links, buttons */
+  --cinnamon-d:#441c61;     /* darker purple */
   --gold:#b8b6e3;           /* soft lilac for fine details */
-  --sea:#252776;            /* photo placeholder / dial centre */
+  --sea:#612D87;            /* photo placeholder / dial centre */
   --night:#17183f;          /* dark contact strip */
   --tint:#dcdbf5;           /* light lilac text on photos */
   --shade:23,24,63;         /* RGB of photo overlays */
@@ -43,9 +45,72 @@ main{min-height:100vh;padding-bottom:calc(70px + var(--safeB))}
 .topnav{position:fixed;top:0;left:0;right:0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:calc(12px + env(safe-area-inset-top,0px)) 18px 12px;transition:background .3s,box-shadow .3s,color .3s;color:#fff}
 .topnav.solid{background:rgba(255,255,255,.96);backdrop-filter:blur(10px);box-shadow:0 1px 0 var(--line);color:var(--ink)}
 .logo{display:flex;flex-direction:column;line-height:1}
-.logo b{font-family:var(--serif);font-weight:600;font-size:21px;letter-spacing:.02em}
-.logo small{font-size:9.5px;letter-spacing:.34em;text-transform:uppercase;margin-top:4px;opacity:.85}
+.logo img{height:40px;width:auto;transition:filter .3s}
+/* the logo file is white: tint it the logo's purple once the bar turns white on scroll */
+.topnav.solid .logo img{filter:brightness(0) saturate(100%) invert(20%) sepia(38%) saturate(2960%) hue-rotate(247deg) brightness(92%) contrast(94%)}
+.top-meta{display:flex;align-items:center;gap:12px}
 .clock{font-size:12px;letter-spacing:.06em;opacity:.9;text-align:right}
+
+/* ---------- top notifications ---------- */
+.notif-wrap{position:relative}
+.notif-btn{background:none;border:none;color:inherit;cursor:pointer;display:grid;place-items:center;position:relative;width:34px;height:34px;border-radius:50%;padding:0;transition:background .2s,transform .2s}
+.notif-btn:hover{background:rgba(255,255,255,.18);transform:scale(1.06)}
+.topnav.solid .notif-btn:hover{background:rgba(97,45,135,.08)}
+.notif-svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.notif-dot{position:absolute;top:4px;right:4px;width:9px;height:9px;border-radius:50%;background:#ef4444;border:2px solid #fff;display:none}
+.notif-dot.pulse{animation:notifPulse 2.4s infinite}
+@keyframes notifPulse{0%{transform:scale(1);box-shadow:0 0 0 0 rgba(239,68,68,.7)}70%{transform:scale(1.2);box-shadow:0 0 0 8px rgba(239,68,68,0)}100%{transform:scale(1);box-shadow:0 0 0 0 rgba(239,68,68,0)}}
+
+/* dropdown menu */
+.notif-menu{position:absolute;top:calc(100% + 10px);right:0;width:340px;max-width:calc(100vw - 32px);background:#fff;color:var(--ink);border-radius:18px;box-shadow:0 14px 40px rgba(23,24,63,.18),0 0 0 1px var(--line);padding:14px;z-index:100;opacity:0;pointer-events:none;transform:translateY(8px) scale(.97);transition:opacity .25s ease,transform .25s ease}
+.notif-wrap.open .notif-menu{opacity:1;pointer-events:auto;transform:translateY(0) scale(1)}
+@media (hover: hover){
+  .notif-wrap:hover .notif-menu{opacity:1;pointer-events:auto;transform:translateY(0) scale(1)}
+}
+.notif-head{display:flex;align-items:center;justify-content:space-between;padding-bottom:10px;margin-bottom:10px;border-bottom:1px solid var(--line)}
+.notif-head h4{font-family:var(--serif);font-size:18px;font-weight:600;color:var(--ink);line-height:1}
+.notif-head span{display:block;font-size:11px;color:var(--muted);letter-spacing:.04em;margin-top:2px}
+.notif-mark-read{background:none;border:none;font-size:11px;color:var(--cinnamon);font-weight:500;cursor:pointer;padding:4px 8px;border-radius:8px}
+.notif-mark-read:hover{background:var(--paper)}
+.notif-list{display:flex;flex-direction:column;gap:8px;max-height:360px;overflow-y:auto;scrollbar-width:none}
+.notif-list::-webkit-scrollbar{display:none}
+.notif-item{display:flex;align-items:flex-start;gap:12px;padding:10px 12px;border-radius:12px;cursor:pointer;background:var(--paper);transition:background .2s,transform .15s;border:1px solid transparent;position:relative}
+.notif-item:hover{background:#edeaf7;transform:translateX(2px)}
+.notif-item.unread{background:#f8f3fc;border-color:rgba(97,45,135,.2)}
+.notif-item-ic{width:36px;height:36px;border-radius:50%;background:#fff;border:1px solid var(--line);display:grid;place-items:center;flex-shrink:0}
+.notif-item-ic svg{width:18px;height:18px;stroke:var(--cinnamon);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.notif-item-tx{flex:1;min-width:0}
+.notif-item-tag{display:inline-block;font-size:9.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:10px;margin-bottom:3px}
+.notif-item-tx b{display:block;font-size:13.5px;font-weight:600;line-height:1.25;color:var(--ink);margin-bottom:2px}
+.notif-item-tx p{font-size:12px;color:var(--muted);margin-top:2px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.notif-item-dot{position:absolute;top:10px;right:10px;width:7px;height:7px;border-radius:50%;background:#ef4444}
+.notif-foot{margin-top:10px;padding-top:10px;border-top:1px solid var(--line);text-align:center;font-size:11.5px;color:var(--cinnamon);font-weight:500}
+
+/* detail modal */
+.notif-modal-overlay{position:fixed;inset:0;background:rgba(18,19,45,.65);backdrop-filter:blur(6px);z-index:90;display:grid;place-items:center;padding:18px;opacity:0;pointer-events:none;transition:opacity .3s ease}
+.notif-modal-overlay.open{opacity:1;pointer-events:auto}
+.notif-modal-card{width:100%;max-width:440px;background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 24px 50px rgba(0,0,0,.3);transform:scale(.94) translateY(12px);transition:transform .3s cubic-bezier(.16,1,.3,1);position:relative;max-height:calc(92vh);display:flex;flex-direction:column}
+.notif-modal-overlay.open .notif-modal-card{transform:scale(1) translateY(0)}
+.notif-modal-hero{width:100%;aspect-ratio:16/9;background-color:#612D87;background-size:cover;background-position:center;position:relative;flex-shrink:0}
+.notif-modal-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.15),rgba(0,0,0,.65) 100%)}
+.notif-modal-close{position:absolute;top:12px;right:12px;width:34px;height:34px;border-radius:50%;background:rgba(0,0,0,.5);color:#fff;border:none;display:grid;place-items:center;cursor:pointer;z-index:2;transition:background .2s}
+.notif-modal-close:hover{background:rgba(0,0,0,.85)}
+.notif-modal-close svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.notif-modal-body{padding:20px;overflow-y:auto;display:flex;flex-direction:column;gap:12px}
+.notif-modal-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:600}
+.notif-modal-badge svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8}
+.notif-modal-title{font-family:var(--serif);font-size:24px;font-weight:600;line-height:1.15;color:var(--ink)}
+.notif-modal-meta{font-size:12px;color:var(--ink);padding:8px 12px;background:var(--paper);border-radius:10px;border-left:3px solid var(--cinnamon);font-weight:500}
+.notif-modal-desc{font-size:14px;color:#3f3f5c;line-height:1.55}
+.notif-modal-perks{list-style:none;padding:0;margin:4px 0;display:flex;flex-direction:column;gap:6px}
+.notif-modal-perks li{font-size:13px;display:flex;align-items:flex-start;gap:8px;color:var(--ink)}
+.notif-modal-perks li svg{width:16px;height:16px;stroke:#17663a;fill:none;stroke-width:2.2;flex-shrink:0;margin-top:2px}
+.notif-modal-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.notif-modal-btn{flex:1;min-width:120px;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:11px 16px;border-radius:12px;font-size:13px;font-weight:500;text-decoration:none;cursor:pointer;border:none;transition:background .2s,transform .15s}
+.notif-modal-btn.primary{background:var(--cinnamon);color:#fff}
+.notif-modal-btn.primary:hover{background:var(--cinnamon-d);transform:translateY(-1px)}
+.notif-modal-btn.secondary{background:var(--paper);color:var(--cinnamon);border:1px solid var(--line)}
+.notif-modal-btn.secondary:hover{background:#eceaf7}
 
 /* ---------- hero ---------- */
 .hero{position:relative;min-height:88vh;min-height:88svh;display:flex;align-items:flex-end;color:#fff;background-color:var(--sea);background-image:var(--img);background-position:center;background-size:cover;background-repeat:no-repeat;overflow:hidden}
@@ -101,6 +166,8 @@ main{min-height:100vh;padding-bottom:calc(70px + var(--safeB))}
 @media (min-width:760px){.split .tx{padding:40px 48px}}
 .split .title{font-size:34px;margin-top:8px}
 .split p{color:var(--muted);margin-top:10px;font-weight:300}
+.split-spa-logo{display:inline-flex;align-items:center;background:#fff;padding:6px 14px;border-radius:10px;border:1px solid var(--line);box-shadow:0 3px 12px rgba(97,45,135,.08);margin-bottom:12px}
+.split-spa-logo img{height:38px;width:auto;display:block;object-fit:contain}
 .link{display:inline-flex;align-items:center;gap:8px;margin-top:18px;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--cinnamon);border-bottom:1px solid currentColor;padding-bottom:4px}
 .link svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.6}
 
@@ -118,6 +185,8 @@ main{min-height:100vh;padding-bottom:calc(70px + var(--safeB))}
 .phero::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(var(--shade),.5),rgba(var(--shade),.15) 40%,rgba(var(--shade),.78))}
 .phero .in{position:relative;width:100%;max-width:1080px;margin:0 auto;padding:90px 22px 30px}
 .phero .eyebrow{color:var(--tint)}
+.phero-logo{display:inline-flex;align-items:center;background:#fff;padding:8px 16px;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.28);margin-bottom:12px}
+.phero-logo img{height:46px;width:auto;display:block;object-fit:contain}
 .phero h2{font-family:var(--serif);font-weight:500;font-size:clamp(34px,7vw,56px);line-height:1.05;margin-top:8px}
 .phero p{max-width:560px;margin-top:8px;font-weight:300;color:#ecebf7}
 .crumb{display:inline-flex;align-items:center;gap:6px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#fff;opacity:.9}
@@ -128,7 +197,7 @@ main{min-height:100vh;padding-bottom:calc(70px + var(--safeB))}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 @media (min-width:760px){.grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}}
 .card{display:block;background:var(--paper);overflow:hidden;box-shadow:0 1px 0 var(--line);transition:transform .2s,box-shadow .2s}
-.card:hover{box-shadow:0 10px 28px rgba(37,39,118,.14)}
+.card:hover{box-shadow:0 10px 28px rgba(97,45,135,.14)}
 .card:active{transform:scale(.98)}
 .card .ph{position:relative;display:block;aspect-ratio:3/4;background:linear-gradient(135deg,#e9e8f6,#f6f6fb);overflow:hidden}
 .card .ph img{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;object-position:top;opacity:0;transition:opacity .4s}
@@ -155,6 +224,83 @@ main{min-height:100vh;padding-bottom:calc(70px + var(--safeB))}
 .mapimg{width:100%;background:#e9e8f6;box-shadow:0 1px 0 var(--line)}
 .note{font-size:13px;color:var(--muted);margin:12px 4px 0}
 
+/* ---------- document content ---------- */
+.phero.flat{min-height:230px}
+.djump{position:sticky;top:calc(56px + env(safe-area-inset-top,0px));z-index:20;display:flex;gap:8px;overflow-x:auto;padding:10px 16px;background:rgba(255,255,255,.97);border-bottom:1px solid var(--line);scrollbar-width:none}
+.djump::-webkit-scrollbar{display:none}
+.djump button{flex:none;font:inherit;font-size:12px;color:var(--cinnamon);background:var(--paper);border:1px solid var(--line);padding:7px 12px;cursor:pointer;white-space:nowrap}
+.doc{max-width:760px;margin:0 auto;padding:26px 20px 48px}
+.dh{font-family:var(--serif);font-weight:500;font-size:29px;line-height:1.15;margin:34px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line);scroll-margin-top:125px}
+.doc > .dh:first-child{margin-top:0}
+.dpart{font-family:var(--serif);font-weight:500;font-size:36px;color:var(--cinnamon);margin:52px 0 0;text-align:center}
+.dsub{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--cinnamon);font-weight:500;margin:24px 0 8px}
+.dkick{font-family:var(--serif);font-style:italic;font-size:21px;line-height:1.3;color:var(--cinnamon);margin:0 0 12px}
+.dp{margin:0 0 12px;font-weight:300;font-size:16px}
+.dul{margin:0 0 14px;padding:0;list-style:none}
+.dul li{position:relative;padding:6px 0 6px 18px;font-weight:300;border-bottom:1px solid #f0f0f7}
+.dul li::before{content:"";position:absolute;left:2px;top:15px;width:6px;height:6px;border-radius:50%;background:var(--gold)}
+.dnote{font-size:14px;color:var(--muted);margin:12px 0}
+.dcall{background:var(--paper);border-left:3px solid var(--cinnamon);padding:12px 14px;margin:0 0 18px;font-weight:500;font-size:15px}
+.dcall.soft{font-weight:400;font-size:13.5px;color:var(--muted)}
+.dq{font-family:var(--serif);font-style:italic;font-size:24px;line-height:1.25;text-align:center;color:var(--cinnamon);margin:26px 0}
+.dor{display:flex;align-items:center;gap:12px;margin:2px 0;color:var(--muted);font-family:var(--serif);font-style:italic}
+.dor::before,.dor::after{content:"";flex:1;height:1px;background:var(--line)}
+.dprice{display:flex;flex-direction:column;align-items:flex-start;background:var(--cinnamon);color:#fff;padding:16px 18px;margin:0 0 18px}
+.dprice b{font-family:var(--serif);font-weight:600;font-size:32px;line-height:1.1}
+.dprice span{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--tint);margin-top:3px}
+.dprice small{font-size:13px;margin-top:8px;color:#fff}
+.ditem{padding:12px 0;border-bottom:1px solid #f0f0f7}
+.dn{display:flex;justify-content:space-between;align-items:baseline;gap:16px}
+.dn .nm{font-weight:500;font-size:16px;line-height:1.4}
+.dn .pr{flex:0 0 auto;max-width:46%;text-align:right;font-weight:500;font-size:14px;color:var(--cinnamon)}
+.dd{font-weight:300;font-size:15px;color:#3f3f5c;margin-top:3px}
+.dw{font-size:13px;font-style:italic;color:var(--muted);margin-top:5px}
+.tag{display:inline-block;font-size:10.5px;font-weight:500;letter-spacing:.03em;line-height:1;color:#7a4a12;background:#fbf1e2;border:1px solid #f0dcbc;border-radius:20px;padding:3px 7px;margin:1px 1px;vertical-align:1px;white-space:nowrap}
+.tag.good{color:#17663a;background:#e8f5ec;border-color:#c9e6d3}
+.dcards{display:grid;gap:10px;margin:0 0 16px}
+@media (min-width:620px){.dcards{grid-template-columns:1fr 1fr}}
+.dcard{background:var(--paper);padding:14px 16px;box-shadow:0 1px 0 var(--line)}
+.dcard b{display:block;font-weight:500;margin-bottom:4px}
+.dcard p{font-size:14px;font-weight:300;margin-top:3px;overflow-wrap:anywhere}
+.dqa > div{padding:10px 0;border-bottom:1px solid #f0f0f7}
+.dqa b{font-weight:500}
+.dqa p{font-weight:300;font-size:15px;margin-top:3px}
+.dtable{width:100%;border-collapse:collapse;margin:0 0 16px;font-size:15px}
+.dtable th{text-align:left;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500;padding:6px 8px 6px 0;border-bottom:1px solid var(--line)}
+.dtable td{padding:9px 8px 9px 0;border-bottom:1px solid #f0f0f7;font-weight:300}
+.dtable td:first-child{font-weight:500}
+.ptable{margin:0 0 20px}
+.ptable h4{display:flex;justify-content:space-between;gap:12px;font-weight:500;font-size:16px;padding:9px 12px;background:var(--paper);border-left:3px solid var(--cinnamon)}
+.ptable h4 span{flex:none;color:var(--cinnamon)}
+.ptable .tn{display:block;font-size:12px;color:var(--muted);padding:5px 12px 0}
+.ptable table{width:100%;border-collapse:collapse}
+.ptable td{padding:8px 12px;border-bottom:1px solid #f0f0f7;vertical-align:baseline;font-size:15px}
+.ptable td b{font-weight:400}
+.ptable td small{display:block;font-size:12px;color:var(--muted)}
+.ptable .num{text-align:right;white-space:nowrap;font-weight:500;color:var(--cinnamon);font-size:14px}
+.sched{display:grid;gap:12px}
+@media (min-width:620px){.sched{grid-template-columns:1fr 1fr}}
+.day{background:var(--paper);padding:14px 16px;box-shadow:0 1px 0 var(--line)}
+.day.today{box-shadow:inset 0 0 0 2px var(--cinnamon)}
+.day h4{display:flex;align-items:center;justify-content:space-between;font-family:var(--serif);font-weight:500;font-size:24px;margin-bottom:6px}
+.day h4 em{font-family:var(--sans);font-style:normal;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:var(--cinnamon);padding:3px 8px}
+.slot{padding:8px 0;border-top:1px solid var(--line)}
+.slot .when{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--cinnamon);margin-bottom:3px}
+.slot b{display:block;font-weight:500}
+.slot small{display:block;font-size:13px;color:var(--muted);margin-bottom:3px}
+.dcontact{display:flex;flex-direction:column;gap:6px;margin:0 0 12px}
+.dcontact a{color:var(--cinnamon);border-bottom:1px solid var(--line);padding:8px 0;overflow-wrap:anywhere}
+.dlink{background:var(--paper);margin:0 0 16px}
+.dcodes{background:var(--paper);padding:12px 14px;margin:0 0 16px}
+.dcodes summary{cursor:pointer;font-weight:500;color:var(--cinnamon)}
+.dcodes .cq{width:100%;font:inherit;font-size:16px;padding:10px 12px;margin:12px 0;border:1px solid var(--line);background:#fff}
+.dcodes ul{list-style:none}
+.dcodes li{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px solid var(--line);font-size:14px}
+.dcodes li[hidden]{display:none}
+.dcodes li b{font-weight:500;white-space:nowrap}
+.dfoot{font-size:13px;color:var(--muted);text-align:center;margin:28px 0 0;padding-top:16px;border-top:1px solid var(--line)}
+.dorig{display:flex;width:max-content;max-width:100%;margin:20px auto 0}
+
 /* ---------- document viewer ---------- */
 .viewer{position:fixed;inset:0;background:#1b1b1b;display:flex;flex-direction:column;z-index:60}
 .vbar{display:flex;align-items:center;gap:10px;padding:10px 14px;padding-top:max(10px,env(safe-area-inset-top));background:var(--cream);border-bottom:1px solid var(--line)}
@@ -165,10 +311,94 @@ main{min-height:100vh;padding-bottom:calc(70px + var(--safeB))}
 .viewer iframe{flex:1;border:0;width:100%;background:#2b2b2b}
 
 /* ---------- bottom tabs ---------- */
-.tabs{position:fixed;left:0;right:0;bottom:0;z-index:40;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:6px 4px calc(6px + var(--safeB))}
-.tabs a{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:4px 8px;min-width:58px}
-.tabs a.on{color:var(--cinnamon)}
-.tabs svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:40;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:6px 2px calc(6px + var(--safeB))}
+.tabs a, .tabs .tab-item{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:9.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);padding:4px 3px;min-width:0;flex:1 1 0;text-align:center;position:relative}
+.tabs a.on{color:var(--cinnamon);font-weight:600}
+.tabs a.on::before{content:"";position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:26px;height:3px;background:var(--cinnamon);border-radius:0 0 3px 3px}
+.tabs svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.tab-disabled{opacity:.45;cursor:not-allowed;user-select:none}
+.tab-soon{position:absolute;top:-3px;right:50%;transform:translateX(16px);font-size:7.5px;font-weight:600;padding:1px 3px;border-radius:3px;background:var(--line);color:var(--cinnamon);line-height:1;letter-spacing:0}
+
+/* ---------- gallery & lightbox ---------- */
+.gallery-bar{display:flex;gap:8px;overflow-x:auto;padding:20px 16px 8px;max-width:1080px;margin:0 auto;scrollbar-width:none}
+.gallery-bar::-webkit-scrollbar{display:none}
+.gallery-chip{flex:none;font:inherit;font-size:12px;color:var(--muted);background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:7px 15px;cursor:pointer;transition:all .2s;font-weight:500}
+.gallery-chip.on{background:var(--cinnamon);color:#fff;border-color:var(--cinnamon)}
+.gallery-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:12px 16px 40px;max-width:1080px;margin:0 auto}
+@media (min-width:760px){.gallery-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}}
+@media (min-width:1020px){.gallery-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+
+.gallery-card{position:relative;aspect-ratio:4/3;background:var(--sea);border-radius:12px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.06);cursor:pointer;transition:transform .3s ease,box-shadow .3s ease}
+.gallery-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(97,45,135,.16)}
+.gallery-card img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.7,.2,1);image-rendering:-webkit-optimize-contrast}
+.gallery-card:hover img{transform:scale(1.06)}
+.gallery-card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(0,0,0,.75) 100%)}
+.gallery-card .cap{position:absolute;left:12px;right:12px;bottom:10px;z-index:1;color:#fff}
+.gallery-card .cap small{display:block;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--tint);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gallery-card .cap b{display:block;font-family:var(--serif);font-size:16px;font-weight:600;line-height:1.2;margin-top:2px;text-shadow:0 1px 3px rgba(0,0,0,.8)}
+
+.lightbox{position:fixed;inset:0;z-index:100;background:rgba(14,15,35,.94);backdrop-filter:blur(10px);display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity .3s ease}
+.lightbox.open{opacity:1;pointer-events:auto}
+.lightbox-top{display:flex;align-items:center;justify-content:space-between;padding:calc(14px + env(safe-area-inset-top,0px)) 20px 10px;color:#fff}
+.lightbox-counter{font-size:12px;letter-spacing:.1em;opacity:.8}
+.lightbox-close{background:none;border:none;color:#fff;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;cursor:pointer;transition:background .2s}
+.lightbox-close:hover{background:rgba(255,255,255,.15)}
+.lightbox-close svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2}
+.lightbox-main{flex:1;display:flex;align-items:center;justify-content:center;position:relative;padding:10px 60px;min-height:0}
+.lightbox-main img{max-width:100%;max-height:100%;object-fit:contain;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,.6);transition:opacity .2s ease}
+.lightbox-btn{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;display:grid;place-items:center;cursor:pointer;transition:background .2s,transform .15s}
+.lightbox-btn:hover{background:rgba(255,255,255,.25);transform:translateY(-50%) scale(1.06)}
+.lightbox-btn.prev{left:12px}
+.lightbox-btn.next{right:12px}
+.lightbox-btn svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2.2}
+.lightbox-bottom{padding:14px 20px calc(14px + var(--safeB, 0px));text-align:center;color:#fff;max-width:700px;margin:0 auto}
+.lightbox-cat{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--tint);font-weight:600;margin-bottom:6px}
+.lightbox-title{font-family:var(--serif);font-size:22px;font-weight:500}
+.lightbox-desc{font-size:13px;color:#d5d4ea;margin-top:4px;font-weight:300}
+
+/* toast */
+.toast{position:fixed;bottom:calc(75px + var(--safeB, 0px));left:50%;transform:translateX(-50%) translateY(20px);background:rgba(23,24,63,.95);color:#fff;padding:9px 16px;border-radius:20px;font-size:12px;letter-spacing:.03em;z-index:80;box-shadow:0 4px 18px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* today activities spotlight */
+.today-act-card{background:var(--paper);border:1px solid var(--line);border-top:3px solid var(--cinnamon);padding:22px 20px;box-shadow:0 4px 18px rgba(97,45,135,.06);margin-bottom:8px}
+.today-act-badge{display:inline-block;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:var(--cinnamon);padding:4px 10px;border-radius:20px;font-weight:600;margin-bottom:10px}
+.today-act-card h3{font-family:var(--serif);font-size:26px;font-weight:500;margin:0 0 6px;color:var(--ink)}
+.today-act-sub{font-size:14px;color:var(--muted);font-weight:300;margin:0 0 18px}
+.today-act-grid{display:grid;gap:16px}
+@media (min-width:680px){.today-act-grid{grid-template-columns:1fr 1fr;gap:20px}}
+.today-act-col{background:#fff;border:1px solid var(--line);padding:16px}
+.today-act-col h4{display:flex;align-items:center;gap:8px;font-family:var(--sans);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--cinnamon);font-weight:600;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.today-act-col h4 svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8}
+.today-act-slot{padding:8px 0;border-bottom:1px solid #f2f2fa}
+.today-act-slot:last-child{border-bottom:0;padding-bottom:0}
+.today-act-time{display:block;font-size:11px;font-weight:600;color:var(--gold);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.today-act-ev{margin-bottom:6px}
+.today-act-ev:last-child{margin-bottom:0}
+.today-act-ev b{display:block;font-size:14.5px;font-weight:500;color:var(--ink);line-height:1.3}
+.today-act-ev small{display:block;font-size:12.5px;color:var(--muted);margin-top:2px}
+.empty-act{font-size:13px;color:var(--muted);font-style:italic;margin:6px 0}
+
+/* ---------- island news ---------- */
+.news-feed{max-width:860px;margin:0 auto;padding:20px 16px 40px;display:flex;flex-direction:column;gap:32px}
+.news-card{background:var(--paper);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 4px 20px rgba(97,45,135,.06);transition:transform .3s ease,box-shadow .3s ease}
+.news-card:hover{box-shadow:0 8px 28px rgba(97,45,135,.12)}
+.news-card-body{padding:22px 20px 24px}
+.news-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.news-badge{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--cinnamon);background:var(--tint);padding:4px 12px;border-radius:20px;font-weight:600}
+.news-badge svg{width:12px;height:12px;fill:currentColor}
+.news-date{font-size:12px;color:var(--muted);font-weight:400}
+.news-category-tag{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:6px;line-height:1.4}
+.news-title{font-family:var(--serif);font-size:22px;line-height:1.3;color:var(--ink);margin:0 0 10px;font-weight:600}
+.news-sub{font-size:14px;color:var(--muted);line-height:1.5;margin:0 0 18px;font-weight:400}
+.news-media-grid{display:grid;grid-template-columns:1fr;gap:14px;margin:18px 0 20px}
+.news-media-grid.two-col{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.news-photo-wrap{position:relative;border-radius:10px;overflow:hidden;background:#141537;cursor:pointer;aspect-ratio:1414/2000;max-height:520px;box-shadow:0 3px 12px rgba(0,0,0,.08);margin:0 auto;width:100%}
+.news-photo-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .5s cubic-bezier(.2,.7,.2,1);display:block}
+.news-photo-wrap:hover img{transform:scale(1.03)}
+.news-photo-wrap .zoom-pill{position:absolute;bottom:12px;right:12px;background:rgba(23,24,63,.85);backdrop-filter:blur(6px);color:#fff;font-size:11px;padding:6px 12px;border-radius:16px;display:flex;align-items:center;gap:6px;pointer-events:none;font-weight:500;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.news-photo-wrap .zoom-pill svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.2}
+.news-desc{font-size:14.5px;color:#333;line-height:1.7;margin:0}
 
 /* =================== ANIMATIONS =================== */
 @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
@@ -242,11 +472,60 @@ html,body{overflow-x:clip}
 </style>
 </head>
 <body>
-<header class="topnav" id="topnav"><a class="logo" href="#/"><b id="logoName"></b><small>Maldives</small></a><span class="clock" id="clock"></span></header>
+<header class="topnav" id="topnav">
+  <a class="logo" href="#/"><img id="logoImg" src="img/logo-white.png" width="600" height="199" alt=""></a>
+  <div class="top-meta">
+    <span class="clock" id="clock"></span>
+    <div class="notif-wrap" id="notifWrap">
+      <button class="notif-btn" id="notifBtn" aria-label="Today's Highlights & Offers" title="Today's Highlights & Offers" aria-expanded="false">
+        <svg viewBox="0 0 24 24" class="notif-svg" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <span class="notif-dot" id="notifDot"></span>
+      </button>
+      <div class="notif-menu" id="notifMenu" role="region" aria-label="Today's Highlights & Offers"></div>
+    </div>
+  </div>
+</header>
 <main id="app"></main>
 <nav class="tabs" id="tabs"></nav>
 
+<div class="notif-modal-overlay" id="notifModalOverlay" aria-hidden="true">
+  <div class="notif-modal-card" id="notifModalCard"></div>
+</div>
+
+<div class="lightbox" id="lightbox" aria-modal="true" role="dialog">
+  <div class="lightbox-top">
+    <span class="lightbox-counter" id="lightboxCounter">1 / 12</span>
+    <button type="button" class="lightbox-close" onclick="closeLightbox()" aria-label="Close image viewer">
+      <svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="lightbox-main">
+    <button type="button" class="lightbox-btn prev" onclick="prevLightbox()" aria-label="Previous image">
+      <svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>
+    </button>
+    <img id="lightboxImg" src="" alt="Gallery Image">
+    <button type="button" class="lightbox-btn next" onclick="nextLightbox()" aria-label="Next image">
+      <svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
+    </button>
+  </div>
+  <div class="lightbox-bottom">
+    <small class="lightbox-cat" id="lightboxCat"></small>
+    <h3 class="lightbox-title" id="lightboxTitle"></h3>
+    <p class="lightbox-desc" id="lightboxDesc"></p>
+  </div>
+</div>
+
+<script src="content.js"></script>
 <script>
+  if (typeof CONTENT !== 'undefined') {
+    window.CONTENT = CONTENT;
+    window.CONTENT_READY = true;
+  }
+</script>
+<script src="chatbot.js"></script>
+<script src="notifications.js"></script>
+<script>
+window.CONTENT_READY = typeof CONTENT !== 'undefined';
 /* =====================================================================
    CONFIGURATION — edit this block to update the site.
    Documents are Google Drive file IDs (the long code in a file's link:
@@ -269,13 +548,18 @@ const RESORT = {
    Leave "" to use the cover of that section's first document instead. */
 const CINNAMON_IMG = "https://cinnamonweb.blob.core.windows.net/cinnamonweb-prd/misc/";
 const PHOTOS = {
-  home:     CINNAMON_IMG + "velifush-intro-01-200122.jpeg",
-  island:   CINNAMON_IMG + "velifushi-arrivals-00-530x498.jpg",
-  menus: "", sustain: "", compendium: "", activities: "",
+  home:     "img/hero-aerial.jpg",
+  island:   "img/island-experiences.jpg",
+  menus: "",
+  sustain:    "img/docs/sustainability.jpg",
+  compendium: "img/compendium-cover.jpg",
+  activities: "img/yoga.jpg",
   map:      "1Pnn-vVSgpbs00vP2vWNHh7yJLj_ozRj0",
-  special: "", packages: "",
-  spa:      "1tpOXMbRNiQ5cusDIwjvYw4RNAyfYTFes",
-  wedding: "", contacts: ""
+  special:    "img/Signature Experiences.jpg",
+  packages:   "",
+  spa:      "img/WhatsApp Image 2026-11-07 at 01.10.31.jpeg",
+  wedding:  "img/Wedding 01.avif",
+  contacts: ""
 };
 /* Set to false to show plain text lists instead of picture cards */
 const SHOW_DOCUMENT_PREVIEWS = true;
@@ -411,6 +695,9 @@ const ICONS = {
   mail:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',
   globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/>',
   chat:'<path d="M4 20l1.5-4A8 8 0 1 1 9 19Z"/>',
+  image:'<rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>',
+  news:'<path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8V6Z"/>',
+  expand:'<path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>',
   chev:'<path d="m9 6 6 6-6 6"/>', left:'<path d="m15 6-6 6 6 6"/>', arrow:'<path d="M4 12h16M14 6l6 6-6 6"/>', down:'<path d="M12 4v16M6 14l6 6 6-6"/>'
 };
 const svg = (n, cls='') => `<svg viewBox="0 0 24 24" class="${cls}" aria-hidden="true">${ICONS[n]||''}</svg>`;
@@ -419,7 +706,7 @@ const app = document.getElementById('app');
 const driveView = id => `https://drive.google.com/file/d/${id}/view`;
 const drivePreview = id => `https://drive.google.com/file/d/${id}/preview`;
 const driveImage = (id, w=2400) => `https://drive.google.com/thumbnail?id=${id}&sz=w${w}`;
-const photoUrl = (v, w=1800) => !v ? '' : (/^(https?:|\/|\.|img\/)/.test(v) || /\.(jpe?g|png|webp|gif)$/i.test(v)) ? v : driveImage(v, w);
+const photoUrl = (v, w=1800) => !v ? '' : (/^(https?:|\/|\.|img\/)/.test(v) || /\.(jpe?g|png|webp|gif|avif)$/i.test(v)) ? encodeURI(v) : driveImage(v, w);
 const itemsOf = g => g.items === "DEST" ? DESTINATION_DINING : (g.items || []);
 function firstDocId(key){
   for (const g of (SECTIONS[key]?.groups || [])) { const it = itemsOf(g); if (it.length) return it[0][1]; }
@@ -437,7 +724,7 @@ const DOCS = {};
 for (const [k,s] of Object.entries(SECTIONS))
   (s.groups||[]).forEach(g => itemsOf(g).forEach(([t,id]) => { DOCS[id] = DOCS[id] || {t, from:k}; }));
 
-document.getElementById('logoName').textContent = RESORT.name;
+document.getElementById('logoImg').alt = RESORT.name + ' Maldives';
 function tickClock(){
   const el = document.getElementById('clock');
   el.textContent = new Date().toLocaleString([], {weekday:'short', day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'});
@@ -468,7 +755,7 @@ function dialSvg(){
     <circle class="pulse" cx="200" cy="200" r="112"/>
     <a class="ctr" href="#/packages" aria-label="${esc(SECTIONS.packages.title)}">
       <circle class="c1" cx="200" cy="200" r="112"/><circle class="c2" cx="200" cy="200" r="100"/>
-      <g transform="translate(184,146) scale(1.35)"><g class="ic">${ICONS.flower}</g></g>
+      <image href="img/logo-flower.png" x="178" y="136" width="44" height="44"/>
       <text class="t1" x="200" y="202">All-Inclusive</text>
       <text class="t2" x="200" y="224">PACKAGES &amp; MENUS</text></a></svg>`;
 }
@@ -478,10 +765,13 @@ function renderHome(){
   const tiles = HOME_TILES.map((k,i) => `<a class="tile rv${i===0?' wide':''}" style="--d:${(i%2)*0.12}s" href="#/${k}">
       <span class="pic" style="${bgVar(k)}"></span>
       <span class="cap"><b>${esc(SECTIONS[k].title)}</b><span>Explore</span></span></a>`).join('');
-  const split = (k, eyebrow, title, rev) => `<section class="split rv${rev?' rev':''}">
+  const split = (k, eyebrow, title, rev) => {
+    const logo = k === 'spa' ? `<div class="split-spa-logo"><img src="img/mandara-spa-logo.png" alt="Mandara Spa"></div>` : '';
+    return `<section class="split rv${rev?' rev':''}">
       <a class="ph" href="#/${k}" style="${bgVar(k)}" aria-label="${esc(SECTIONS[k].title)}"></a>
-      <div class="tx"><div class="eyebrow">${esc(eyebrow)}</div><h3 class="title">${title}</h3>
+      <div class="tx">${logo}<div class="eyebrow">${esc(eyebrow)}</div><h3 class="title">${title}</h3>
         <p>${esc(SECTIONS[k].intro)}</p><a class="link" href="#/${k}">Discover ${svg('arrow')}</a></div></section>`;
+  };
   app.innerHTML = `
     <section class="hero"><span class="bgz" style="${bgVar('home')}"></span>
       <div class="in"><div class="eyebrow">${esc(RESORT.tagline)} · Guest Directory</div>
@@ -514,19 +804,37 @@ function contactRows(){
   if (RESORT.whatsapp) r.push(['chat', `https://wa.me/${RESORT.whatsapp}`, 'WhatsApp', 'Message the team']);
   if (RESORT.email) r.push(['mail', `mailto:${RESORT.email}`, 'Email', RESORT.email]);
   if (RESORT.website) r.push(['globe', RESORT.website, 'Website', 'cinnamonhotels.com']);
+  r.push(['image', '#/gallery', 'Gallery', 'View resort photos & moments']);
+  r.push(['news', '#/news', 'Island News', 'Stories, initiatives & updates']);
+  r.push(['flower', 'javascript:openIslandConcierge()', 'Island Concierge', 'Instant answers 24/7']);
   return r;
 }
 function contactBlock(){
   return `<section class="contact"><div class="eyebrow rv">We're here for you</div><h2 class="title">Day and night</h2>
-    <div class="cbtns">${contactRows().map(([ic,h,l]) => `<a href="${h}"${h.startsWith('http')?' target="_blank" rel="noopener"':''}>${svg(ic)}${esc(l)}</a>`).join('')}</div>
+    <div class="cbtns">${contactRows().map(([ic,h,l]) => {
+      const isExt = h.startsWith('http');
+      const isJs = h.startsWith('javascript:');
+      const jsCode = isJs ? h.slice(11) : '';
+      return `<a href="${isJs ? '#' : h}"${isExt ? ' target="_blank" rel="noopener"' : ''}${isJs ? ` onclick="event.preventDefault();${jsCode};"` : ''}>${svg(ic)}${esc(l)}</a>`;
+    }).join('')}</div>
     <small>${esc(RESORT.name)} · ${esc(RESORT.tagline)}</small></section>`;
 }
 
 /* ---------- Section pages ---------- */
+const DOC_COVERS = {
+  "1N6iaVZSfNeGc6YsOZ16z-B19E5aiOQMX": "img/Wedding 01.avif",
+  "1Wq_R_jAfc4T5hKfC2_5rj5Ywj1z1jTBu": "img/yoga.jpg",
+  "1iC_YteBk_fjPN4wInjbWayYQz9F--_Cw": "img/spa-portrait.jpg",
+  "1eX_1Iuzz5GOQVfBAgaXWOhydB14687Px": "img/compendium-cover.jpg",
+  "1sFDPuT8A_tWKe73oaFN3JDgBpDTJDvh8": "img/signature-experiences-setup.jpg",
+  "1teGbSK25HeuBRblcZESVpNi7K1NNAmJQ": "img/sunset-dining-ambience.jpg",
+  "1ufUhu-A6tu8hHB9hm80U7SNqppkmnmpI": "img/Coral_1.png"
+};
 function itemCard(title, id, sub){
+  const imgUrl = DOC_COVERS[id] ? encodeURI(DOC_COVERS[id]) : driveImage(id, 600);
   return `<a class="card rv" href="#/doc/${id}">
     <span class="ph"><span class="fb">${svg('doc')}</span>
-      <img src="${driveImage(id, 600)}" alt="" loading="lazy" onload="this.classList.add('ok')" onerror="this.remove()"></span>
+      <img src="${imgUrl}" alt="" loading="lazy" onload="this.classList.add('ok')" onerror="this.remove()"></span>
     <span class="cap"><b>${esc(title)}</b>${sub?`<span>${esc(sub)}</span>`:''}</span></a>`;
 }
 function itemRow(title, id, sub){
@@ -534,14 +842,83 @@ function itemRow(title, id, sub){
     <span class="tx"><b>${esc(title)}</b>${sub?`<span>${esc(sub)}</span>`:''}</span>${svg('chev','chev')}</a>`;
 }
 function pageHero(s, key){
+  const extraLogo = key === 'spa' ? `<div class="phero-logo"><img src="img/mandara-spa-logo.png" alt="Mandara Spa"></div>` : '';
   return `<section class="phero"><span class="bgz" style="${bgVar(key)}"></span><div class="in">
     <a class="crumb" href="#/">${svg('left')}Home</a>
+    ${extraLogo}
     <h2>${esc(s.title)}</h2>${s.intro?`<p>${esc(s.intro)}</p>`:''}</div></section>`;
+}
+function todayActivitiesBanner(){
+  const today = new Intl.DateTimeFormat('en-US', {weekday:'long', timeZone:'Indian/Maldives'}).format(new Date());
+  let actItems = [];
+  let entItems = [];
+
+  if (window.CONTENT_READY && window.CONTENT){
+    const aDoc = CONTENT["1Wq_R_jAfc4T5hKfC2_5rj5Ywj1z1jTBu"];
+    if (aDoc && aDoc.blocks){
+      aDoc.blocks.forEach(b => {
+        if (b.schedule && b.schedule.days){
+          const m = b.schedule.days.find(d => d[0].toLowerCase() === today.toLowerCase());
+          if (m){
+            const t = b.schedule.times || ["Morning", "Afternoon"];
+            if (m[1] && m[1].length) actItems.push({ time: t[0], events: m[1] });
+            if (m[2] && m[2].length) actItems.push({ time: t[1], events: m[2] });
+          }
+        }
+      });
+    }
+    const eDoc = CONTENT["1e-M6ZcV7hsaUQbsou82lkROJvxzCSJJk"];
+    if (eDoc && eDoc.blocks){
+      eDoc.blocks.forEach(b => {
+        if (b.schedule && b.schedule.days){
+          const m = b.schedule.days.find(d => d[0].toLowerCase() === today.toLowerCase());
+          if (m){
+            const t = b.schedule.times || ["Sunset", "Night"];
+            if (m[1] && m[1].length) entItems.push({ time: t[0], events: m[1] });
+            if (m[2] && m[2].length) entItems.push({ time: t[1], events: m[2] });
+          }
+        }
+      });
+    }
+  }
+
+  const renderSlot = slot => `
+    <div class="today-act-slot">
+      <span class="today-act-time">${esc(slot.time)}</span>
+      <div class="today-act-events">
+        ${slot.events.map(ev => {
+          const [name, loc] = ev.split('|');
+          return `<div class="today-act-ev"><b>${esc(name)}</b>${loc ? `<small>📍 ${esc(loc)}</small>` : ''}</div>`;
+        }).join('')}
+      </div>
+    </div>`;
+
+  return `
+    <div class="group">
+      <div class="today-act-card rv">
+        <span class="today-act-badge">Today's Schedule · ${esc(today)}</span>
+        <h3>Today on Velifushi</h3>
+        <p class="today-act-sub">Happening today across the island. All resort guests are warmly welcomed.</p>
+        <div class="today-act-grid">
+          <div class="today-act-col">
+            <h4>${svg('calendar')} Daytime Activities</h4>
+            ${actItems.length ? actItems.map(renderSlot).join('') : '<p class="empty-act">Relax on the beach or explore the reef lagoon.</p>'}
+          </div>
+          <div class="today-act-col">
+            <h4>${svg('star')} Evening Entertainment</h4>
+            ${entItems.length ? entItems.map(renderSlot).join('') : '<p class="empty-act">Chill music and signature drinks at Fen Bar.</p>'}
+          </div>
+        </div>
+      </div>
+    </div>`;
 }
 function renderSection(key){
   const s = SECTIONS[key];
   if (key === 'contacts') return renderContacts(s);
   let body = '';
+  if (key === 'activities'){
+    body += todayActivitiesBanner();
+  }
   if (s.image){
     body += `<div class="group"><a href="${driveView(s.image)}" target="_blank" rel="noopener">
       <img class="mapimg" src="${driveImage(s.image)}" alt="${esc(s.title)}" loading="lazy"></a>
@@ -563,15 +940,87 @@ function renderSection(key){
   app.innerHTML = pageHero(s, key) + body + `<div style="height:40px"></div>` + contactBlock();
 }
 function renderContacts(s){
-  const rows = contactRows().map(([ic,h,l,sub]) => `<a class="item" href="${h}"${h.startsWith('http')?' target="_blank" rel="noopener"':''}>
-    <span class="badge">${svg(ic)}</span><span class="tx"><b>${esc(l)}</b><span>${esc(sub)}</span></span>${svg('chev','chev')}</a>`).join('');
+  const rows = contactRows().map(([ic,h,l,sub]) => {
+    const isExt = h.startsWith('http');
+    const isJs = h.startsWith('javascript:');
+    const jsCode = isJs ? h.slice(11) : '';
+    return `<a class="item" href="${isJs ? '#' : h}"${isExt ? ' target="_blank" rel="noopener"' : ''}${isJs ? ` onclick="event.preventDefault();${jsCode};"` : ''}>
+      <span class="badge">${svg(ic)}</span><span class="tx"><b>${esc(l)}</b><span>${esc(sub)}</span></span>${svg('chev','chev')}</a>`;
+  }).join('');
   app.innerHTML = pageHero(s, 'home') + `<div class="group"><h3>Reach us</h3><div class="list">${rows}</div>
     <p class="note">From your villa, dial reception on the in-room phone at any time.</p></div>`;
 }
 
 /* ---------- Document viewer ---------- */
+const TAGS = { alcohol:'Alcohol', gluten:'Gluten', mustard:'Mustard', dairy:'Dairy', pork:'Pork', vegetarian:'Vegetarian',
+  nuts:'Nuts', egg:'Egg', celery:'Celery', fish:'Fish', molluscs:'Molluscs', soya:'Soya', crustaceans:'Crustaceans',
+  peanut:'Peanut', sesame:'Sesame', coconut:'Coconut', spicy:'Spicy', healthy:'Healthy option' };
+const GOOD_TAGS = ['vegetarian','healthy'];
+/* Escapes text, then turns {gluten} markers into visible tags */
+const rich = s => esc(s).replace(/\s*\{(\w+)\}/g, (m,k) => ` <span class="tag${GOOD_TAGS.includes(k)?' good':''}">${esc(TAGS[k]||k)}</span>`);
+const anchor = i => `sec-${i}`;
+const ALLERGY_NOTE = "Tags show allergen and dietary information as marked on the resort's menu. A dish without a tag is not guaranteed to be allergen free. If you have any concerns regarding food allergies, please alert your server prior to ordering.";
+
+function scheduleBlock(s){
+  const today = new Intl.DateTimeFormat('en-US', {weekday:'long', timeZone:'Indian/Maldives'}).format(new Date());
+  const slot = (time, list) => list.length ? `<div class="slot"><span class="when">${esc(time)}</span>${list.map(x => {
+      const [name, where] = x.split('|');
+      return `<b>${esc(name)}</b>${where?`<small>${esc(where)}</small>`:''}`; }).join('')}</div>` : '';
+  return `<div class="sched">${s.days.map(([day,a,b]) => `<div class="day${day===today?' today':''}">
+    <h4>${esc(day)}${day===today?'<em>Today</em>':''}</h4>${slot(s.times[0],a)}${slot(s.times[1],b)}</div>`).join('')}</div>`;
+}
+function priceTable(t){
+  return `<div class="ptable"><h4>${esc(t.cap)}${t.total?`<span>USD ${esc(t.total)}</span>`:''}</h4>${t.note?`<small class="tn">${esc(t.note)}</small>`:''}
+    <table>${t.rows.map(([n,d,v]) => `<tr><td><b>${esc(n||d)}</b>${n&&d?`<small>${esc(d)}</small>`:''}</td><td class="num">${v?`USD ${esc(v)}`:''}</td></tr>`).join('')}</table></div>`;
+}
+function renderBlock(b, i){
+  /* items and price panels first: an item's "p" is its price, and a panel's "note" is its caption */
+  if (b.price) return `<div class="dprice"><b>${esc(b.price)}</b><span>${esc(b.unit||'')}</span>${b.note?`<small>${esc(b.note)}</small>`:''}</div>`;
+  if (b.i)     return `<div class="ditem"><div class="dn"><span class="nm">${rich(b.i)}</span>${b.p?`<span class="pr">${esc(b.p).replace(/ \| /g,'<br>')}</span>`:''}</div>
+      ${(b.d||[]).map(x => `<p class="dd">${rich(x)}</p>`).join('')}${b.w?`<p class="dw">Wine pairing: ${esc(b.w)}</p>`:''}</div>`;
+  if (b.part)  return `<h2 class="dpart">${esc(b.part)}</h2>`;
+  if (b.h)     return `<h3 class="dh" id="${anchor(i)}">${esc(b.h)}</h3>`;
+  if (b.sub)   return `<h4 class="dsub">${esc(b.sub)}</h4>`;
+  if (b.kicker)return `<p class="dkick">${esc(b.kicker)}</p>`;
+  if (b.p)     return `<p class="dp">${rich(b.p)}</p>`;
+  if (b.ul)    return `<ul class="dul">${b.ul.map(x => `<li>${rich(x)}</li>`).join('')}</ul>`;
+  if (b.note)  return `<p class="dnote">${rich(b.note)}</p>`;
+  if (b.callout) return `<p class="dcall">${esc(b.callout)}</p>`;
+  if (b.quote) return `<blockquote class="dq">${esc(b.quote)}</blockquote>`;
+  if (b.or)    return `<div class="dor"><span>or</span></div>`;
+  if (b.cards) return `<div class="dcards">${b.cards.map(c => `<div class="dcard"><b>${esc(c.t)}</b>${c.d.map(x => `<p>${esc(x)}</p>`).join('')}</div>`).join('')}</div>`;
+  if (b.qa)    return `<div class="dqa">${b.qa.map(([q,a]) => `<div><b>${esc(q)}</b><p>${esc(a)}</p></div>`).join('')}</div>`;
+  if (b.schedule) return scheduleBlock(b.schedule);
+  if (b.table) return b.table.cap ? priceTable(b.table) : `<table class="dtable"><thead><tr>${b.table.head.map(h => `<th>${esc(h)}</th>`).join('')}</tr></thead>
+      <tbody>${b.table.rows.map(r => `<tr>${r.map(c => `<td>${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+  if (b.contact) return `<div class="dcontact">${b.contact.map(([h,l]) => `<a href="${esc(h)}">${esc(l)}</a>`).join('')}</div>`;
+  if (b.link)  return `<a class="item dlink" href="#/doc/${esc(b.link)}"><span class="tx"><b>${esc(b.t)}</b><span>${esc(b.d||'')}</span></span>${svg('chev','chev')}</a>`;
+  if (b.codes) return `<details class="dcodes"><summary>Show ${b.codes.length} country codes</summary>
+      <input class="cq" type="search" placeholder="Search for a country" aria-label="Search for a country">
+      <ul>${b.codes.map(([n,c]) => `<li data-n="${esc(n.toLowerCase())}"><span>${esc(n)}</span><b>${esc(c)}</b></li>`).join('')}</ul></details>`;
+  return '';
+}
 function renderDoc(id){
   const d = DOCS[id] || {t:'Document', from:''};
+  const c = window.CONTENT_READY && CONTENT[id];
+  if (!c) return renderPdfViewer(id, d);
+  const heads = c.blocks.map((b,i) => b.h ? [b.h,i] : null).filter(Boolean);
+  const jump = heads.length >= 4 ? `<nav class="djump" aria-label="On this page">${heads.map(([h,i]) => `<button type="button" data-to="${anchor(i)}">${esc(h)}</button>`).join('')}</nav>` : '';
+  const heroPath = DOC_COVERS[id] || (c.hero ? `img/docs/${c.hero}.jpg` : '');
+  const hero = heroPath ? `<span class="bgz" style="--img:url('${encodeURI(heroPath)}')"></span>` : '';
+  app.innerHTML = `<section class="phero${c.hero?'':' flat'}">${hero}<div class="in">
+      <a class="crumb" href="#/${d.from||''}">${svg('left')}${esc(SECTIONS[d.from]?.title || 'Home')}</a>
+      <h2>${esc(d.t)}</h2>${d.sub?`<p>${esc(d.sub)}</p>`:''}</div></section>
+    ${jump}
+    <article class="doc"${c.lang?` lang="${esc(c.lang)}"`:''}>
+      ${c.allergy?`<p class="dcall soft">${esc(ALLERGY_NOTE)}</p>`:''}
+      ${c.blocks.map(renderBlock).join('')}
+      ${c.foot?`<p class="dfoot">${esc(c.foot)}</p>`:''}
+      <a class="link dorig" href="${driveView(id)}" target="_blank" rel="noopener">View the original document ${svg('arrow')}</a>
+    </article>`;
+}
+/* Documents without extracted content (e.g. newly added ones) still open in the Drive viewer */
+function renderPdfViewer(id, d){
   app.innerHTML = `<div class="viewer"><div class="vbar">
       <a class="back" href="#/${d.from||''}" aria-label="Back">${svg('left')}</a>
       <span class="ttl">${esc(d.t)}</span>
@@ -579,11 +1028,332 @@ function renderDoc(id){
     <iframe src="${drivePreview(id)}" title="${esc(d.t)}" allow="autoplay"></iframe></div>`;
 }
 
+/* ---------- Gallery & Lightbox ---------- */
+const GALLERY_ITEMS = [
+  /* --- Resort Tour --- */
+  {
+    title: "Aerial View of Cinnamon Velifushi",
+    category: "Resort Tour",
+    catKey: "tour",
+    src: "img/hero-aerial.jpg",
+    desc: "A breathtaking aerial perspective of our private island oasis in Vaavu Atoll."
+  },
+  {
+    title: "Overwater Luxury Villas & Ocean Lagoon",
+    category: "Resort Tour",
+    catKey: "tour",
+    src: "img/velifushi-luxury-stay.jpg",
+    desc: "Iconic overwater living perched directly above the shimmering turquoise waters of Cinnamon Velifushi."
+  },
+  {
+    title: "Sunset Aerial of Vaavu Atoll",
+    category: "Resort Tour",
+    catKey: "tour",
+    src: "img/aerial-sunset-drone.jpg",
+    desc: "A breathtaking golden hour perspective of Cinnamon Velifushi surrounded by crystal clear lagoon reefs."
+  },
+  {
+    title: "Mandara Spa Overwater Sanctuary",
+    category: "Resort Tour",
+    catKey: "tour",
+    src: "img/WhatsApp Image 2026-11-07 at 01.10.31.jpeg",
+    desc: "Holistic Balinese healing treatments, aromatic baths, and luxury ELEMIS rituals."
+  },
+  {
+    title: "Balinese Healing & ELEMIS Rituals",
+    category: "Resort Tour",
+    catKey: "tour",
+    src: "img/spa-portrait.jpg",
+    desc: "Authentic Balinese wellness therapies, soothing aromatic oils, and restorative overwater spa treatments."
+  },
+  {
+    title: "Private Beachfront Dining",
+    category: "Resort Tour",
+    catKey: "tour",
+    src: "img/Signature Experiences.jpg",
+    desc: "Candlelit destination dining under the stars right by the gently lapping ocean waves."
+  },
+  {
+    title: "Candlelit Shoreline Dinner Setup",
+    category: "Resort Tour",
+    catKey: "tour",
+    src: "img/signature-experiences-setup.jpg",
+    desc: "An unforgettable private dining setup under the Maldivian stars framed by gentle ocean waves."
+  },
+  {
+    title: "Sunset Beach Lounge & Cocktails",
+    category: "Resort Tour",
+    catKey: "tour",
+    src: "img/sunset-dining-ambience.jpg",
+    desc: "Relaxing beachfront dining atmosphere with chilled drinks, ambient evening glow, and island breezes."
+  },
+  {
+    title: "Signature Poolside Cocktails",
+    category: "Resort Tour",
+    catKey: "tour",
+    src: "img/docs/signature-cocktail.jpg",
+    desc: "Freshly shaken tropical cocktails and chilled drinks at Fen Pool Bar."
+  },
+  {
+    title: "Weekly Island Activities & Yoga",
+    category: "Resort Tour",
+    catKey: "tour",
+    src: "img/yoga.jpg",
+    desc: "Friendly volleyball matches, sunrise yoga, zumba, dart championships, and water sports."
+  },
+  {
+    title: "Island Wedding Setup",
+    category: "Resort Tour",
+    catKey: "tour",
+    src: "img/Wedding 01.avif",
+    desc: "Barefoot beach weddings and renewal of vows framed by palm arches and floral blooms."
+  },
+  {
+    title: "Resort Compendium & Welcome Guide",
+    category: "Resort Tour",
+    catKey: "tour",
+    src: "img/compendium-cover.jpg",
+    desc: "Your comprehensive guide to resort services, villa amenities, dining, and island experiences."
+  },
+
+  /* --- Catway experience --- */
+  {
+    title: "Castaway Sandbank Picnic",
+    category: "Catway experience",
+    catKey: "catway",
+    src: "img/docs/sandbank-excursion.jpg",
+    desc: "An untouched expanse of pure white sand encircled by crystalline coral lagoons on a private castaway trip."
+  },
+  {
+    title: "Sunset Dhoni Cruise",
+    category: "Catway experience",
+    catKey: "catway",
+    src: "img/docs/sunset-cruise.jpg",
+    desc: "Unwind on a traditional wooden Dhoni boat as golden hour illuminates the Maldives."
+  },
+  {
+    title: "Dolphin Safari Adventure",
+    category: "Catway experience",
+    catKey: "catway",
+    src: "img/docs/dolphin-watching.jpg",
+    desc: "Encounter playful spinner dolphins leaping in their natural turquoise habitat."
+  },
+  {
+    title: "Big Game Fishing Adventure",
+    category: "Catway experience",
+    catKey: "catway",
+    src: "img/island-experiences.jpg",
+    desc: "Sail for the horizon seeking marlin, sailfish, and tuna with our experienced local crew."
+  },
+  {
+    title: "Traditional Sunset Fishing",
+    category: "Catway experience",
+    catKey: "catway",
+    src: "img/docs/sunset-fishing.jpg",
+    desc: "Reel in fresh reef fish using traditional Maldivian handlines as dusk settles."
+  },
+  {
+    title: "Thinadhoo Island Village",
+    category: "Catway experience",
+    catKey: "catway",
+    src: "img/docs/thinadhoo-island.jpg",
+    desc: "Discover rich cultural traditions and local crafts on neighbouring island communities."
+  }
+];
+
+let curGalleryFilter = 'all';
+let curLightboxIndex = 0;
+let activeGalleryList = GALLERY_ITEMS;
+
+function renderGallery(){
+  activeGalleryList = curGalleryFilter === 'all'
+    ? GALLERY_ITEMS
+    : GALLERY_ITEMS.filter(it => it.catKey === curGalleryFilter);
+
+  const filters = [
+    ['all', 'All Photos'],
+    ['tour', 'Resort Tour'],
+    ['catway', 'Catway experience']
+  ];
+
+  const chipsHtml = `<nav class="gallery-bar">${filters.map(([k,l]) =>
+    `<button type="button" class="gallery-chip ${curGalleryFilter===k?'on':''}" onclick="setGalleryFilter('${k}')">${esc(l)}</button>`
+  ).join('')}</nav>`;
+
+  const cardsHtml = `<div class="gallery-grid">${activeGalleryList.map((it, idx) => `
+    <div class="gallery-card rv" onclick="openLightbox(${idx})">
+      <img src="${it.src}" alt="${esc(it.title)}" loading="lazy">
+      <div class="cap">
+        <small>${esc(it.category)}</small>
+        <b>${esc(it.title)}</b>
+      </div>
+    </div>
+  `).join('')}</div>`;
+
+  app.innerHTML = pageHero({
+    title: "Gallery",
+    intro: "Glimpses of paradise, azure lagoons, and unforgettable memories at Cinnamon Velifushi."
+  }, 'home') + chipsHtml + cardsHtml + `<div style="height:30px"></div>` + contactBlock();
+}
+
+function setGalleryFilter(k){
+  curGalleryFilter = k;
+  renderGallery();
+  arm();
+}
+
+function openLightbox(idx){
+  curLightboxIndex = idx;
+  updateLightboxContent();
+  document.getElementById('lightbox').classList.add('open');
+}
+
+function closeLightbox(){
+  document.getElementById('lightbox').classList.remove('open');
+}
+
+function updateLightboxContent(){
+  const it = activeGalleryList[curLightboxIndex];
+  if (!it) return;
+  document.getElementById('lightboxImg').src = it.src;
+  document.getElementById('lightboxCounter').textContent = `${curLightboxIndex + 1} / ${activeGalleryList.length}`;
+  const catEl = document.getElementById('lightboxCat');
+  if (catEl) catEl.textContent = it.category || '';
+  document.getElementById('lightboxTitle').textContent = it.title;
+  document.getElementById('lightboxDesc').textContent = it.desc;
+}
+
+function nextLightbox(){
+  curLightboxIndex = (curLightboxIndex + 1) % activeGalleryList.length;
+  updateLightboxContent();
+}
+
+function prevLightbox(){
+  curLightboxIndex = (curLightboxIndex - 1 + activeGalleryList.length) % activeGalleryList.length;
+  updateLightboxContent();
+}
+
+document.addEventListener('keydown', e => {
+  const lb = document.getElementById('lightbox');
+  if (lb && lb.classList.contains('open')) {
+    if (e.key === 'ArrowRight') nextLightbox();
+    else if (e.key === 'ArrowLeft') prevLightbox();
+    else if (e.key === 'Escape') closeLightbox();
+  }
+});
+
+/* ---------- Island News ---------- */
+const NEWS_ITEMS = [
+  {
+    id: "christmas-cake-mixing",
+    category: "Mixing Traditions, Sharing Joy, and Spreading Christmas Cheer | Cinnamon Velifushi Maldives",
+    badge: "Festive Tradition",
+    date: "Cinnamon Velifushi Maldives",
+    title: "Mixing Traditions, Sharing Joy, and Spreading Christmas Cheer",
+    subtitle: "Annual Christmas Cake Mixing Ceremony unites guests and associates in festive holiday spirit.",
+    desc: "Guests and resort associates unite in festive spirit for the annual Christmas cake mixing ceremony at Cinnamon Velifushi Maldives. Blending rich dry fruits, candied peels, fragrant island spices, and warm holiday traditions under the swaying palms of Vaavu Atoll.",
+    images: [
+      { src: "img/CAKE.png", title: "Christmas Cake Mixing Ceremony", desc: "Guests and associates uniting in festive holiday spirit for the annual Christmas cake mixing ceremony at Cinnamon Velifushi Maldives." },
+      { src: "img/CAKE 2.png", title: "Spreading Christmas Cheer", desc: "Blending rich dry fruits, candied peels, aromatic spices, and warm holiday traditions under the Maldivian palm trees." }
+    ]
+  },
+  {
+    id: "7-years-of-excellence",
+    category: "Celebrating 7 Years of Excellence Through Education and Inspiration",
+    badge: "Resort Milestone",
+    date: "7-Year Anniversary",
+    title: "Celebrating 7 Years of Excellence Through Education and Inspiration",
+    subtitle: "Honouring dedication, career learning, and world-class hospitality leadership across the island.",
+    desc: "Empowering talent and celebrating seven inspiring years of hospitality excellence, learning, and achievement at Cinnamon Velifushi Maldives. Fostering continuous professional growth, community education, and inspiring leadership across our entire island family.",
+    images: [
+      { src: "img/EDU 01.png", title: "7 Years of Hospitality Excellence", desc: "Empowering talent and celebrating seven inspiring years of hospitality excellence, learning, and achievement at Cinnamon Velifushi." },
+      { src: "img/EDU 02.png", title: "Education & Inspiration Across the Island", desc: "Fostering professional career growth, community education, and inspiring leadership across our island team." }
+    ]
+  },
+  {
+    id: "coral-propagation",
+    category: "Cinnamon Coral Restoration Initiative - Coral Propagation Project",
+    badge: "Marine Conservation",
+    date: "Sustainability & House Reef Care",
+    title: "Cinnamon Coral Restoration Initiative – Coral Propagation Project",
+    subtitle: "Protecting and rejuvenating the house reef ecosystem through active coral frame propagation in Vaavu Atoll.",
+    desc: "Cinnamon Velifushi Maldives is dedicated to protecting and rejuvenating the delicate marine ecosystem of Vaavu Atoll. Through our active coral frame propagation project, coral fragments are nurtured to maturity, revitalizing the house reef and providing thriving sanctuary habitats for diverse marine life.",
+    images: [
+      { src: "img/Coral_1.png", title: "Coral Restoration & Propagation Project", desc: "Protecting and rejuvenating the house reef ecosystem through active coral frame propagation and marine conservation in Vaavu Atoll." }
+    ]
+  }
+];
+
+function renderNews(){
+  const newsHtml = `<div class="news-feed">${NEWS_ITEMS.map((item, nIdx) => `
+    <article class="news-card rv">
+      <div class="news-card-body">
+        <div class="news-header">
+          <span class="news-badge">${svg('star')}${esc(item.badge)}</span>
+          <span class="news-date">${esc(item.date)}</span>
+        </div>
+        <small class="news-category-tag">${esc(item.category)}</small>
+        <h3 class="news-title">${esc(item.title)}</h3>
+        <p class="news-sub">${esc(item.subtitle)}</p>
+        
+        <div class="news-media-grid ${item.images.length > 1 ? 'two-col' : ''}">
+          ${item.images.map((img, iIdx) => `
+            <div class="news-photo-wrap" onclick="openNewsLightbox(${nIdx}, ${iIdx})">
+              <img src="${img.src}" alt="${esc(img.title)}" loading="lazy">
+              <span class="zoom-pill">${svg('expand')} View Poster</span>
+            </div>
+          `).join('')}
+        </div>
+        
+        <p class="news-desc">${esc(item.desc)}</p>
+      </div>
+    </article>
+  `).join('')}</div>`;
+
+  app.innerHTML = pageHero({
+    title: "Island News",
+    intro: "Stories, celebrations, environmental initiatives, and island happenings at Cinnamon Velifushi Maldives."
+  }, 'home') + newsHtml + `<div style="height:20px"></div>` + contactBlock();
+}
+
+function openNewsLightbox(newsIdx, imgIdx){
+  const news = NEWS_ITEMS[newsIdx];
+  if (!news || !news.images[imgIdx]) return;
+  const img = news.images[imgIdx];
+  document.getElementById('lightboxImg').src = img.src;
+  document.getElementById('lightboxCounter').textContent = `Story ${newsIdx + 1} of ${NEWS_ITEMS.length}`;
+  const catEl = document.getElementById('lightboxCat');
+  if (catEl) catEl.textContent = news.category;
+  document.getElementById('lightboxTitle').textContent = img.title;
+  document.getElementById('lightboxDesc').textContent = img.desc;
+  document.getElementById('lightbox').classList.add('open');
+}
+
 /* ---------- Tabs, top bar & router ---------- */
-const TABS = [["","home","Home"],["menus","menu","Dine"],["spa","spa","Spa"],["activities","calendar","activities"],["contacts","phone","Call"]];
+const TABS = [
+  ["activities", "calendar", "Activities"],
+  ["", "home", "Home"],
+  ["menus", "menu", "Dine"],
+  ["spa", "spa", "Spa"],
+  ["contacts", "phone", "Call"]
+];
 function renderTabs(cur){
   document.getElementById('tabs').innerHTML = TABS.map(([r,ic,l]) =>
-    `<a href="#/${r}" class="${cur===r?'on':''}">${svg(ic)}<span>${l}</span></a>`).join('');
+    `<a href="#/${r}" class="tab-item ${cur===r?'on':''}">${svg(ic)}<span>${l}</span></a>`
+  ).join('');
+}
+function showToast(msg){
+  let t = document.getElementById('toast');
+  if (!t){
+    t = document.createElement('div');
+    t.id = 'toast';
+    t.className = 'toast';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.classList.remove('show'), 2500);
 }
 const topnav = document.getElementById('topnav');
 function updateNav(){ topnav.classList.toggle('solid', window.scrollY > 120); }
@@ -594,8 +1364,12 @@ function route(){
   if (h === 'explore') return;
   const [a,b] = h.split('/');
   const tabs = document.getElementById('tabs');
-  if (a === 'doc' && b){ renderDoc(b); tabs.style.display='none'; topnav.style.display='none'; return; }
+  const viewerOnly = a === 'doc' && b && !(window.CONTENT_READY && CONTENT[b]);
+  if (viewerOnly){ renderDoc(b); tabs.style.display='none'; topnav.style.display='none'; return; }
   tabs.style.display=''; topnav.style.display='';
+  if (a === 'doc' && b){ renderDoc(b); renderTabs(DOCS[b]?.from || ''); window.scrollTo(0,0); updateNav(); arm(); return; }
+  if (a === 'gallery'){ renderGallery(); renderTabs(''); window.scrollTo(0,0); updateNav(); arm(); return; }
+  if (a === 'news'){ renderNews(); renderTabs(''); window.scrollTo(0,0); updateNav(); arm(); return; }
   if (a && SECTIONS[a]) renderSection(a); else renderHome();
   renderTabs(SECTIONS[a] ? a : '');
   window.scrollTo(0,0); updateNav(); arm();
@@ -609,6 +1383,16 @@ function arm(){
   document.querySelectorAll('.rv:not(.seen), .dial:not(.seen)').forEach(el => io ? io.observe(el) : el.classList.add('seen'));
   app.classList.remove('enter'); void app.offsetWidth; app.classList.add('enter');
 }
+/* Document pages: "on this page" chips and the country code search */
+app.addEventListener('click', e => {
+  const b = e.target.closest('.djump button');
+  if (b) document.getElementById(b.dataset.to)?.scrollIntoView({behavior:'smooth', block:'start'});
+});
+app.addEventListener('input', e => {
+  if (!e.target.classList.contains('cq')) return;
+  const q = e.target.value.trim().toLowerCase();
+  e.target.parentElement.querySelectorAll('li').forEach(li => { li.hidden = q && !li.dataset.n.includes(q); });
+});
 window.addEventListener('hashchange', route);
 route();
 </script>
