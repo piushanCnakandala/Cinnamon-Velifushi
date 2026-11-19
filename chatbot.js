@@ -313,8 +313,7 @@
     if (/(wifi|wi-fi|internet|connection|password|network|online)/.test(text)) {
       return {
         reply: `📶 <strong>Wi-Fi Information:</strong><br><br>
-        ${info.wifi}<br><br>
-        Simply select the resort guest Wi-Fi network and follow the on-screen prompt to connect. No login code is required.`,
+        ${info.wifi}`,
         actions: [
           { text: "📞 Tech Support (Ext 650)", url: `tel:${info.phone.replace(/\s/g, '')}` }
         ]
