@@ -190,7 +190,7 @@
       {
         id: "act-today",
         category: "Today's Activities",
-        tagColor: "#252776",
+        tagColor: "#612D87",
         icon: "calendar",
         title: `${today} Activities: ${actNames}`,
         shortDesc: actShortDesc,
@@ -280,7 +280,7 @@
       {
         id: "island-news-bulletin",
         category: "Resort News",
-        tagColor: "#252776",
+        tagColor: "#612D87",
         icon: "star",
         title: "Island News: Festive Traditions & Milestones",
         shortDesc: "Annual Cake Mixing, 7 Years of Excellence, and Coral Reef Propagation.",
