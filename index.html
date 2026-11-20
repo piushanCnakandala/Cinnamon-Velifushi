@@ -12,6 +12,29 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600&family=Outfit:wght@300&display=swap" rel="stylesheet">
 <style>
+/* ---------- Aptos Font Support ---------- */
+@font-face {
+  font-family: 'Aptos';
+  src: local('Aptos'), local('Aptos-Regular'), url('fonts/Aptos.woff2') format('woff2'), url('fonts/Aptos.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Aptos';
+  src: local('Aptos Bold'), local('Aptos-Bold'), url('fonts/Aptos-Bold.woff2') format('woff2'), url('fonts/Aptos-Bold.ttf') format('truetype');
+  font-weight: 600 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Aptos Display';
+  src: local('Aptos Display'), local('AptosDisplay'), url('fonts/Aptos-Display.woff2') format('woff2'), url('fonts/Aptos-Display.ttf') format('truetype');
+  font-weight: 300 500;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root{
   /* BRAND COLOURS — Cinnamon purple & white. Change these to retheme the whole site. */
   --cream:#ffffff;          /* page background */
@@ -26,12 +49,9 @@
   --night:#3b1b53;          /* dark contact strip */
   --tint:#e8dcf0;           /* light lilac text on photos */
   --shade:48,22,67;         /* RGB of photo overlays (deep purple) */
-  /* cinnamonhotels.com: headings = Isidora 300, body = Proxima Nova. Both are licensed fonts, so the
-     free look-alikes Outfit (headings) and Mulish (body) load from Google Fonts as fallbacks; if the
-     licensed fonts are ever added to this site they take over automatically.
-     --serif is kept as a name so existing rules keep working; it now means "heading font". */
-  --serif:Isidora,Outfit,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-  --sans:"proxima-nova",Mulish,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  /* Typography: Aptos as the primary font family with graceful fallbacks */
+  --serif:"Aptos Display","Aptos",Isidora,Outfit,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --sans:"Aptos","Aptos Display","proxima-nova",Mulish,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   --safeB:env(safe-area-inset-bottom,0px);
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -171,11 +191,9 @@ main{min-height:100vh;padding-bottom:calc(70px + var(--safeB))}
 .tile{position:relative;display:block;aspect-ratio:4/5;border-radius:18px;overflow:hidden;background:var(--sea);color:#fff;box-shadow:0 4px 18px rgba(0,0,0,.08);transform:translateZ(0);-webkit-mask-image:-webkit-radial-gradient(white,black);transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s ease}
 .tile:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(97,45,135,.22)}
 
+.tile.wide{grid-column:span 2;aspect-ratio:16/10}
 @media (min-width:820px){
   .tile.wide{grid-column:span 2;aspect-ratio:auto;height:100%}
-}
-@media (max-width:819px){
-  .tile.wide{grid-column:span 1;aspect-ratio:4/5}
 }
 
 .tile .pic{position:absolute;inset:0;background-image:var(--img);background-position:center;background-size:cover;background-repeat:no-repeat;transition:transform .7s cubic-bezier(.2,.7,.2,1)}
@@ -184,18 +202,18 @@ main{min-height:100vh;padding-bottom:calc(70px + var(--safeB))}
 
 .tile-badge{position:absolute;top:14px;right:14px;z-index:2;background:#fff;color:#1a1a1a;font-size:11.5px;font-weight:600;font-family:var(--sans);padding:4px 12px;border-radius:999px;box-shadow:0 2px 8px rgba(0,0,0,.18);letter-spacing:.02em}
 @media (max-width:600px){
-  .tile-badge{top:8px;right:8px;font-size:9.5px;padding:3px 9px}
+  .tile-badge{top:10px;right:10px;font-size:10px;padding:3px 10px}
 }
 
 .tile .cap{position:absolute;left:18px;right:18px;bottom:18px;z-index:2;text-align:left}
 @media (max-width:600px){
-  .tile .cap{left:12px;right:12px;bottom:12px}
+  .tile .cap{left:14px;right:14px;bottom:14px}
 }
 .tile .cap b{display:block;font-family:var(--serif);font-weight:500;color:#fff;line-height:1.2;text-shadow:0 2px 8px rgba(0,0,0,.6)}
 .tile.wide .cap b{font-size:24px;font-weight:500;text-transform:none;letter-spacing:0}
 .tile:not(.wide) .cap b{font-size:14.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
 @media (max-width:600px){
-  .tile.wide .cap b{font-size:13.5px;text-transform:uppercase;letter-spacing:.03em}
+  .tile.wide .cap b{font-size:18px;font-weight:500;text-transform:none;letter-spacing:0}
   .tile:not(.wide) .cap b{font-size:12px;letter-spacing:.03em}
 }
 
@@ -911,6 +929,7 @@ const DOC_COVERS = {
   "1N6iaVZSfNeGc6YsOZ16z-B19E5aiOQMX": "img/Wedding 01.avif",
   "1Wq_R_jAfc4T5hKfC2_5rj5Ywj1z1jTBu": "img/yoga.jpg",
   "1iC_YteBk_fjPN4wInjbWayYQz9F--_Cw": "img/spa-portrait.jpg",
+  "1tpOXMbRNiQ5cusDIwjvYw4RNAyfYTFes": "img/Mandara Spa Fresh On Arrival Offer Flyer.jpg (1).jpg.jpeg",
   "1eX_1Iuzz5GOQVfBAgaXWOhydB14687Px": "img/compendium-cover.jpg",
   "1sFDPuT8A_tWKe73oaFN3JDgBpDTJDvh8": "img/signature-experiences-setup.jpg",
   "1teGbSK25HeuBRblcZESVpNi7K1NNAmJQ": "img/sunset-dining-ambience.jpg",
